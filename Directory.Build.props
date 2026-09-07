@@ -9,7 +9,7 @@
     <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
     <!-- WPF needs the real cultures; invariant globalization breaks startup on German Windows. -->
     <InvariantGlobalization>false</InvariantGlobalization>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <Authors>dxmoc</Authors>
     <Product>sc-outfitter</Product>
   </PropertyGroup>

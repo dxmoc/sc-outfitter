@@ -21,7 +21,27 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="LoadoutRowStyle" TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
+        <!-- read-only tables: scroll and wheel work, but clicking a row does not highlight it -->
+        <Style x:Key="QuietRowStyle" TargetType="DataGridRow">
+            <Setter Property="Background" Value="{StaticResource Field}" />
+            <Setter Property="MinHeight" Value="30" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Focusable" Value="False" />
+            <Style.Triggers>
+                <Trigger Property="AlternationIndex" Value="1">
+                    <Setter Property="Background" Value="{StaticResource Field2}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="QuietCellStyle" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+            <Setter Property="Focusable" Value="False" />
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="{StaticResource Fg}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="LoadoutRowStyle" TargetType="DataGridRow" BasedOn="{StaticResource QuietRowStyle}">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsKeep}" Value="True">
                     <Setter Property="Foreground" Value="{StaticResource Muted}" />
@@ -222,7 +242,7 @@
             <Border Grid.Row="3" Style="{StaticResource Card}" Padding="16,12">
                 <DockPanel>
                     <TextBlock DockPanel.Dock="Top" Text="SHOPPING LIST AT THE SELECTED STOP" Style="{StaticResource SectionTitle}" />
-                    <DataGrid ItemsSource="{Binding BuyRows}" IsHitTestVisible="False">
+                    <DataGrid ItemsSource="{Binding BuyRows}" RowStyle="{StaticResource QuietRowStyle}" CellStyle="{StaticResource QuietCellStyle}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Item" Binding="{Binding Item}" Width="2*" />
                             <DataGridTextColumn Header="Qty" Binding="{Binding Quantity}" Width="60" />
@@ -238,7 +258,7 @@
             <Border Grid.Row="5" Style="{StaticResource Card}" Padding="16,12">
                 <DockPanel>
                     <TextBlock DockPanel.Dock="Top" Text="LOADOUT" Style="{StaticResource SectionTitle}" />
-                    <DataGrid ItemsSource="{Binding LoadoutRows}" RowStyle="{StaticResource LoadoutRowStyle}" IsHitTestVisible="False">
+                    <DataGrid ItemsSource="{Binding LoadoutRows}" RowStyle="{StaticResource LoadoutRowStyle}" CellStyle="{StaticResource QuietCellStyle}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Slot" Binding="{Binding Kind}" Width="110" />
                             <DataGridTextColumn Header="S" Binding="{Binding Size}" Width="44" />
