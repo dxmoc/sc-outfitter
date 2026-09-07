@@ -102,7 +102,8 @@ def cmd_components(args: argparse.Namespace) -> int:
     if args.kind == "missile_rack":
         from .optimizer import _attach_rack_stats
         _attach_rack_stats(catalog["missile_rack"], catalog["missile"], goals)
-    comps = [c for c in catalog[args.kind] if (args.size is None or c.size == args.size)]
+    comps = [c for c in catalog[args.kind] if (args.size is None or c.size == args.size)
+             and (args.all or c.buyable)]
     cands = list(comps)  # list.sort empties the list while sorting, so score against a copy
     comps.sort(key=lambda c: score(c, goals, cands), reverse=True)
     for c in comps:
@@ -171,6 +172,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("kind", choices=KINDS)
     p.add_argument("--size", type=int)
     p.add_argument("--goal", action="append", help=goal_help)
+    p.add_argument("--all", action="store_true", help="include parts that are not sold anywhere")
     p.set_defaults(func=cmd_components)
 
     p = sub.add_parser("ships", help="list ship names known to the wiki")

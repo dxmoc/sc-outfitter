@@ -79,7 +79,7 @@ ship actually spawns with, tick **buy every slot** in the GUI or pass `--buy-all
 | `gui` | graphical planner |
 | `plan <ship>` | best loadout + shopping route |
 | `slots <ship>` | list the hull's component slots and stock parts |
-| `components <kind> [--size N] [--goal ...]` | rank parts of one kind |
+| `components <kind> [--size N] [--goal ...]` | rank purchasable parts of one kind (`--all` includes unsold) |
 | `ships [filter]` | list flight-ready ship names (`--all` incl. concepts) |
 | `locations [system]` | start locations grouped by system and body |
 
