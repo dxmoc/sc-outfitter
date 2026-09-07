@@ -5,8 +5,8 @@ from dataclasses import dataclass, field
 
 from . import api
 
-PORT_TYPES = {"QuantumDrive": "quantum_drive", "Shield": "shield",
-              "PowerPlant": "power_plant", "Cooler": "cooler"}
+PORT_TYPES = {"QuantumDrive": "quantum_drive", "Shield": "shield", "PowerPlant": "power_plant",
+              "Cooler": "cooler", "Radar": "radar", "MissileLauncher": "missile_rack"}
 
 
 @dataclass
@@ -15,7 +15,8 @@ class Slot:
     size: int
     port: str
     equipped: str | None
-    gimbal: bool = False  # gun slot currently carrying a gimbal mount
+    gimbal: bool = False              # gun slot currently carrying a gimbal mount
+    equipped_missile: str | None = None  # missile_rack slots: what the stock rack is loaded with
 
     def __str__(self) -> str:
         return f"{self.kind} S{self.size} ({self.port})"
@@ -29,6 +30,7 @@ class Ship:
     quantum_range_m: float = 0.0
     power_generation: float = 0.0
     cooling_generation: float = 0.0
+    role: str = ""
 
     def slots_of(self, kind: str) -> list[Slot]:
         return [s for s in self.slots if s.kind == kind]
@@ -48,15 +50,19 @@ def _walk_ports(ports: list[dict], slots: list[Slot], *, fixed_guns: bool, manne
         ptype = p.get("type")
         size = int((p.get("sizes") or {}).get("max") or 0)
         eq = (p.get("equipped_item") or {}).get("name")
+        children = p.get("ports") or []
+        if ptype == "MissileLauncher":
+            missile = next(((c.get("equipped_item") or {}).get("name") for c in children
+                            if c.get("type") == "Missile"), None)
+            slots.append(Slot("missile_rack", size, p["name"], eq, equipped_missile=missile))
+            continue
         if ptype in PORT_TYPES:
             slots.append(Slot(PORT_TYPES[ptype], size, p["name"], eq))
             continue
         if _compatible(p, "WeaponGun") and size > 0:
             # a gun hardpoint; may currently hold a gimbal mount whose child port is one size smaller
-            child_gun = None
-            for c in (p.get("ports") or []):
-                if c.get("type") == "WeaponGun" or _compatible(c, "WeaponGun"):
-                    child_gun = c
+            child_gun = next((c for c in children
+                              if c.get("type") == "WeaponGun" or _compatible(c, "WeaponGun")), None)
             eq_is_gimbal = child_gun is not None and "gimbal" in (eq or "").lower()
             child_eq = (child_gun.get("equipped_item") or {}).get("name") if child_gun else None
             if fixed_guns or not eq_is_gimbal:
@@ -65,7 +71,7 @@ def _walk_ports(ports: list[dict], slots: list[Slot], *, fixed_guns: bool, manne
                 slots.append(Slot("gun", size - 1, p["name"], child_eq, True))
             continue
         if ptype in ("Turret", "TurretBase") and manned:
-            _walk_ports(p.get("ports") or [], slots, fixed_guns=fixed_guns, manned=manned)
+            _walk_ports(children, slots, fixed_guns=fixed_guns, manned=manned)
 
 
 def load_ship(name: str, *, fixed_guns: bool = True, manned_turrets: bool = False) -> Ship:
@@ -76,5 +82,6 @@ def load_ship(name: str, *, fixed_guns: bool = True, manned_turrets: bool = Fals
     ship.quantum_range_m = float(q.get("quantum_range") or 0)
     ship.power_generation = float((v.get("power") or {}).get("generation_segments") or 0)
     ship.cooling_generation = float((v.get("cooling") or {}).get("generation_segments") or 0)
+    ship.role = str(v.get("role") or v.get("career") or "")
     _walk_ports(v.get("ports") or [], ship.slots, fixed_guns=fixed_guns, manned=manned_turrets)
     return ship

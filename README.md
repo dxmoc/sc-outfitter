@@ -1,42 +1,78 @@
 # sc-outfitter
 
 Builds the best purchasable loadout for a Star Citizen ship and plans the shopping trip
-through Stanton: which shop to visit in which order, how long each quantum jump takes and
-how much quantum fuel it burns.
+through Stanton: which shop to visit in which order, how far each quantum jump is, how long
+it takes and how much quantum fuel it burns. Comes as a CLI and a small GUI.
 
-Python 3.10+, standard library only. No account, no API key.
-
-```
-python -m outfitter plan Gladius --start "Everus Harbor"
-```
+Python 3.10+, standard library only (tkinter for the GUI). No account, no API key.
 
 ```
-== Gladius - profile 'combat'
+python -m outfitter gui
+python -m outfitter plan Gladius --start "Everus Harbor" --goal dps --goal tank
+```
+
+```
+== Gladius - goals: dps, tank
 
 Loadout:
-  gun            S3  Revenant Gatling             A   56,955 aUEC  1054 dps, 2166 m, ammo
-  gun            S3  Revenant Gatling             A   56,955 aUEC  1054 dps, 2166 m, ammo
-  cooler         S1  Bracer                       C  keep          34 coolant segments
+  missile_rack   S3  MSD-322 Missile Rack           A  keep          2x S2
+  missile        S2  2x Tempest II-G Missile        A      320 aUEC  2400 dmg, 1029 m/s, 31 km, CrossSection
+  gun            S3  Revenant Gatling               A   56,955 aUEC  1054 dps, 2166 m, ammo
+  shield         S1  AllStop                        C  keep          3168 hp, 602/s regen
+  quantum_drive  S1  FoxFire                        B  115,500 aUEC  263 Mm/s, spool 4.8s, 5.88 fuel/Gm
+  radar          S1  Ecouter                        C  keep          sensitivity 0.80
   ...
-  quantum_drive  S1  FoxFire                      B  115,500 aUEC  263 Mm/s, spool 4.8s, 5.88 fuel/Gm
-
-  total dps 3162 | shield 6000 hp | power 14.3/16 | cooling 24.3/68 segments
+  guns 3162 dps | shields 6336 hp | missiles 19200 dmg | power 19.3/16 | cooling 29.3/68 segments
 
 Route from Everus Harbor (quantum drive: Beacon):
-  1. HUR-L3                                    25.70 Gm   8m 08s  fuel    479
-       buy 7SA 'Concord'                 120,000 aUEC   @ Platinum Bay - HUR-L3
-  2. MIC-L2                                    ...
+  1. Orison (Crusader)                         31.92 Gm   10m 46s  fuel    594
+       buy 8x Tempest II-G Missile           1,280 aUEC   @ Ship Weapons - Crusader Showroom - Orison
+       buy 3x Revenant Gatling             170,865 aUEC   @ Ship Weapons - Crusader Showroom - Orison
+       buy FoxFire                         115,500 aUEC   @ Cousin Crow's - Providence Platform - Orison
 
-  total: 17m 22s incl. landings | 42.75 Gm | fuel 796 (133% of tank) | 523,965 aUEC
+  total: 10m 46s incl. landings | 31.92 Gm | fuel 594 (99% of tank) | 298,081 aUEC
 ```
+
+## GUI
+
+`python -m outfitter gui` opens a window: ship, start location, tick the goals that matter
+(with a weight each), hit **Plan route**. The route table lists the stops in flying order with
+distance, time and fuel; clicking a stop shows what to buy there and in which shop. The
+loadout table below shows every slot with the chosen part, its stats and whether you keep the
+stock part or what it costs.
+
+## Goals
+
+"Best" is whatever you tick. Every goal maps to one stat per component kind; stats are
+normalized against the best candidate for the slot so goals with different units can be mixed
+and weighted. Kinds that none of your goals touch (e.g. shields when you only tick `dps`) fall
+back to a balanced score, and power plants/coolers always take the highest output.
+
+| Goal | Affects |
+|---|---|
+| `dps` | gun damage per second |
+| `damage` | missile payload per rack (tube count × missile damage) |
+| `range` | gun and missile range |
+| `tank` | shield hit points |
+| `regen` | shield regeneration |
+| `speed` | quantum drive speed |
+| `fuel` | quantum fuel per Gm (less is better) |
+| `detection` | radar sensitivity |
+| `cheap` | lower price, across all kinds |
+
+Default when nothing is chosen: `dps damage tank regen=0.5 speed`.
+
+Covered slots: guns, missile racks + missiles, shields, power plant, coolers, quantum drive,
+radar. Stock parts are kept when nothing sold beats them.
 
 ## Commands
 
 | Command | What it does |
 |---|---|
+| `gui` | graphical planner |
 | `plan <ship>` | best loadout + shopping route |
 | `slots <ship>` | list the hull's component slots and stock parts |
-| `components <kind> [--size N]` | rank guns / shields / power plants / coolers / quantum drives |
+| `components <kind> [--size N] [--goal ...]` | rank parts of one kind |
 | `locations` | known start locations for `--start` |
 
 `plan` options:
@@ -44,29 +80,16 @@ Route from Everus Harbor (quantum drive: Beacon):
 | Option | Meaning |
 |---|---|
 | `--start LOC` | where you are now (station, city or body; default Everus Harbor) |
-| `--profile combat\|brawl\|travel\|economy` | what "best" means, see below |
+| `--goal NAME[=WEIGHT]` | repeatable, see Goals |
 | `--gimbal` | keep gimbal mounts (guns one size smaller) instead of fixed max-size guns |
 | `--turrets` | include manned turret guns in the shopping list |
 | `--max-grade A..D` | cap the component grade for cheaper builds |
 | `--replace-all` | buy even if the stock part scores equal |
-| `--plan-with-new-qd` | compute travel time with the planned quantum drive instead of the equipped one |
+| `--plan-with-new-qd` | compute travel with the planned quantum drive instead of the equipped one |
 | `--auec-per-minute N` | value of your time; lets the router trade travel time against cheaper shops |
 | `--json` | machine-readable output |
 
 Ship names are the wiki names: `Gladius`, `Cutlass Black`, `Constellation Andromeda`, ...
-
-## Profiles
-
-| Profile | Guns | Shields | Quantum drive |
-|---|---|---|---|
-| `combat` | dps, some range | hp, some regen | fastest |
-| `brawl` | dps, prefers energy weapons (no rearming) | regen-heavy | fastest |
-| `travel` | dps | hp | fastest, short spool |
-| `economy` | dps | hp | least fuel per Gm |
-
-Power plants and coolers are always the highest output for the slot size. The power/cooling
-line shows demand vs. generation in the game's segment model; being over budget is normal on
-some hulls and only means items get throttled when everything runs at once.
 
 ## Data sources
 
@@ -81,25 +104,24 @@ Responses are cached for 24 h in `.cache/`. Delete the folder to force a refresh
 
 ## How the numbers are made
 
-- **Loadout**: for every slot, the highest-scoring component of matching size that is sold
-  somewhere. Guns may be smaller than the hardpoint, everything else must match exactly.
-  Stock parts are kept when nothing sold beats them.
 - **Route**: every shop location that sells one of the needed parts is a candidate. All
   subsets of up to `--max-stops` locations and all visiting orders are enumerated; the plan
   with the lowest travel time (plus price, if `--auec-per-minute` is set) wins. Each item is
-  bought at the cheapest shop on the route.
+  bought at the cheapest shop on the route. Parts only sold where there are no coordinates
+  (Pyro) are listed as extra stops without order or distance.
 - **Jump time**: spool + 5 s calibration + accelerate/cruise/decelerate at the drive's
   stage-two acceleration + cooldown, plus a fixed landing/shopping/take-off overhead per stop
   (station 3 min, outpost 4 min, city 7 min).
 - **Fuel**: distance × the drive's fuel rate. The tank size is the wiki's quantum fuel
-  capacity × 1000, which matches the wiki's own range figure. Legs that need more than one
-  tank are flagged.
+  capacity × 1000, which matches the wiki's own range figure. Legs needing more than one tank
+  are flagged; refuelling is up to you.
 
 ## Known limits
 
-- Stanton only. Pyro shops are ignored; jump-point travel is not modelled.
-- Positions are the parent body's centre. Surface cities and orbital stations are treated as
-  sitting at the planet; the error is a few thousand km on jumps of tens of millions of km.
-- Missiles, missile racks, radars and countermeasures are not part of the loadout.
+- Coordinates for Stanton only. Pyro shops appear as unordered extra stops.
+- Positions are the parent body's centre; surface cities and orbital stations sit at the planet.
+  The error is a few thousand km on jumps of tens of millions of km.
+- Countermeasures, jump modules and paints are not part of the loadout.
 - Prices and availability are what UEX users last reported, not live server data.
-- "Best" is a weighted score. The weights are in `outfitter/optimizer.py` and easy to tweak.
+- Power/cooling is reported, not enforced: being over budget is normal on some hulls and only
+  means items get throttled when everything runs at once.
