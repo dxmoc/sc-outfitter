@@ -1,0 +1,644 @@
+{
+ "system": "Stanton",
+ "unit": "km",
+ "containers": {
+  "Aberdeen": {
+   "pos": [
+    12905757.636,
+    40955.551,
+    0.0
+   ],
+   "radius_km": 274.0,
+   "pois": [
+    "Barton Flats Aid Shelter",
+    "Comm Array ST1-92",
+    "HDES Dobbs (NA) [F]",
+    "HDMS Anderson",
+    "HDMS Norgaard",
+    "Klescher Rehabilitation Facility"
+   ]
+  },
+  "ArcCorp": {
+   "pos": [
+    18587664.74,
+    -22151916.92,
+    0.0
+   ],
+   "radius_km": 800.0,
+   "pois": [
+    "Area 04",
+    "Area 06",
+    "Area 11",
+    "Area 17",
+    "Area 18",
+    "Area 20",
+    "Baijini Point",
+    "Comm Array ST3-90"
+   ]
+  },
+  "Arial": {
+   "pos": [
+    12892673.309,
+    -31476.129,
+    0.0
+   ],
+   "radius_km": 344.5,
+   "pois": [
+    "Comm Array ST1-13",
+    "HDMS Bezdek",
+    "HDMS Lathan"
+   ]
+  },
+  "Calliope": {
+   "pos": [
+    22398369.308,
+    37168840.679,
+    0.0
+   ],
+   "radius_km": 240.0,
+   "pois": [
+    "Comm Array ST4-31",
+    "Rayari Anvik Research Outpost",
+    "Rayari Kaltag Research Outpost",
+    "Shubin Mining Facility SMCa-6",
+    "Shubin Mining Facility SMCa-8",
+    "Shubin Processing Facility SPMC-1",
+    "Shubin Processing Facility SPMC-10",
+    "Shubin Processing Facility SPMC-11",
+    "Shubin Processing Facility SPMC-14",
+    "Shubin Processing Facility SPMC-3",
+    "Shubin Processing Facility SPMC-5"
+   ]
+  },
+  "Cellin": {
+   "pos": [
+    -18987611.119,
+    -2709009.661,
+    0.0
+   ],
+   "radius_km": 260.0,
+   "pois": [
+    "Ashburn Channel Aid Shelter",
+    "Cellin Stash House (Private Property)",
+    "Comm Array ST2-28",
+    "Flanagan's Ravine Aid Shelter",
+    "Gallete Family Farms",
+    "Hickes Research Outpost",
+    "Julep Ravine Aid Shelter",
+    "Mogote Aid Shelter",
+    "NT-999-XV",
+    "Security Post Criska",
+    "Security Post Dipur",
+    "Security Post Kareah",
+    "Security Post Lespin",
+    "Terra Mills HydroFarm",
+    "Tram & Myers Mining"
+   ]
+  },
+  "Clio": {
+   "pos": [
+    22476728.221,
+    37091020.074,
+    0.0
+   ],
+   "radius_km": 337.17,
+   "pois": [
+    "Comm Array ST4-59",
+    "Rayari Cantwell Research Outpost",
+    "Rayari McGrath Research Outpost"
+   ]
+  },
+  "Crusader": {
+   "pos": [
+    -18962176.0,
+    -2664960.0,
+    0.0
+   ],
+   "radius_km": 7450.01,
+   "pois": [
+    "Comm Array ST2-55",
+    "Orison",
+    "Port Olisar"
+   ]
+  },
+  "Daymar": {
+   "pos": [
+    -18930539.54,
+    -2610158.765,
+    0.0
+   ],
+   "radius_km": 295.0,
+   "pois": [
+    "ArcCorp Mining Area 141",
+    "Bountiful Harvest Hydroponics",
+    "Brio's Breaker Yard",
+    "Comm Array ST2-47",
+    "Covalex Shipping Hub Gundo",
+    "Daymar Stash House (Nuen Waste Management)",
+    "Dunlow Ridge Aid Shelter",
+    "Eager Flats Aid Shelter",
+    "Kudre Ore",
+    "Kudre Ore Mine (Closed) [F]",
+    "NT-999-XVI",
+    "Security Post Moluto",
+    "Security Post Prashad",
+    "Security Post Thaquray",
+    "Shubin Mining Facility SCD-1",
+    "TPF",
+    "Tamdon Plains Aid Shelter",
+    "The Garden",
+    "Wolf Point Aid Shelter"
+   ]
+  },
+  "Delamar": {
+   "pos": [
+    -10531703.478,
+    18241438.664,
+    0.0
+   ],
+   "radius_km": 75.0,
+   "pois": []
+  },
+  "Euterpe": {
+   "pos": [
+    22488109.736,
+    37081123.565,
+    0.0
+   ],
+   "radius_km": 213.0,
+   "pois": [
+    "Bud's Growery",
+    "Comm Array ST4-64",
+    "Devlin Scrap & Salvage"
+   ]
+  },
+  "Hurston": {
+   "pos": [
+    12850457.093,
+    0.0,
+    0.0
+   ],
+   "radius_km": 1000.0,
+   "pois": [
+    "Comm Array ST1-61",
+    "Everus Harbor",
+    "HDES Calthrope (NA) [F]",
+    "HDMS Edmond",
+    "HDMS Hadley",
+    "HDMS Oparei",
+    "HDMS Pinewood",
+    "HDMS Stanhope",
+    "HDMS Thedus",
+    "HDSF Adlai",
+    "HDSF Barnabas",
+    "HDSF Breckinridge",
+    "HDSF Colfax",
+    "HDSF Damaris",
+    "HDSF Elbridge",
+    "HDSF Hendricks",
+    "HDSF Hiram",
+    "HDSF Hobart",
+    "HDSF Ishmael",
+    "HDSF Millerand",
+    "HDSF Rufus",
+    "HDSF Sherman",
+    "HDSF Tamar",
+    "HDSF Tompkins",
+    "HDSF Zacharias",
+    "Lorville",
+    "Reclamation & Disposal Orinth",
+    "Security Depot Hurston-1 / HDSRO Bramen"
+   ]
+  },
+  "Ita": {
+   "pos": [
+    12830194.716,
+    114913.609,
+    0.0
+   ],
+   "radius_km": 325.0,
+   "pois": [
+    "Comm Array ST1-02",
+    "HDMS Ryder",
+    "HDMS Woodruff"
+   ]
+  },
+  "Lyria": {
+   "pos": [
+    18703607.172,
+    -22121650.134,
+    0.0
+   ],
+   "radius_km": 223.0,
+   "pois": [
+    "Buckets",
+    "Comm Array ST3-18",
+    "Elsewhere",
+    "Humboldt Mines",
+    "Launch Pad",
+    "Loveridge Mineral Reserve",
+    "Security Depot Lyria-1",
+    "Shubin Mining Facility SAL-2",
+    "Shubin Mining Facility SAL-5",
+    "Shubin Processing Facility SPAL-12",
+    "Shubin Processing Facility SPAL-16",
+    "Shubin Processing Facility SPAL-21",
+    "Shubin Processing Facility SPAL-3",
+    "Shubin Processing Facility SPAL-7",
+    "Shubin Processing Facility SPAL-9",
+    "Teddy's Playhouse",
+    "The Orphanage",
+    "The Pit",
+    "Wheeler's"
+   ]
+  },
+  "Magda": {
+   "pos": [
+    12792686.359,
+    -74464.581,
+    0.0
+   ],
+   "radius_km": 340.83,
+   "pois": [
+    "Comm Array ST1-48",
+    "HDMS Hahn",
+    "HDMS Perlman"
+   ]
+  },
+  "microTech": {
+   "pos": [
+    22462085.252,
+    37185744.965,
+    0.0
+   ],
+   "radius_km": 1000.0,
+   "pois": [
+    "Calhoun Pass Emergency Shelter",
+    "Clear View Emergency Shelter",
+    "Comm Array ST4-22",
+    "MT DataCenter 2UB-RB9-5",
+    "MT DataCenter 4HJ-LVE-A",
+    "MT DataCenter 5WQ-R2V-C",
+    "MT DataCenter 8FK-Q2X-K",
+    "MT DataCenter D79-ECG-R",
+    "MT DataCenter E2Q-NSG-Y",
+    "MT DataCenter KH3-AAE-L",
+    "MT DataCenter L8P-JUC-8",
+    "MT DataCenter QVX-J88-J",
+    "MT DataCenter TMG-XEV-2",
+    "MT SecurityCenter DDV-6",
+    "Necropolis (Stash House)",
+    "New Babbage",
+    "Nuiqsut Emergency Shelter",
+    "Outpost 54 (Stash House)",
+    "Point Wain Emergency Shelter",
+    "Port Tressler",
+    "Rayari Deltana Research Outpost",
+    "Shubin Mining Facility SM0-10",
+    "Shubin Mining Facility SM0-13",
+    "Shubin Mining Facility SM0-18",
+    "Shubin Mining Facility SM0-22"
+   ]
+  },
+  "Wala": {
+   "pos": [
+    18379649.31,
+    -22000466.768,
+    0.0
+   ],
+   "radius_km": 283.0,
+   "pois": [
+    "ArcCorp Mining Area 045",
+    "ArcCorp Mining Area 048",
+    "ArcCorp Mining Area 056",
+    "ArcCorp Mining Area 061",
+    "Comm Array ST3-35",
+    "Samson & Son's Salvage Yard"
+   ]
+  },
+  "Yela": {
+   "pos": [
+    -19022916.799,
+    -2613996.152,
+    0.0
+   ],
+   "radius_km": 313.0,
+   "pois": [
+    "Afterlife",
+    "ArcCorp Mining Area 157",
+    "Aston Ridge Aid Shelter",
+    "Benson Mining Outpost",
+    "Comm Array ST2-76",
+    "Connor's",
+    "Deakins Research Outpost",
+    "Grim HEX",
+    "Kosso Basin Aid Shelter",
+    "NT-999-XXII",
+    "Nakamura Valley Aid Shelter",
+    "Security Post Opal",
+    "Security Post Wan",
+    "Talarine Divide Aid Shelter",
+    "Utopia",
+    "Yela Stash House (NT-999-XX)"
+   ]
+  },
+  "ARC-L1": {
+   "pos": [
+    16729134.637,
+    -19937006.925,
+    8.077
+   ],
+   "radius_km": 0.0,
+   "pois": [
+    "Mining Claim #0K8-HE1",
+    "Mining Claim #10E-4EX",
+    "Mining Claim #6G3-YNQ",
+    "Mining Claim #95S-AN6",
+    "Mining Claim #9WB-MTS",
+    "Mining Claim #H20-5FY",
+    "Mining Claim #LH7-KP4",
+    "Mining Claim #X1A-79O",
+    "R&R ARC-L1 Wide Forest Station"
+   ]
+  },
+  "ARC-L2": {
+   "pos": [
+    20446718.503,
+    -24367450.991,
+    8.077
+   ],
+   "radius_km": 0.0,
+   "pois": [
+    "Mining Claim #05D-PZR",
+    "Mining Claim #19F-MUY",
+    "Mining Claim #29N-704",
+    "Mining Claim #2FC-DQ3",
+    "Mining Claim #489-YQ1",
+    "Mining Claim #9OE-85E",
+    "Mining Claim #FJ2-26X",
+    "Mining Claim #Z4O-0M1",
+    "R&R ARC-L2 Lively Pathway Station"
+   ]
+  },
+  "ARC-L3": {
+   "pos": [
+    -25043446.884,
+    14458841.788,
+    8.077
+   ],
+   "radius_km": 0.0,
+   "pois": [
+    "R&R ARC-L3 Modern Express Station"
+   ]
+  },
+  "ARC-L4": {
+   "pos": [
+    28478354.916,
+    5021502.483,
+    8.077
+   ],
+   "radius_km": 0.0,
+   "pois": [
+    "R&R ARC-L4 Faint Glen Station"
+   ]
+  },
+  "ARC-L5": {
+   "pos": [
+    -9890422.516,
+    -27173732.225,
+    8.077
+   ],
+   "radius_km": 0.0,
+   "pois": [
+    "R&R ARC-L5 Yellow Core Station"
+   ]
+  },
+  "CRU-L1": {
+   "pos": [
+    -17065957.376,
+    -2398464.0,
+    0.0
+   ],
+   "radius_km": 0.0,
+   "pois": [
+    "Mining Claim #187-EK3",
+    "Mining Claim #2JR-IH4",
+    "Mining Claim #6QU-VLF",
+    "Mining Claim #LOW-9SW",
+    "Mining Claim #M77-B9R",
+    "Mining Claim #Q02-658",
+    "Mining Claim #RDM-570",
+    "Mining Claim #U3Z-O5M",
+    "R&R CRU-L1 Ambitious Dream Station"
+   ]
+  },
+  "CRU-L2": {
+   "pos": [
+    -20858376.485,
+    -2931474.402,
+    0.0
+   ],
+   "radius_km": 0.0,
+   "pois": []
+  },
+  "CRU-L3": {
+   "pos": [
+    18962164.826,
+    2664965.041,
+    0.0
+   ],
+   "radius_km": 0.0,
+   "pois": [
+    "Mining Claim #1WF-8Q2",
+    "Mining Claim #233-0BG",
+    "Mining Claim #2AO-YXA",
+    "Mining Claim #5QZ-EVL",
+    "Mining Claim #6VQ-R0L",
+    "Mining Claim #7BH-6IB",
+    "Mining Claim #B93-ECE",
+    "Mining Claim #SNS-133"
+   ]
+  },
+  "CRU-L4": {
+   "pos": [
+    -7173168.64,
+    -17754204.16,
+    0.0
+   ],
+   "radius_km": 0.0,
+   "pois": [
+    "R&R CRU-L4 Shallow Fields Station"
+   ]
+  },
+  "CRU-L5": {
+   "pos": [
+    -11789008.988,
+    15089246.107,
+    0.0
+   ],
+   "radius_km": 0.0,
+   "pois": [
+    "Mining Claim #35F-7IY",
+    "Mining Claim #714-SK2",
+    "Mining Claim #A83-1XB",
+    "Mining Claim #J2P-9P8",
+    "Mining Claim #J5B-CJZ",
+    "Mining Claim #UU1-PPU",
+    "Mining Claim #W70-48O",
+    "Mining Claim #Z8V-6O0",
+    "R&R CRU-L5 Beautiful Glen Station"
+   ]
+  },
+  "HUR-L1": {
+   "pos": [
+    11565411.328,
+    0.0,
+    0.0
+   ],
+   "radius_km": 0.0,
+   "pois": [
+    "Mining Claim #252-RDC",
+    "Mining Claim #564-AT7",
+    "Mining Claim #5GU-TMT",
+    "Mining Claim #89K-011",
+    "Mining Claim #LW2-QQA",
+    "Mining Claim #PCV-664",
+    "Mining Claim #SA0-62G",
+    "Mining Claim #W80-8T2",
+    "R&R HUR-L1 Green Glade Station"
+   ]
+  },
+  "HUR-L2": {
+   "pos": [
+    14135502.848,
+    0.0,
+    0.0
+   ],
+   "radius_km": 0.0,
+   "pois": [
+    "Mining Claim #117-6KR",
+    "Mining Claim #117-P8P",
+    "Mining Claim #17D-NF2",
+    "Mining Claim #1P2-O6W",
+    "Mining Claim #26X-9QI",
+    "Mining Claim #407-4F2",
+    "Mining Claim #46K-104",
+    "Mining Claim #L7X-O1Z",
+    "R&R HUR-L2 Faithful Dream Station"
+   ]
+  },
+  "HUR-L3": {
+   "pos": [
+    -12850457.6,
+    -1.123,
+    0.0
+   ],
+   "radius_km": 0.0,
+   "pois": [
+    "Mining Claim #286-T23",
+    "Mining Claim #3EH-MR5",
+    "Mining Claim #7Y5-2BL",
+    "Mining Claim #H29-61U",
+    "Mining Claim #M9Q-1JW",
+    "Mining Claim #MHP-7R3",
+    "Mining Claim #T9P-B90",
+    "Mining Claim #X79-361",
+    "R&R HUR-L3 Thundering Express Station"
+   ]
+  },
+  "HUR-L4": {
+   "pos": [
+    6425228.288,
+    11128823.808,
+    0.0
+   ],
+   "radius_km": 0.0,
+   "pois": [
+    "Mining Claim #0A3-EB6",
+    "Mining Claim #5P7-CB5",
+    "Mining Claim #5TP-9LV",
+    "Mining Claim #IG2-PUS",
+    "Mining Claim #K16-4PN",
+    "Mining Claim #OXK-LWP",
+    "Mining Claim #P0C-84M",
+    "Mining Claim #U7S-YF2",
+    "R&R HUR-L4 Melodic Fields Station"
+   ]
+  },
+  "HUR-L5": {
+   "pos": [
+    6425227.776,
+    -11128823.808,
+    0.0
+   ],
+   "radius_km": 0.0,
+   "pois": [
+    "Mining Claim #031-L6W",
+    "Mining Claim #2ZK-92P",
+    "Mining Claim #62W-6FF",
+    "Mining Claim #69H-T0M",
+    "Mining Claim #9R4-US2",
+    "Mining Claim #H08-C6Q",
+    "Mining Claim #P4S-50Z",
+    "Mining Claim #PY9-010",
+    "R&R HUR-L5 High Course Station"
+   ]
+  },
+  "MIC-L1": {
+   "pos": [
+    20215824.238,
+    33467065.008,
+    0.0
+   ],
+   "radius_km": 0.0,
+   "pois": [
+    "INS-Jericho",
+    "R&R MIC-L1 Shallow Frontier Station"
+   ]
+  },
+  "MIC-L2": {
+   "pos": [
+    24708827.153,
+    40905202.459,
+    0.0
+   ],
+   "radius_km": 0.0,
+   "pois": [
+    "R&R MIC-L2 Long Forest Station"
+   ]
+  },
+  "MIC-L3": {
+   "pos": [
+    -22457170.266,
+    -37187612.396,
+    0.0
+   ],
+   "radius_km": 0.0,
+   "pois": [
+    "R&R MIC-L3 Endless Odyssey Station"
+   ]
+  },
+  "MIC-L4": {
+   "pos": [
+    -20971933.23,
+    38045504.032,
+    0.0
+   ],
+   "radius_km": 0.0,
+   "pois": [
+    "R&R MIC-L4 Red Crossroads Station"
+   ]
+  },
+  "MIC-L5": {
+   "pos": [
+    43435204.288,
+    -851406.956,
+    0.0
+   ],
+   "radius_km": 0.0,
+   "pois": [
+    "R&R MIC-L5 Modern Icarus Station"
+   ]
+  }
+ }
+}
