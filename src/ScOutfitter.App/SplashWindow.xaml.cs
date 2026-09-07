@@ -8,6 +8,7 @@ namespace ScOutfitter.App;
 public partial class SplashWindow : Window
 {
     private TaskCompletionSource<bool>? _retry;
+    private TaskCompletionSource<(bool Erkul, string Link)>? _choice;
 
     public SplashWindow()
     {
@@ -33,6 +34,20 @@ public partial class SplashWindow : Window
         _retry = new TaskCompletionSource<bool>();
         return _retry.Task;
     }
+
+    /// <summary>Data is in: let the user pick the mode. Returns (erkul mode?, pasted link).</summary>
+    public Task<(bool Erkul, string Link)> ChooseModeAsync()
+    {
+        LoadingPanel.Visibility = Visibility.Collapsed;
+        ErrorPanel.Visibility = Visibility.Collapsed;
+        ChoicePanel.Visibility = Visibility.Visible;
+        _choice = new TaskCompletionSource<(bool, string)>();
+        return _choice.Task;
+    }
+
+    private void OnPlanner(object sender, RoutedEventArgs e) => _choice?.TrySetResult((false, ErkulLinkBox.Text.Trim()));
+
+    private void OnErkul(object sender, RoutedEventArgs e) => _choice?.TrySetResult((true, ErkulLinkBox.Text.Trim()));
 
     private void OnRetry(object sender, RoutedEventArgs e) => _retry?.TrySetResult(true);
 

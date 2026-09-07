@@ -8,6 +8,7 @@ await runner.RunAsync("Ship hardpoints", ShipTests.RunAsync);
 await runner.RunAsync("Optimizer", OptimizerTests.RunAsync);
 await runner.RunAsync("Routing", RoutingTests.RunAsync);
 await runner.RunAsync("Planner", PlannerTests.RunAsync);
+await runner.RunAsync("erkul import", ErkulTests.RunAsync);
 await runner.RunAsync("Windows construct", AppTests.RunAsync);
 
 return runner.Report();

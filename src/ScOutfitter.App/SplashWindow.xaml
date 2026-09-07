@@ -43,6 +43,23 @@
                            Text="First start downloads the component catalogue (about a minute). After that it is cached for a day." />
             </StackPanel>
 
+            <StackPanel Grid.Row="3" x:Name="ChoicePanel" Visibility="Collapsed" VerticalAlignment="Bottom">
+                <TextBlock Text="Ready. What do you want to do?" FontWeight="SemiBold" Margin="0,0,0,10" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Plan a loadout" Style="{StaticResource AccentButton}" Margin="0,0,6,0" Click="OnPlanner"
+                            AutomationProperties.Name="Plan a loadout" />
+                    <Button Grid.Column="1" Content="Route for an erkul build" Style="{StaticResource GhostButton}" Margin="6,0,0,0" Click="OnErkul"
+                            AutomationProperties.Name="Route for an erkul build" />
+                </Grid>
+                <TextBox x:Name="ErkulLinkBox" Margin="0,10,0,0" ToolTip="erkul.games share link, browse link or id" />
+                <TextBlock Style="{StaticResource MutedText}" FontSize="11" Margin="0,6,0,0"
+                           Text="For the erkul route: paste the build link here first (or later in the app)." />
+            </StackPanel>
+
             <StackPanel Grid.Row="3" x:Name="ErrorPanel" Visibility="Collapsed" VerticalAlignment="Bottom">
                 <TextBlock Text="Could not load the data" Foreground="{StaticResource Warn}" FontWeight="SemiBold" />
                 <TextBlock x:Name="ErrorText" Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,4,0,12" MaxHeight="70" />

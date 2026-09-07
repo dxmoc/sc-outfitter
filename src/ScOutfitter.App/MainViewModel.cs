@@ -79,6 +79,8 @@ public sealed class MainViewModel : Observable
     private string _selectedPlace = "Everus Harbor";
     private bool _keepGimbals, _mannedTurrets, _buyAll;
     private string _maxGrade = "any";
+    private bool _erkulMode;
+    private string _erkulLink = string.Empty;
     private bool _busy;
     private string _status = "Pick a ship and where you are, then plan the route.";
     private RouteRow? _selectedRoute;
@@ -97,7 +99,66 @@ public sealed class MainViewModel : Observable
 
         PlanCommand = new RelayCommand(PlanAsync, () => !Busy);
         RefreshCommand = new RelayCommand(RefreshAsync, () => !Busy);
+        LoadErkulCommand = new RelayCommand(LoadErkulAsync, () => !Busy);
         RefreshBodies();
+    }
+
+    public RelayCommand LoadErkulCommand { get; }
+
+    /// <summary>true: route-only mode fed by an erkul.games build; false: the full planner.</summary>
+    public bool ErkulMode
+    {
+        get => _erkulMode;
+        set
+        {
+            if (Set(ref _erkulMode, value))
+            {
+                Raise(nameof(PlannerMode));
+            }
+        }
+    }
+
+    public bool PlannerMode
+    {
+        get => !_erkulMode;
+        set => ErkulMode = !value;
+    }
+
+    public string ErkulLink
+    {
+        get => _erkulLink;
+        set => Set(ref _erkulLink, value);
+    }
+
+    private async Task LoadErkulAsync()
+    {
+        string link = ErkulLink.Trim();
+        if (link.Length == 0)
+        {
+            Status = "Paste an erkul.games share link (erkul.games/s/...) or a browse link.";
+            return;
+        }
+
+        Busy = true;
+        Status = "Fetching the build from erkul.games ...";
+        string start = StartName();
+        try
+        {
+            Plan plan = await Task.Run(() => Planner.FromErkulAsync(_data, link, start));
+            Render(plan);
+            ShipText = plan.Ship.Name;
+            Status = plan.Unknown.Count == 0
+                ? $"{plan.Ship.Name}: {plan.Trip.Stops.Count} stop(s) for the erkul build"
+                : $"{plan.Ship.Name}: {plan.Trip.Stops.Count} stop(s). Not in the catalog: {string.Join(", ", plan.Unknown.Take(4))}";
+        }
+        catch (Exception ex) when (ex is LookupException or HttpRequestException or InvalidDataException or TaskCanceledException)
+        {
+            Status = ex.Message;
+        }
+        finally
+        {
+            Busy = false;
+        }
     }
 
     public IReadOnlyList<string> ShipNames { get; private set; }
@@ -225,6 +286,7 @@ public sealed class MainViewModel : Observable
             {
                 PlanCommand.Refresh();
                 RefreshCommand.Refresh();
+                LoadErkulCommand.Refresh();
             }
         }
     }
@@ -255,7 +317,7 @@ public sealed class MainViewModel : Observable
 
     // summary tiles
     public string ShipTitle => _plan is null ? "No plan yet" : _plan.Ship.Name;
-    public string GoalsText => _plan is null ? string.Empty : "goals: " + _plan.Goals.Describe();
+    public string GoalsText => _plan?.Source ?? string.Empty;
     public string DpsText => _plan is null ? "-" : Inv($"{_plan.Totals.Dps:N0}");
     public string ShieldText => _plan is null ? "-" : Inv($"{_plan.Totals.ShieldHp:N0}");
     public string MissileText => _plan is null ? "-" : Inv($"{_plan.Totals.MissileDamage:N0}");
@@ -372,7 +434,8 @@ public sealed class MainViewModel : Observable
 
         foreach (Pick p in plan.Picks)
         {
-            string status = p.Fixed ? "fixed" : p.Keep ? "keep" : p.Price.ToString("N0", CultureInfo.InvariantCulture);
+            string status = p.Fixed ? "fixed" : p.Keep ? "keep" : !p.Component.Buyable ? "not sold"
+                : p.Price.ToString("N0", CultureInfo.InvariantCulture);
             string name = p.Quantity > 1 ? $"{p.Quantity}x {p.Component.Name}" : p.Component.Name;
             LoadoutRows.Add(new LoadoutRow(p.Component.Kind.Label(), p.Component.Size, name, p.Component.Grade, status,
                 p.Stock ?? "-", p.Component.Summary(), p.Keep, p.Fixed));

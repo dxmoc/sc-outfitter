@@ -11,6 +11,27 @@
         mc:Ignorable="d">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <Style x:Key="ModeTab" TargetType="RadioButton">
+            <Setter Property="Foreground" Value="{StaticResource Muted}" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="bd" Background="{StaticResource Panel}" BorderBrush="{StaticResource Border}" BorderThickness="1"
+                                CornerRadius="6" Padding="10,8" Margin="0,0,6,0">
+                            <ContentPresenter HorizontalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="{StaticResource Accent}" />
+                                <Setter Property="Foreground" Value="{StaticResource Bg}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="FieldLabel" TargetType="TextBlock" BasedOn="{StaticResource MutedText}">
             <Setter Property="Margin" Value="0,10,0,4" />
         </Style>
@@ -75,7 +96,26 @@
                     </StackPanel>
                 </StackPanel>
 
-                <Border Style="{StaticResource Card}">
+                <!-- mode switch -->
+                <Grid Margin="0,0,0,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <RadioButton Content="Plan a loadout" IsChecked="{Binding PlannerMode}" Style="{StaticResource ModeTab}" />
+                    <RadioButton Grid.Column="1" Content="Route for an erkul build" IsChecked="{Binding ErkulMode}" Style="{StaticResource ModeTab}" />
+                </Grid>
+
+                <Border Style="{StaticResource Card}" Visibility="{Binding ErkulMode, Converter={StaticResource BoolToVis}}" Margin="0,0,0,12">
+                    <StackPanel>
+                        <TextBlock Text="ERKUL.GAMES BUILD" Style="{StaticResource SectionTitle}" />
+                        <TextBox x:Name="ErkulBox" Text="{Binding ErkulLink, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Style="{StaticResource MutedText}" FontSize="11" Margin="0,6,0,0" TextWrapping="Wrap"
+                                   Text="Paste a share link (erkul.games/s/...), a browse link (erkul.games/browse?q=@...) or just the id. The parts of that build are taken as they are; only the shopping route is planned." />
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Card}" Visibility="{Binding PlannerMode, Converter={StaticResource BoolToVis}}">
                     <StackPanel>
                         <TextBlock Text="SHIP" Style="{StaticResource SectionTitle}" />
                         <ComboBox x:Name="ShipBox" IsEditable="True" IsTextSearchEnabled="False"
@@ -110,7 +150,7 @@
                     </StackPanel>
                 </Border>
 
-                <Border Style="{StaticResource Card}" Margin="0,12,0,0">
+                <Border Style="{StaticResource Card}" Margin="0,12,0,0" Visibility="{Binding PlannerMode, Converter={StaticResource BoolToVis}}">
                     <StackPanel>
                         <TextBlock Text="WHAT MATTERS" Style="{StaticResource SectionTitle}" />
                         <ItemsControl ItemsSource="{Binding GoalRows}">
@@ -145,7 +185,11 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Button Content="Plan route" Style="{StaticResource AccentButton}" Command="{Binding PlanCommand}"
-                            HorizontalAlignment="Stretch" AutomationProperties.Name="Plan route" />
+                            HorizontalAlignment="Stretch" AutomationProperties.Name="Plan route"
+                            Visibility="{Binding PlannerMode, Converter={StaticResource BoolToVis}}" />
+                    <Button Content="Load build and plan route" Style="{StaticResource AccentButton}" Command="{Binding LoadErkulCommand}"
+                            HorizontalAlignment="Stretch" AutomationProperties.Name="Load build"
+                            Visibility="{Binding ErkulMode, Converter={StaticResource BoolToVis}}" />
                     <Button Grid.Column="1" Content="Refresh data" Style="{StaticResource GhostButton}" Command="{Binding RefreshCommand}"
                             Margin="8,0,0,0" ToolTip="Throw the cache away and reload ships, parts and current UEX prices" />
                 </Grid>

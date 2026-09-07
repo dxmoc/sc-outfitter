@@ -80,6 +80,10 @@ public sealed class Plan
     public required Totals Totals { get; init; }
     public required QuantumDrive Drive { get; init; }
     public required Goals Goals { get; init; }
+    /// <summary>Where the loadout came from: "goals: ..." or the erkul build name.</summary>
+    public string Source { get; init; } = string.Empty;
+    /// <summary>erkul parts the catalog does not know (paints, jump drives, unknown class names).</summary>
+    public List<string> Unknown { get; init; } = [];
 }
 
 public static class Planner
@@ -113,6 +117,37 @@ public static class Planner
         {
             Ship = ship, Picks = picks, Trip = trip, Drive = drive, Goals = goals,
             Budget = Optimizer.BudgetOf(ship, picks), Totals = Optimizer.TotalsOf(picks),
+            Source = "goals: " + goals.Describe(),
+        };
+    }
+
+    /// <summary>Route for a build shared on erkul.games: the parts are given, only the trip is planned.</summary>
+    public static async Task<Plan> FromErkulAsync(DataStore data, string linkOrId, string startName, CancellationToken ct = default)
+    {
+        Location start = data.Starmap.Locate(startName)
+                         ?? throw new LookupException($"Unknown start location '{startName}'.");
+        ErkulBuild build = await new ErkulClient().FetchAsync(linkOrId, ct).ConfigureAwait(false);
+        ShipRef ship = data.Ships.FirstOrDefault(s => s.ClassName.Equals(build.ShipClass, StringComparison.OrdinalIgnoreCase))
+                       ?? data.Ships.FirstOrDefault(s => s.Slug.Replace("-", "_").Equals(build.ShipClass, StringComparison.OrdinalIgnoreCase))
+                       ?? throw new LookupException($"The wiki has no ship with class '{build.ShipClass}'.");
+        JsonNode vehicle = await data.Client.VehicleAsync(ship, ct).ConfigureAwait(false);
+        return FromErkul(data, build, vehicle, start);
+    }
+
+    public static Plan FromErkul(DataStore data, ErkulBuild build, JsonNode vehicle, Location start)
+    {
+        // gimbals stay as the player set them: overrides address the gun inside the mount
+        Ship ship = ShipLoader.FromJson(vehicle, fixedGuns: !build.GimbalLocked);
+        ErkulImporter.Result result = ErkulImporter.ToPicks(build, ship, data.Catalog);
+        QuantumDrive drive = TripDrive(result.Picks, data.Catalog, ship, usePlanned: false);
+        Trip trip = Router.Plan(result.Picks, data.Terminals, data.Starmap, start, drive);
+        string title = build.Name.Length > 0 ? build.Name : build.Id;
+        return new Plan
+        {
+            Ship = ship, Picks = result.Picks, Trip = trip, Drive = drive, Goals = new Goals(),
+            Budget = Optimizer.BudgetOf(ship, result.Picks), Totals = Optimizer.TotalsOf(result.Picks),
+            Source = $"erkul.games build \"{title}\"" + (build.GameVersion.Length > 0 ? $" ({build.GameVersion})" : string.Empty),
+            Unknown = result.Unknown,
         };
     }
 

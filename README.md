@@ -8,9 +8,16 @@ each quantum jump is. Jump points between systems are part of the route.
 
 ## Run
 
-Download `sc-outfitter.exe` from the [releases](https://github.com/dxmoc/sc-outfitter/releases)
-and start it. The first start downloads the component catalogue (about a minute) behind the
-splash screen. Stats and hardpoints are cached for a day, prices for an hour, in
+Download from the [releases](https://github.com/dxmoc/sc-outfitter/releases):
+
+- `sc-outfitter.exe` (a few MB) needs the [.NET 8 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/8.0)
+  once on the machine.
+- `sc-outfitter-standalone.exe` brings the runtime along, no install needed.
+
+The first start downloads the component catalogue (about a minute) behind the splash screen,
+then asks what you want: **Plan a loadout** (the full planner) or **Route for an erkul build**
+(paste an erkul.games link, the parts are taken as they are and only the shopping trip is
+planned). You can switch between the two at the top of the sidebar any time. Stats and hardpoints are cached for a day, prices for an hour, in
 `%LOCALAPPDATA%\sc-outfitter\cache`. **Refresh data** throws the cache away and reloads everything;
 the line under the buttons shows how old the newest UEX price report is.
 
@@ -19,10 +26,18 @@ Or build it yourself (the .NET SDK is expected in `%USERPROFILE%\.dotnet`, see `
 ```powershell
 .\build.ps1 -Run        # build and start
 .\build.ps1 -Test       # run the test suite
-.\build.ps1 -Publish    # self-contained single exe in publish\
+.\build.ps1 -Publish    # both exes into publish\
 ```
 
 ## Using it
+
+**Route for an erkul.games build**: paste a share link (`erkul.games/s/...`), a browse link
+(`erkul.games/browse?q=@...`) or just the id, pick where you are, hit **Load build and plan
+route**. Every part the build changed becomes a purchase; untouched ports keep the ship's stock
+part. Parts the catalogue does not cover (paints, jump drives) are listed in the status line,
+parts nobody sells are shown as `not sold`.
+
+**Plan a loadout**:
 
 1. **Ship**: type part of the name, the list filters as you type (`stingray` finds `S-65 Stingray`).
    Editions and variants that share a name are listed with a tag, e.g. `S-65 Stingray (Ballistic)`
@@ -69,6 +84,8 @@ as `fixed`, missiles inside them are still chosen.
 - Prices per shop terminal and shop locations: [UEX Corp API](https://uexcorp.space/api/documentation/),
   fetched live (`items_prices_all`, matched to wiki items by uuid). The wiki's mirrored prices are
   the fallback when UEX is unreachable.
+- Shared and published builds: [erkul.games](https://erkul.games) API (`/shares/{id}`,
+  `/browse/{id}`), raw-deflate JSON; parts matched to wiki items by class name.
 - Positions of bodies, stations, outposts and gateways: `starmap_positions.json` from
   [StarCitizenWiki/scunpacked-data](https://github.com/StarCitizenWiki/scunpacked-data) (extracted
   game data), reduced by `tools/build_starmap.py` and embedded into the app.

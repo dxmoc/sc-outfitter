@@ -30,7 +30,9 @@ public partial class App : Application
             try
             {
                 DataStore data = await splash.LoadAsync(client);
-                var main = new MainWindow(new MainViewModel(data));
+                (bool erkul, string link) = await splash.ChooseModeAsync();
+                var vm = new MainViewModel(data) { ErkulMode = erkul, ErkulLink = link };
+                var main = new MainWindow(vm);
                 MainWindow = main;
                 main.Closed += (_, _) => Shutdown();
                 main.Show();

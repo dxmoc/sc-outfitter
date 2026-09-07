@@ -13,7 +13,8 @@
     .\build.ps1 -Release        # build everything (Release)
     .\build.ps1 -Test           # build, then run the test suite
     .\build.ps1 -Run            # build, then start the app
-    .\build.ps1 -Publish        # self-contained single exe in publish\
+    .\build.ps1 -Publish        # publish\sc-outfitter.exe (needs .NET 8 Desktop Runtime, small)
+                                # and publish\sc-outfitter-standalone.exe (runtime included)
 #>
 [CmdletBinding()]
 param(
@@ -43,10 +44,21 @@ $solution = Join-Path $PSScriptRoot 'ScOutfitter.sln'
 
 if ($Publish) {
     $project = Join-Path $PSScriptRoot 'src\ScOutfitter.App\ScOutfitter.App.csproj'
+    $out = Join-Path $PSScriptRoot 'publish'
+    # small: framework-dependent, needs the .NET 8 Desktop Runtime on the machine
+    dotnet publish $project -c Release -r win-x64 --self-contained false `
+        -p:PublishSingleFile=true -p:DebugType=none -o $out -v minimal --nologo
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    # standalone: runtime included, compressed. Built into its own folder (overriding AssemblyName
+    # confuses NuGet restore) and renamed afterwards.
+    $standalone = Join-Path $out 'standalone'
     dotnet publish $project -c Release -r win-x64 --self-contained true `
-        -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true `
-        -o (Join-Path $PSScriptRoot 'publish') -v minimal --nologo
-    exit $LASTEXITCODE
+        -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true `
+        -p:DebugType=none -o $standalone -v minimal --nologo
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    Move-Item -Force (Join-Path $standalone 'sc-outfitter.exe') (Join-Path $out 'sc-outfitter-standalone.exe')
+    Remove-Item -Recurse -Force $standalone
+    exit 0
 }
 
 dotnet build $solution -c $configuration -v minimal --nologo

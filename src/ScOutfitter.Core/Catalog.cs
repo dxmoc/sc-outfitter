@@ -41,6 +41,8 @@ public sealed class Component
     public required int Size { get; init; }
     /// <summary>Game uuid; UEX carries the same one, so prices can be matched without name games.</summary>
     public string Uuid { get; init; } = string.Empty;
+    /// <summary>Game class name (e.g. BEHR_LaserCannon_S5); erkul builds refer to parts by it.</summary>
+    public string ClassName { get; init; } = string.Empty;
     public string Grade { get; init; } = "?";
     public string Class { get; init; } = string.Empty;
     public Dictionary<string, double> Stats { get; } = new(StringComparer.Ordinal);
@@ -315,6 +317,7 @@ public static class Catalog
             Kind = kind,
             Size = item.Int("size"),
             Uuid = item.Str("uuid"),
+            ClassName = item.Str("class_name"),
             Grade = item.StrOrNull("grade") is { Length: > 0 } g ? g : "?",
             Class = item.Str("class"),
             Ammo = ammo,

@@ -16,6 +16,13 @@ public partial class MainWindow : Window
         DataContext = vm;
         InitializeComponent();
         vm.SelectStart("Stanton", "Hurston", "Everus Harbor");
+        Loaded += (_, _) =>
+        {
+            if (vm.ErkulMode && vm.ErkulLink.Length > 0 && vm.LoadErkulCommand.CanExecute(null))
+            {
+                vm.LoadErkulCommand.Execute(null);
+            }
+        };
 
         // filter the ship dropdown while typing, without touching the typed text
         ShipBox.AddHandler(TextBoxBase.TextChangedEvent, new TextChangedEventHandler(OnShipTextChanged));
