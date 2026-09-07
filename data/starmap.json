@@ -1,0 +1,4619 @@
+{
+ "unit": "km",
+ "systems": {
+  "Nyx": [
+   {
+    "name": "Nyx",
+    "kind": "body",
+    "parent": "jumppointlocationsecurity-003",
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "Nyx I",
+    "kind": "body",
+    "parent": "Nyx",
+    "pos": [
+     6495194.2,
+     -3749995.5,
+     0.0
+    ]
+   },
+   {
+    "name": "Nyx II",
+    "kind": "body",
+    "parent": "Nyx",
+    "pos": [
+     -3591210.9,
+     9866771.4,
+     0.0
+    ]
+   },
+   {
+    "name": "Nyx III",
+    "kind": "body",
+    "parent": "Nyx",
+    "pos": [
+     -29109694.3,
+     -24425930.8,
+     0.0
+    ]
+   },
+   {
+    "name": "Pyro Gateway",
+    "kind": "gateway",
+    "parent": "Nyx",
+    "pos": [
+     -12000044.5,
+     20784580.5,
+     -38.7
+    ]
+   },
+   {
+    "name": "Stanton Gateway",
+    "kind": "gateway",
+    "parent": "Nyx",
+    "pos": [
+     -13499931.6,
+     -23382702.0,
+     -36.7
+    ]
+   },
+   {
+    "name": "Levski",
+    "kind": "station",
+    "parent": "Nyx",
+    "pos": [
+     -9641669.5,
+     -11490738.6,
+     -93.6
+    ]
+   },
+   {
+    "name": "People's Service Station Alpha",
+    "kind": "station",
+    "parent": "Nyx",
+    "pos": [
+     -45804312.8,
+     -14351346.4,
+     29.6
+    ]
+   },
+   {
+    "name": "People's Service Station Delta",
+    "kind": "station",
+    "parent": "Nyx",
+    "pos": [
+     -6432467.7,
+     -47567033.5,
+     13.9
+    ]
+   },
+   {
+    "name": "People's Service Station Lambda",
+    "kind": "station",
+    "parent": "Nyx",
+    "pos": [
+     43327758.0,
+     20656812.1,
+     25.7
+    ]
+   },
+   {
+    "name": "People's Service Station Theta",
+    "kind": "station",
+    "parent": "Nyx",
+    "pos": [
+     40472690.2,
+     -25806259.4,
+     40.6
+    ]
+   },
+   {
+    "name": "QV Breaker Station BRK-127",
+    "kind": "station",
+    "parent": "Nyx",
+    "pos": [
+     47270353.3,
+     -8335028.4,
+     0.0
+    ]
+   },
+   {
+    "name": "QV Breaker Station BRK-204",
+    "kind": "station",
+    "parent": "Nyx",
+    "pos": [
+     -45105001.8,
+     16416858.0,
+     0.0
+    ]
+   },
+   {
+    "name": "QV Breaker Station BRK-320",
+    "kind": "station",
+    "parent": "Nyx",
+    "pos": [
+     -27531183.2,
+     39318601.2,
+     0.0
+    ]
+   },
+   {
+    "name": "QV Breaker Station BRK-425",
+    "kind": "station",
+    "parent": "Nyx",
+    "pos": [
+     27531031.5,
+     -39318355.6,
+     0.0
+    ]
+   },
+   {
+    "name": "QV Breaker Station BRK-546",
+    "kind": "station",
+    "parent": "Nyx",
+    "pos": [
+     16416937.2,
+     45105181.3,
+     0.0
+    ]
+   },
+   {
+    "name": "Transit Point Glaciem Alpha",
+    "kind": "station",
+    "parent": "Nyx",
+    "pos": [
+     -13592383.2,
+     6338233.6,
+     0.0
+    ]
+   },
+   {
+    "name": "Transit Point Glaciem Bravo",
+    "kind": "station",
+    "parent": "Nyx",
+    "pos": [
+     9640228.8,
+     -11488779.8,
+     0.0
+    ]
+   },
+   {
+    "name": "Transit Point Glaciem Charlie",
+    "kind": "station",
+    "parent": "Nyx",
+    "pos": [
+     9640231.4,
+     11488779.9,
+     0.0
+    ]
+   }
+  ],
+  "Pyro": [
+   {
+    "name": "Adir",
+    "kind": "body",
+    "parent": "Pyro V",
+    "pos": [
+     42263800.4,
+     -7355657.9,
+     0.0
+    ]
+   },
+   {
+    "name": "Bloom",
+    "kind": "body",
+    "parent": "Pyro",
+    "pos": [
+     -8900812.5,
+     -15417125.8,
+     0.0
+    ]
+   },
+   {
+    "name": "Fairo",
+    "kind": "body",
+    "parent": "Pyro V",
+    "pos": [
+     42403147.0,
+     -7498534.2,
+     0.0
+    ]
+   },
+   {
+    "name": "Fuego",
+    "kind": "body",
+    "parent": "Pyro V",
+    "pos": [
+     42364517.6,
+     -7328410.0,
+     0.0
+    ]
+   },
+   {
+    "name": "Ignis",
+    "kind": "body",
+    "parent": "Pyro V",
+    "pos": [
+     42296899.2,
+     -7508634.3,
+     0.0
+    ]
+   },
+   {
+    "name": "Monox",
+    "kind": "body",
+    "parent": "Pyro",
+    "pos": [
+     9198417.2,
+     5310746.5,
+     0.0
+    ]
+   },
+   {
+    "name": "Pyro",
+    "kind": "body",
+    "parent": "jumppointlocationsecurity-003",
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "Pyro I",
+    "kind": "body",
+    "parent": "Pyro",
+    "pos": [
+     1720027.3,
+     -8091980.5,
+     0.0
+    ]
+   },
+   {
+    "name": "Pyro IV",
+    "kind": "body",
+    "parent": "Pyro V",
+    "pos": [
+     42614452.0,
+     -7273027.2,
+     0.0
+    ]
+   },
+   {
+    "name": "Pyro V",
+    "kind": "body",
+    "parent": "Pyro",
+    "pos": [
+     42285288.4,
+     -7454572.8,
+     0.0
+    ]
+   },
+   {
+    "name": "Terminus",
+    "kind": "body",
+    "parent": "Pyro",
+    "pos": [
+     -52336519.5,
+     -43918227.8,
+     0.0
+    ]
+   },
+   {
+    "name": "Vatra",
+    "kind": "body",
+    "parent": "Pyro V",
+    "pos": [
+     42216747.4,
+     -7426185.3,
+     0.0
+    ]
+   },
+   {
+    "name": "Vuur",
+    "kind": "body",
+    "parent": "Pyro V",
+    "pos": [
+     42164443.8,
+     -7582532.5,
+     0.0
+    ]
+   },
+   {
+    "name": "Nyx Gateway",
+    "kind": "gateway",
+    "parent": "Pyro",
+    "pos": [
+     32993982.4,
+     -38151730.1,
+     6.7
+    ]
+   },
+   {
+    "name": "Stanton Gateway",
+    "kind": "gateway",
+    "parent": "Pyro",
+    "pos": [
+     -37609223.5,
+     37435743.6,
+     6.7
+    ]
+   },
+   {
+    "name": "Arid Reach",
+    "kind": "outpost",
+    "parent": "Monox",
+    "pos": [
+     9198410.9,
+     5311267.7,
+     -92.8
+    ]
+   },
+   {
+    "name": "Ashland",
+    "kind": "outpost",
+    "parent": "Ignis",
+    "pos": [
+     42296606.7,
+     -7508659.8,
+     265.6
+    ]
+   },
+   {
+    "name": "Blackrock Exchange",
+    "kind": "outpost",
+    "parent": "Terminus",
+    "pos": [
+     -52336731.3,
+     -43918036.9,
+     -31.5
+    ]
+   },
+   {
+    "name": "Bueno Ravine",
+    "kind": "outpost",
+    "parent": "Bloom",
+    "pos": [
+     -8900641.2,
+     -15417499.2,
+     -57.5
+    ]
+   },
+   {
+    "name": "Bullock's Reach",
+    "kind": "outpost",
+    "parent": "Terminus",
+    "pos": [
+     -52336249.6,
+     -43918218.4,
+     -93.1
+    ]
+   },
+   {
+    "name": "Canard View",
+    "kind": "outpost",
+    "parent": "Terminus",
+    "pos": [
+     -52336719.5,
+     -43918048.7,
+     -102.1
+    ]
+   },
+   {
+    "name": "Carver's Ridge",
+    "kind": "outpost",
+    "parent": "Bloom",
+    "pos": [
+     -8900616.3,
+     -15417487.8,
+     -48.1
+    ]
+   },
+   {
+    "name": "Chawla's Beach",
+    "kind": "outpost",
+    "parent": "Pyro IV",
+    "pos": [
+     42614206.9,
+     -7273113.0,
+     189.4
+    ]
+   },
+   {
+    "name": "Dinger's Depot",
+    "kind": "outpost",
+    "parent": "Pyro IV",
+    "pos": [
+     42614546.2,
+     -7273183.0,
+     267.3
+    ]
+   },
+   {
+    "name": "Fallow Field",
+    "kind": "outpost",
+    "parent": "Pyro IV",
+    "pos": [
+     42614520.3,
+     -7273203.7,
+     262.2
+    ]
+   },
+   {
+    "name": "Farro Data Center I",
+    "kind": "outpost",
+    "parent": "Pyro IV",
+    "pos": [
+     42614722.7,
+     -7273199.6,
+     17.9
+    ]
+   },
+   {
+    "name": "Farro Data Center II",
+    "kind": "outpost",
+    "parent": "Pyro IV",
+    "pos": [
+     42614764.2,
+     -7273012.1,
+     -74.8
+    ]
+   },
+   {
+    "name": "Farro Data Center III",
+    "kind": "outpost",
+    "parent": "Pyro IV",
+    "pos": [
+     42614648.2,
+     -7272830.2,
+     -161.4
+    ]
+   },
+   {
+    "name": "Farro Data Center IV",
+    "kind": "outpost",
+    "parent": "Pyro IV",
+    "pos": [
+     42614449.4,
+     -7272802.5,
+     -230.6
+    ]
+   },
+   {
+    "name": "Farro Data Center IX",
+    "kind": "outpost",
+    "parent": "Pyro IV",
+    "pos": [
+     42614561.6,
+     -7273233.2,
+     -221.8
+    ]
+   },
+   {
+    "name": "Farro Data Center V",
+    "kind": "outpost",
+    "parent": "Pyro IV",
+    "pos": [
+     42614373.9,
+     -7272719.8,
+     -54.0
+    ]
+   },
+   {
+    "name": "Farro Data Center VI",
+    "kind": "outpost",
+    "parent": "Pyro IV",
+    "pos": [
+     42614538.1,
+     -7272721.2,
+     -47.8
+    ]
+   },
+   {
+    "name": "Farro Data Center VII",
+    "kind": "outpost",
+    "parent": "Pyro IV",
+    "pos": [
+     42614376.3,
+     -7272966.4,
+     306.4
+    ]
+   },
+   {
+    "name": "Farro Data Center VIII",
+    "kind": "outpost",
+    "parent": "Pyro IV",
+    "pos": [
+     42614589.5,
+     -7272923.9,
+     271.7
+    ]
+   },
+   {
+    "name": "Farro Data Center X",
+    "kind": "outpost",
+    "parent": "Pyro IV",
+    "pos": [
+     42614411.3,
+     -7273133.0,
+     -301.0
+    ]
+   },
+   {
+    "name": "Feo Canyon Depot",
+    "kind": "outpost",
+    "parent": "Fairo",
+    "pos": [
+     42402818.4,
+     -7498732.3,
+     81.6
+    ]
+   },
+   {
+    "name": "Frigid Knot",
+    "kind": "outpost",
+    "parent": "Bloom",
+    "pos": [
+     -8900581.8,
+     -15417102.0,
+     -342.9
+    ]
+   },
+   {
+    "name": "Goner's Deal",
+    "kind": "outpost",
+    "parent": "Pyro IV",
+    "pos": [
+     42614556.8,
+     -7273179.2,
+     265.3
+    ]
+   },
+   {
+    "name": "Gray Gardens Depot",
+    "kind": "outpost",
+    "parent": "Pyro I",
+    "pos": [
+     1719647.0,
+     -8091860.0,
+     -101.3
+    ]
+   },
+   {
+    "name": "Jackson's Swap",
+    "kind": "outpost",
+    "parent": "Monox",
+    "pos": [
+     9198800.3,
+     5310500.6,
+     -272.5
+    ]
+   },
+   {
+    "name": "Kabir's Post",
+    "kind": "outpost",
+    "parent": "Ignis",
+    "pos": [
+     42296743.3,
+     -7508286.3,
+     108.8
+    ]
+   },
+   {
+    "name": "Kinder Plots",
+    "kind": "outpost",
+    "parent": "Terminus",
+    "pos": [
+     -52336776.3,
+     -43918176.0,
+     -115.5
+    ]
+   },
+   {
+    "name": "Last Ditch",
+    "kind": "outpost",
+    "parent": "Monox",
+    "pos": [
+     9198274.0,
+     5310711.5,
+     508.9
+    ]
+   },
+   {
+    "name": "Last Landings",
+    "kind": "outpost",
+    "parent": "Terminus",
+    "pos": [
+     -52336804.1,
+     -43918240.5,
+     -7.9
+    ]
+   },
+   {
+    "name": "Lazarus Transport Hub Phoenix-I",
+    "kind": "outpost",
+    "parent": "Pyro I",
+    "pos": [
+     1719886.3,
+     -8091668.8,
+     229.3
+    ]
+   },
+   {
+    "name": "Lazarus Transport Hub Phoenix-II",
+    "kind": "outpost",
+    "parent": "Pyro I",
+    "pos": [
+     1719887.7,
+     -8091612.1,
+     120.7
+    ]
+   },
+   {
+    "name": "Lazarus Transport Hub Phoenix-III",
+    "kind": "outpost",
+    "parent": "Pyro I",
+    "pos": [
+     1719759.1,
+     -8091707.5,
+     151.7
+    ]
+   },
+   {
+    "name": "Lazarus Transport Hub Tithonus-I",
+    "kind": "outpost",
+    "parent": "Pyro I",
+    "pos": [
+     1720125.8,
+     -8092319.7,
+     -211.9
+    ]
+   },
+   {
+    "name": "Lazarus Transport Hub Tithonus-II",
+    "kind": "outpost",
+    "parent": "Pyro I",
+    "pos": [
+     1720256.8,
+     -8092246.0,
+     -216.9
+    ]
+   },
+   {
+    "name": "Lazarus Transport Hub Tithonus-III",
+    "kind": "outpost",
+    "parent": "Pyro I",
+    "pos": [
+     1720226.4,
+     -8092311.2,
+     -143.8
+    ]
+   },
+   {
+    "name": "Narena's Rest",
+    "kind": "outpost",
+    "parent": "Bloom",
+    "pos": [
+     -8901208.0,
+     -15417002.9,
+     -11.8
+    ]
+   },
+   {
+    "name": "Ostler's Claim",
+    "kind": "outpost",
+    "parent": "Monox",
+    "pos": [
+     9198926.6,
+     5310692.1,
+     -136.1
+    ]
+   },
+   {
+    "name": "Prophet's Peak",
+    "kind": "outpost",
+    "parent": "Adir",
+    "pos": [
+     42263566.2,
+     -7355986.8,
+     154.7
+    ]
+   },
+   {
+    "name": "Prospect Depot",
+    "kind": "outpost",
+    "parent": "Bloom",
+    "pos": [
+     -8900649.6,
+     -15417504.0,
+     -45.3
+    ]
+   },
+   {
+    "name": "Rough Landing",
+    "kind": "outpost",
+    "parent": "Terminus",
+    "pos": [
+     -52336718.3,
+     -43918416.6,
+     78.0
+    ]
+   },
+   {
+    "name": "Rustville",
+    "kind": "outpost",
+    "parent": "Pyro I",
+    "pos": [
+     1719831.5,
+     -8092299.6,
+     170.8
+    ]
+   },
+   {
+    "name": "Sacren's Plot",
+    "kind": "outpost",
+    "parent": "Pyro IV",
+    "pos": [
+     42614215.6,
+     -7273124.9,
+     194.6
+    ]
+   },
+   {
+    "name": "Scarper's Turn",
+    "kind": "outpost",
+    "parent": "Terminus",
+    "pos": [
+     -52336801.8,
+     -43918188.5,
+     0.2
+    ]
+   },
+   {
+    "name": "Seer's Canyon",
+    "kind": "outpost",
+    "parent": "Vatra",
+    "pos": [
+     42216831.4,
+     -7425848.1,
+     -119.6
+    ]
+   },
+   {
+    "name": "Shadowfall",
+    "kind": "outpost",
+    "parent": "Bloom",
+    "pos": [
+     -8900904.2,
+     -15416726.2,
+     -57.0
+    ]
+   },
+   {
+    "name": "Shepherd's Rest",
+    "kind": "outpost",
+    "parent": "Bloom",
+    "pos": [
+     -8900783.0,
+     -15416765.8,
+     -202.1
+    ]
+   },
+   {
+    "name": "Slowburn Depot",
+    "kind": "outpost",
+    "parent": "Monox",
+    "pos": [
+     9198278.1,
+     5310708.1,
+     509.8
+    ]
+   },
+   {
+    "name": "Stag's Rut",
+    "kind": "outpost",
+    "parent": "Pyro I",
+    "pos": [
+     1719643.9,
+     -8091873.8,
+     -103.6
+    ]
+   },
+   {
+    "name": "Stonetree",
+    "kind": "outpost",
+    "parent": "Terminus",
+    "pos": [
+     -52336778.6,
+     -43918189.7,
+     -115.8
+    ]
+   },
+   {
+    "name": "Sunset Mesa",
+    "kind": "outpost",
+    "parent": "Monox",
+    "pos": [
+     9198790.7,
+     5310483.7,
+     -269.6
+    ]
+   },
+   {
+    "name": "The Golden Riviera",
+    "kind": "outpost",
+    "parent": "Bloom",
+    "pos": [
+     -8901196.9,
+     -15416972.5,
+     5.8
+    ]
+   },
+   {
+    "name": "The Yard",
+    "kind": "outpost",
+    "parent": "Bloom",
+    "pos": [
+     -8900468.6,
+     -15416937.0,
+     132.1
+    ]
+   },
+   {
+    "name": "Watcher's Depot",
+    "kind": "outpost",
+    "parent": "Terminus",
+    "pos": [
+     -52336697.6,
+     -43918426.8,
+     103.1
+    ]
+   },
+   {
+    "name": "Windfall",
+    "kind": "outpost",
+    "parent": "Bloom",
+    "pos": [
+     -8900682.7,
+     -15417519.4,
+     -12.2
+    ]
+   },
+   {
+    "name": "Yang's Place",
+    "kind": "outpost",
+    "parent": "Monox",
+    "pos": [
+     9198878.7,
+     5310621.8,
+     -229.9
+    ]
+   },
+   {
+    "name": "Checkmate",
+    "kind": "station",
+    "parent": "Pyro",
+    "pos": [
+     1833362.4,
+     10434543.3,
+     2570.9
+    ]
+   },
+   {
+    "name": "Dudley & Daughters",
+    "kind": "station",
+    "parent": "Pyro",
+    "pos": [
+     23342575.9,
+     -64225960.3,
+     -10765.1
+    ]
+   },
+   {
+    "name": "Endgame",
+    "kind": "station",
+    "parent": "Pyro",
+    "pos": [
+     48296754.6,
+     48291979.2,
+     2735.6
+    ]
+   },
+   {
+    "name": "Gaslight",
+    "kind": "station",
+    "parent": "Pyro",
+    "pos": [
+     46494448.9,
+     -8190926.2,
+     17665.4
+    ]
+   },
+   {
+    "name": "Megumi Refueling",
+    "kind": "station",
+    "parent": "Pyro",
+    "pos": [
+     -59145570.7,
+     34145522.7,
+     12705.7
+    ]
+   },
+   {
+    "name": "Orbituary",
+    "kind": "station",
+    "parent": "Bloom",
+    "pos": [
+     -8900432.6,
+     -15417844.6,
+     226.0
+    ]
+   },
+   {
+    "name": "Patch City",
+    "kind": "station",
+    "parent": "Pyro",
+    "pos": [
+     11445282.8,
+     13622341.3,
+     2752.6
+    ]
+   },
+   {
+    "name": "Rat's Nest",
+    "kind": "station",
+    "parent": "Pyro",
+    "pos": [
+     3732645.6,
+     -42766913.6,
+     18513.5
+    ]
+   },
+   {
+    "name": "Rod's Fuel 'N Supplies",
+    "kind": "station",
+    "parent": "Pyro",
+    "pos": [
+     14664316.1,
+     40338624.6,
+     -9518.8
+    ]
+   },
+   {
+    "name": "Ruin Station",
+    "kind": "station",
+    "parent": "Terminus",
+    "pos": [
+     -52336834.9,
+     -43917925.4,
+     -100.5
+    ]
+   },
+   {
+    "name": "Starlight Service Station",
+    "kind": "station",
+    "parent": "Pyro",
+    "pos": [
+     -7756636.1,
+     -14008864.1,
+     1357.7
+    ]
+   }
+  ],
+  "Stanton": [
+   {
+    "name": "Aberdeen",
+    "kind": "body",
+    "parent": "Hurston",
+    "pos": [
+     12905757.6,
+     40955.6,
+     0.0
+    ]
+   },
+   {
+    "name": "ArcCorp",
+    "kind": "body",
+    "parent": "Stanton",
+    "pos": [
+     18587664.7,
+     -22151916.9,
+     0.0
+    ]
+   },
+   {
+    "name": "Arial",
+    "kind": "body",
+    "parent": "Hurston",
+    "pos": [
+     12892673.3,
+     -31476.1,
+     0.0
+    ]
+   },
+   {
+    "name": "Calliope",
+    "kind": "body",
+    "parent": "microTech",
+    "pos": [
+     22525801.2,
+     37202649.3,
+     0.0
+    ]
+   },
+   {
+    "name": "Cellin",
+    "kind": "body",
+    "parent": "Crusader",
+    "pos": [
+     -18987611.1,
+     -2709009.7,
+     0.0
+    ]
+   },
+   {
+    "name": "Clio",
+    "kind": "body",
+    "parent": "microTech",
+    "pos": [
+     22447442.3,
+     37280469.9,
+     0.0
+    ]
+   },
+   {
+    "name": "Crusader",
+    "kind": "body",
+    "parent": "Stanton",
+    "pos": [
+     -18962176.0,
+     -2664960.0,
+     0.0
+    ]
+   },
+   {
+    "name": "Daymar",
+    "kind": "body",
+    "parent": "Crusader",
+    "pos": [
+     -18930539.5,
+     -2610158.8,
+     0.0
+    ]
+   },
+   {
+    "name": "Euterpe",
+    "kind": "body",
+    "parent": "microTech",
+    "pos": [
+     22436060.8,
+     37290366.4,
+     0.0
+    ]
+   },
+   {
+    "name": "Hurston",
+    "kind": "body",
+    "parent": "Stanton",
+    "pos": [
+     12850457.1,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "Ita",
+    "kind": "body",
+    "parent": "Hurston",
+    "pos": [
+     12830194.7,
+     114913.6,
+     0.0
+    ]
+   },
+   {
+    "name": "Lyria",
+    "kind": "body",
+    "parent": "ArcCorp",
+    "pos": [
+     18703607.2,
+     -22121650.1,
+     0.0
+    ]
+   },
+   {
+    "name": "Magda",
+    "kind": "body",
+    "parent": "Hurston",
+    "pos": [
+     12792686.4,
+     -74464.6,
+     0.0
+    ]
+   },
+   {
+    "name": "Stanton",
+    "kind": "body",
+    "parent": "jumppointlocationsecurity-003",
+    "pos": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "name": "Wala",
+    "kind": "body",
+    "parent": "ArcCorp",
+    "pos": [
+     18379649.3,
+     -22000466.8,
+     0.0
+    ]
+   },
+   {
+    "name": "Yela",
+    "kind": "body",
+    "parent": "Crusader",
+    "pos": [
+     -19022916.8,
+     -2613996.2,
+     0.0
+    ]
+   },
+   {
+    "name": "microTech",
+    "kind": "body",
+    "parent": "Stanton",
+    "pos": [
+     22462085.3,
+     37185745.0,
+     0.0
+    ]
+   },
+   {
+    "name": "Area18",
+    "kind": "city",
+    "parent": "ArcCorp",
+    "pos": [
+     18586917.3,
+     -22152033.7,
+     -262.1
+    ]
+   },
+   {
+    "name": "Lorville",
+    "kind": "city",
+    "parent": "Hurston",
+    "pos": [
+     12850128.1,
+     -752.4,
+     572.1
+    ]
+   },
+   {
+    "name": "New Babbage",
+    "kind": "city",
+    "parent": "microTech",
+    "pos": [
+     22462606.0,
+     37186164.3,
+     743.7
+    ]
+   },
+   {
+    "name": "Orison",
+    "kind": "city",
+    "parent": "Crusader",
+    "pos": [
+     -18956880.5,
+     -2665823.2,
+     5282.2
+    ]
+   },
+   {
+    "name": "Nyx Gateway",
+    "kind": "gateway",
+    "parent": "Stanton",
+    "pos": [
+     -62284323.9,
+     23467575.7,
+     20198379.4
+    ]
+   },
+   {
+    "name": "Pyro Gateway",
+    "kind": "gateway",
+    "parent": "Stanton",
+    "pos": [
+     3310495.7,
+     -27979395.0,
+     -2676322.3
+    ]
+   },
+   {
+    "name": "Terra Gateway",
+    "kind": "gateway",
+    "parent": "Stanton",
+    "pos": [
+     51118210.0,
+     -5270029.5,
+     -4339552.4
+    ]
+   },
+   {
+    "name": "\"The Pit\"",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703666.3,
+     -22121582.0,
+     205.0
+    ]
+   },
+   {
+    "name": "\"Wheeler's\"",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703553.8,
+     -22121860.0,
+     -57.1
+    ]
+   },
+   {
+    "name": "Adair's Retreat",
+    "kind": "outpost",
+    "parent": "Euterpe",
+    "pos": [
+     22435895.3,
+     37290501.2,
+     -4.2
+    ]
+   },
+   {
+    "name": "Afterlife",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19023171.1,
+     -2614149.5,
+     99.1
+    ]
+   },
+   {
+    "name": "Ako's Return",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379877.0,
+     -22000387.9,
+     147.0
+    ]
+   },
+   {
+    "name": "ArcCorp Mining Area 045",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379366.5,
+     -22000452.7,
+     10.6
+    ]
+   },
+   {
+    "name": "ArcCorp Mining Area 048",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379471.1,
+     -22000369.0,
+     -196.3
+    ]
+   },
+   {
+    "name": "ArcCorp Mining Area 056",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379765.9,
+     -22000516.9,
+     253.2
+    ]
+   },
+   {
+    "name": "ArcCorp Mining Area 061",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379628.3,
+     -22000714.3,
+     -132.6
+    ]
+   },
+   {
+    "name": "ArcCorp Mining Area 141",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930557.7,
+     -2609978.4,
+     -232.8
+    ]
+   },
+   {
+    "name": "ArcCorp Mining Area 157",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19022910.8,
+     -2613773.8,
+     220.3
+    ]
+   },
+   {
+    "name": "ArcCorp Processing Center 115",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379372.0,
+     -22000416.7,
+     27.9
+    ]
+   },
+   {
+    "name": "ArcCorp Processing Center 123",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379779.9,
+     -22000714.3,
+     43.1
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 011",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703398.6,
+     -22121568.0,
+     0.2
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 024",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703407.5,
+     -22121642.4,
+     101.3
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 029",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703424.7,
+     -22121622.8,
+     127.2
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 033",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703438.3,
+     -22121620.1,
+     144.4
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 038",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703434.1,
+     -22121626.4,
+     140.5
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 042",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703432.4,
+     -22121676.2,
+     137.6
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 045",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703426.4,
+     -22121681.4,
+     128.5
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 052",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703445.3,
+     -22121718.5,
+     138.9
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 059",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703585.9,
+     -22121507.5,
+     171.8
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 060",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703590.1,
+     -22121507.5,
+     172.0
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 066",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379377.4,
+     -22000545.7,
+     1.4
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 074",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379412.3,
+     -22000619.1,
+     26.7
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 078",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379825.8,
+     -22000247.8,
+     -27.5
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 087",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379856.3,
+     -22000273.0,
+     -17.0
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 089",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379726.4,
+     -22000198.5,
+     46.8
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 092",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379753.6,
+     -22000204.2,
+     7.2
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 094",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379717.6,
+     -22000192.3,
+     13.9
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 101",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379836.8,
+     -22000259.1,
+     -38.3
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 108",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379714.8,
+     -22000217.6,
+     117.5
+    ]
+   },
+   {
+    "name": "ArcCorp Security Post 111",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379831.8,
+     -22000270.5,
+     -90.1
+    ]
+   },
+   {
+    "name": "Ashburn Channel Aid Shelter",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987608.1,
+     -2709267.6,
+     -37.1
+    ]
+   },
+   {
+    "name": "Aston Ridge Aid Shelter",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19022708.9,
+     -2613972.1,
+     -232.8
+    ]
+   },
+   {
+    "name": "Astor's Clearing",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22461275.0,
+     37186322.8,
+     -101.4
+    ]
+   },
+   {
+    "name": "Attritus OLP",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930603.1,
+     -2610025.9,
+     270.0
+    ]
+   },
+   {
+    "name": "Attritus PAF-I",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930605.1,
+     -2610028.9,
+     256.6
+    ]
+   },
+   {
+    "name": "Attritus PAF-II",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930597.5,
+     -2610027.7,
+     257.9
+    ]
+   },
+   {
+    "name": "Attritus PAF-III",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930600.1,
+     -2610035.9,
+     261.4
+    ]
+   },
+   {
+    "name": "Balto's Blind",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703526.2,
+     -22121858.9,
+     0.6
+    ]
+   },
+   {
+    "name": "Barton Flats Aid Shelter",
+    "kind": "outpost",
+    "parent": "Aberdeen",
+    "pos": [
+     12905812.0,
+     41172.7,
+     -159.9
+    ]
+   },
+   {
+    "name": "Benson Mining Outpost",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19022867.8,
+     -2614271.8,
+     -140.1
+    ]
+   },
+   {
+    "name": "Blighter's Run",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22526008.0,
+     37202597.6,
+     110.6
+    ]
+   },
+   {
+    "name": "Boondoggle",
+    "kind": "outpost",
+    "parent": "Aberdeen",
+    "pos": [
+     12905892.5,
+     40764.3,
+     -144.3
+    ]
+   },
+   {
+    "name": "Bountiful Harvest Hydroponics",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930482.0,
+     -2610251.0,
+     -274.2
+    ]
+   },
+   {
+    "name": "Brio's Breaker Yard",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930716.5,
+     -2610319.7,
+     173.8
+    ]
+   },
+   {
+    "name": "Broken Patch",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849716.9,
+     -401.5,
+     -543.9
+    ]
+   },
+   {
+    "name": "Buckets",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703413.1,
+     -22121718.1,
+     -89.5
+    ]
+   },
+   {
+    "name": "Bud's Growery",
+    "kind": "outpost",
+    "parent": "Euterpe",
+    "pos": [
+     22436110.9,
+     37290194.1,
+     115.3
+    ]
+   },
+   {
+    "name": "Burnout",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703393.6,
+     -22121649.0,
+     68.1
+    ]
+   },
+   {
+    "name": "Calhoun Pass Emergency Shelter",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22463023.4,
+     37185397.1,
+     31.7
+    ]
+   },
+   {
+    "name": "Clear View Emergency Shelter",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22461475.7,
+     37185056.6,
+     393.2
+    ]
+   },
+   {
+    "name": "Cloudrest Retreat",
+    "kind": "outpost",
+    "parent": "Crusader",
+    "pos": [
+     -18969572.2,
+     -2666380.2,
+     29.0
+    ]
+   },
+   {
+    "name": "Consumption",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987546.8,
+     -2709247.2,
+     85.1
+    ]
+   },
+   {
+    "name": "Covalex Distribution Centre S1DC06",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12851199.9,
+     15.5,
+     671.1
+    ]
+   },
+   {
+    "name": "Covalex Distribution Centre S4DC05",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22461752.7,
+     37186642.8,
+     -290.2
+    ]
+   },
+   {
+    "name": "Coven",
+    "kind": "outpost",
+    "parent": "Arial",
+    "pos": [
+     12892808.0,
+     -31190.8,
+     -139.7
+    ]
+   },
+   {
+    "name": "Cry-Astro Processing Plant 19-02",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22462669.4,
+     37185744.2,
+     812.2
+    ]
+   },
+   {
+    "name": "Cry-Astro Processing Plant 34-12",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22461769.0,
+     37184862.9,
+     -350.6
+    ]
+   },
+   {
+    "name": "Cutter's Rig",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850002.0,
+     -200.5,
+     867.6
+    ]
+   },
+   {
+    "name": "Deakins Research Outpost",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19022685.2,
+     -2614206.4,
+     13.3
+    ]
+   },
+   {
+    "name": "Devlin Scrap & Salvage",
+    "kind": "outpost",
+    "parent": "Euterpe",
+    "pos": [
+     22436075.7,
+     37290577.6,
+     26.0
+    ]
+   },
+   {
+    "name": "Downlow",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703823.5,
+     -22121701.1,
+     -28.8
+    ]
+   },
+   {
+    "name": "Drifters",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22461753.4,
+     37186439.1,
+     -640.4
+    ]
+   },
+   {
+    "name": "Dunboro",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22461349.4,
+     37186423.3,
+     11.2
+    ]
+   },
+   {
+    "name": "Dunlow Ridge Aid Shelter",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930591.4,
+     -2609877.8,
+     75.3
+    ]
+   },
+   {
+    "name": "Dupree Industrial Manufacturing Facility",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850696.5,
+     -969.8,
+     68.6
+    ]
+   },
+   {
+    "name": "Eager Flats Aid Shelter",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930339.0,
+     -2610263.7,
+     190.1
+    ]
+   },
+   {
+    "name": "Elsewhere",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703815.0,
+     -22121717.5,
+     -50.3
+    ]
+   },
+   {
+    "name": "Empyrean Park",
+    "kind": "outpost",
+    "parent": "Crusader",
+    "pos": [
+     -18961085.9,
+     -2657655.6,
+     1509.8
+    ]
+   },
+   {
+    "name": "Fetch",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987369.4,
+     -2709056.8,
+     -84.8
+    ]
+   },
+   {
+    "name": "Finn's Folly",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850260.5,
+     -197.9,
+     962.0
+    ]
+   },
+   {
+    "name": "Flanagan's Ravine Aid Shelter",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987805.4,
+     -2708857.9,
+     85.0
+    ]
+   },
+   {
+    "name": "Frostbite",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22462624.9,
+     37186507.3,
+     -361.4
+    ]
+   },
+   {
+    "name": "Gallete Family Farms",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987700.6,
+     -2708902.9,
+     220.0
+    ]
+   },
+   {
+    "name": "Ghost Hollow",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22461958.1,
+     37186727.0,
+     149.1
+    ]
+   },
+   {
+    "name": "Gonzo",
+    "kind": "outpost",
+    "parent": "Magda",
+    "pos": [
+     12793001.5,
+     -74551.3,
+     -96.9
+    ]
+   },
+   {
+    "name": "Good Times Temple",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379536.0,
+     -22000287.3,
+     187.4
+    ]
+   },
+   {
+    "name": "Greycat Stanton I Production Complex-B",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850049.6,
+     -656.3,
+     636.3
+    ]
+   },
+   {
+    "name": "Greycat Stanton IV Production Complex-A",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22461661.9,
+     37185603.8,
+     -895.1
+    ]
+   },
+   {
+    "name": "HDMS-Anderson",
+    "kind": "outpost",
+    "parent": "Aberdeen",
+    "pos": [
+     12905730.7,
+     41135.8,
+     206.9
+    ]
+   },
+   {
+    "name": "HDMS-Bezdek",
+    "kind": "outpost",
+    "parent": "Arial",
+    "pos": [
+     12892700.0,
+     -31710.8,
+     251.5
+    ]
+   },
+   {
+    "name": "HDMS-Edmond",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850172.6,
+     -730.5,
+     620.9
+    ]
+   },
+   {
+    "name": "HDMS-Hadley",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12851083.3,
+     -584.0,
+     -518.5
+    ]
+   },
+   {
+    "name": "HDMS-Hahn",
+    "kind": "outpost",
+    "parent": "Magda",
+    "pos": [
+     12792539.0,
+     -74756.8,
+     95.2
+    ]
+   },
+   {
+    "name": "HDMS-Lathan",
+    "kind": "outpost",
+    "parent": "Arial",
+    "pos": [
+     12893012.5,
+     -31442.4,
+     55.8
+    ]
+   },
+   {
+    "name": "HDMS-Norgaard",
+    "kind": "outpost",
+    "parent": "Aberdeen",
+    "pos": [
+     12905616.1,
+     41150.9,
+     132.1
+    ]
+   },
+   {
+    "name": "HDMS-Oparei",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849901.0,
+     -72.6,
+     -828.1
+    ]
+   },
+   {
+    "name": "HDMS-Perlman",
+    "kind": "outpost",
+    "parent": "Magda",
+    "pos": [
+     12792545.7,
+     -74176.7,
+     -116.7
+    ]
+   },
+   {
+    "name": "HDMS-Pinewood",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12851442.7,
+     90.0,
+     149.9
+    ]
+   },
+   {
+    "name": "HDMS-Ryder",
+    "kind": "outpost",
+    "parent": "Ita",
+    "pos": [
+     12830018.8,
+     114650.2,
+     73.7
+    ]
+   },
+   {
+    "name": "HDMS-Stanhope",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849808.5,
+     198.3,
+     735.1
+    ]
+   },
+   {
+    "name": "HDMS-Thedus",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850900.4,
+     891.5,
+     101.5
+    ]
+   },
+   {
+    "name": "HDMS-Woodruff",
+    "kind": "outpost",
+    "parent": "Ita",
+    "pos": [
+     12830309.5,
+     115133.3,
+     210.5
+    ]
+   },
+   {
+    "name": "HDPC-Cassillo",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849667.4,
+     615.4,
+     -2.4
+    ]
+   },
+   {
+    "name": "HDPC-Farnesway",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850586.3,
+     63.9,
+     989.6
+    ]
+   },
+   {
+    "name": "HDRSO-Baier",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850023.2,
+     301.7,
+     851.0
+    ]
+   },
+   {
+    "name": "HDRSO-Bardie",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850037.2,
+     440.4,
+     794.9
+    ]
+   },
+   {
+    "name": "HDRSO-Bersch",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850020.8,
+     419.9,
+     795.9
+    ]
+   },
+   {
+    "name": "HDRSO-Bowes",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850021.3,
+     431.0,
+     790.2
+    ]
+   },
+   {
+    "name": "HDRSO-Brel",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850036.9,
+     406.0,
+     813.7
+    ]
+   },
+   {
+    "name": "HDRSO-Cronshaw",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850034.8,
+     382.6,
+     824.6
+    ]
+   },
+   {
+    "name": "HDRSO-Foster",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850050.0,
+     372.9,
+     836.0
+    ]
+   },
+   {
+    "name": "HDRSO-Franz",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850003.6,
+     371.9,
+     812.1
+    ]
+   },
+   {
+    "name": "HDRSO-Giblin",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849908.0,
+     246.1,
+     802.0
+    ]
+   },
+   {
+    "name": "HDRSO-Hosley",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849470.9,
+     -173.1,
+     -0.9
+    ]
+   },
+   {
+    "name": "HDRSO-Malloy",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849475.0,
+     -188.9,
+     39.9
+    ]
+   },
+   {
+    "name": "HDRSO-Marling",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849592.9,
+     -475.0,
+     -171.2
+    ]
+   },
+   {
+    "name": "HDRSO-McKuen",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849622.6,
+     -514.5,
+     -198.3
+    ]
+   },
+   {
+    "name": "HDRSO-Newman",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849649.5,
+     -562.5,
+     -177.6
+    ]
+   },
+   {
+    "name": "HDRSO-Olliff",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849671.1,
+     -584.0,
+     -203.9
+    ]
+   },
+   {
+    "name": "HDRSO-Pearce",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849671.7,
+     -589.6,
+     -188.9
+    ]
+   },
+   {
+    "name": "HDRSO-Sheppard",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849670.7,
+     -599.6,
+     -151.0
+    ]
+   },
+   {
+    "name": "HDRSO-Sims",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849705.7,
+     -630.8,
+     -193.5
+    ]
+   },
+   {
+    "name": "HDRSO-Stott",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849780.3,
+     -709.3,
+     -198.7
+    ]
+   },
+   {
+    "name": "HDRSO-Tillman",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849727.7,
+     -686.8,
+     10.1
+    ]
+   },
+   {
+    "name": "HDRSO-Walker",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849847.1,
+     -794.2,
+     -16.1
+    ]
+   },
+   {
+    "name": "HDRSO-Wyatt",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849889.8,
+     -815.1,
+     -128.4
+    ]
+   },
+   {
+    "name": "HDSF-Adlai",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850220.0,
+     -810.8,
+     537.8
+    ]
+   },
+   {
+    "name": "HDSF-Barnabas",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849561.2,
+     365.6,
+     -252.3
+    ]
+   },
+   {
+    "name": "HDSF-Breckinridge",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849899.4,
+     680.6,
+     -477.7
+    ]
+   },
+   {
+    "name": "HDSF-Colfax",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12851359.3,
+     383.9,
+     -203.8
+    ]
+   },
+   {
+    "name": "HDSF-Damaris",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849558.5,
+     420.3,
+     -142.0
+    ]
+   },
+   {
+    "name": "HDSF-Elbridge",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850906.4,
+     838.7,
+     310.7
+    ]
+   },
+   {
+    "name": "HDSF-Hendricks",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850520.7,
+     -969.0,
+     -242.7
+    ]
+   },
+   {
+    "name": "HDSF-Hiram",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849514.6,
+     -317.0,
+     122.6
+    ]
+   },
+   {
+    "name": "HDSF-Hobart",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849964.8,
+     768.3,
+     410.9
+    ]
+   },
+   {
+    "name": "HDSF-Ishmael",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850190.3,
+     -158.6,
+     952.3
+    ]
+   },
+   {
+    "name": "HDSF-Millerand",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849609.5,
+     517.4,
+     127.6
+    ]
+   },
+   {
+    "name": "HDSF-Rufus",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850392.4,
+     11.4,
+     -998.4
+    ]
+   },
+   {
+    "name": "HDSF-Sherman",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12851356.5,
+     -406.0,
+     168.2
+    ]
+   },
+   {
+    "name": "HDSF-Tamar",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850578.4,
+     -810.9,
+     -573.5
+    ]
+   },
+   {
+    "name": "HDSF-Tompkins",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850831.9,
+     724.6,
+     579.7
+    ]
+   },
+   {
+    "name": "HDSF-Zacharias",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850706.6,
+     398.5,
+     -884.9
+    ]
+   },
+   {
+    "name": "Half Stack",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19022675.5,
+     -2614006.3,
+     -199.1
+    ]
+   },
+   {
+    "name": "Hard Knocks",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22525582.4,
+     37202596.7,
+     84.5
+    ]
+   },
+   {
+    "name": "Harper's Point",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22461397.9,
+     37186461.6,
+     128.2
+    ]
+   },
+   {
+    "name": "Hasbin Hall",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22525983.1,
+     37202499.5,
+     -46.8
+    ]
+   },
+   {
+    "name": "Hela's Regret",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22461418.4,
+     37185183.7,
+     -490.3
+    ]
+   },
+   {
+    "name": "Hickes Research Outpost",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987607.8,
+     -2708996.6,
+     -260.3
+    ]
+   },
+   {
+    "name": "Hospice",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930548.5,
+     -2610087.0,
+     -286.5
+    ]
+   },
+   {
+    "name": "Humboldt Mines",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703612.5,
+     -22121844.0,
+     -112.5
+    ]
+   },
+   {
+    "name": "Julep Ravine Aid Shelter",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987722.6,
+     -2709066.0,
+     -228.9
+    ]
+   },
+   {
+    "name": "Jumptown",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930459.1,
+     -2609916.0,
+     -147.6
+    ]
+   },
+   {
+    "name": "Kant's Peak",
+    "kind": "outpost",
+    "parent": "Clio",
+    "pos": [
+     22447378.5,
+     37280690.2,
+     248.0
+    ]
+   },
+   {
+    "name": "Kelo Bottom",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22462981.6,
+     37186175.7,
+     -116.5
+    ]
+   },
+   {
+    "name": "Klescher Rehabilitation Facility",
+    "kind": "outpost",
+    "parent": "Aberdeen",
+    "pos": [
+     12905802.6,
+     41177.1,
+     -156.6
+    ]
+   },
+   {
+    "name": "Kosso Basin Aid Shelter",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19022948.1,
+     -2614114.3,
+     288.3
+    ]
+   },
+   {
+    "name": "Kudre Ore",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930392.9,
+     -2610335.9,
+     -184.9
+    ]
+   },
+   {
+    "name": "Lamina OLP",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930619.9,
+     -2610431.2,
+     -118.2
+    ]
+   },
+   {
+    "name": "Lamina PAF-I",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930610.6,
+     -2610420.8,
+     -115.6
+    ]
+   },
+   {
+    "name": "Lamina PAF-II",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930618.5,
+     -2610422.1,
+     -107.2
+    ]
+   },
+   {
+    "name": "Lamina PAF-III",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930621.1,
+     -2610417.8,
+     -116.5
+    ]
+   },
+   {
+    "name": "Last Day",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703511.9,
+     -22121555.7,
+     -179.6
+    ]
+   },
+   {
+    "name": "Launch Pad",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703393.3,
+     -22121715.3,
+     16.5
+    ]
+   },
+   {
+    "name": "Lost and Found",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379711.9,
+     -22000352.4,
+     251.6
+    ]
+   },
+   {
+    "name": "Loveridge Mineral Reserve",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703789.0,
+     -22121522.0,
+     24.9
+    ]
+   },
+   {
+    "name": "Lowdown",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850363.7,
+     890.6,
+     -448.8
+    ]
+   },
+   {
+    "name": "Ludlow",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849578.4,
+     -467.9,
+     111.1
+    ]
+   },
+   {
+    "name": "MT DataCenter 2UB-RB9-5",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22462992.3,
+     37185884.9,
+     -397.7
+    ]
+   },
+   {
+    "name": "MT DataCenter 4HJ-LVE-A",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22461984.4,
+     37186707.4,
+     -255.7
+    ]
+   },
+   {
+    "name": "MT DataCenter 5WQ-R2V-C",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22463045.1,
+     37185785.3,
+     -279.1
+    ]
+   },
+   {
+    "name": "MT DataCenter 8FK-Q2X-K",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22462107.6,
+     37185747.9,
+     -1000.7
+    ]
+   },
+   {
+    "name": "MT DataCenter D79-ECG-R",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22462286.2,
+     37186053.7,
+     -929.8
+    ]
+   },
+   {
+    "name": "MT DataCenter E2Q-NSG-Y",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22463002.1,
+     37185932.1,
+     -354.1
+    ]
+   },
+   {
+    "name": "MT DataCenter KH3-AAE-L",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22461616.3,
+     37186546.4,
+     -375.3
+    ]
+   },
+   {
+    "name": "MT DataCenter L8P-JUC-8 (Offline)",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22461998.7,
+     37185963.5,
+     -972.1
+    ]
+   },
+   {
+    "name": "MT DataCenter QVX-J88-J",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22461837.3,
+     37186637.7,
+     -379.7
+    ]
+   },
+   {
+    "name": "MT DataCenter TMG-XEV-2",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22461924.3,
+     37185807.4,
+     986.0
+    ]
+   },
+   {
+    "name": "MT OpCenter TLI-4",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22462153.6,
+     37185809.2,
+     -996.5
+    ]
+   },
+   {
+    "name": "MT SecurityCenter 4HJ-LVE-A",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22462108.0,
+     37186112.7,
+     -930.6
+    ]
+   },
+   {
+    "name": "MT SecurityCenter 6EE-GVH-9",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22525647.6,
+     37202832.7,
+     -21.7
+    ]
+   },
+   {
+    "name": "MT SecurityCenter 9PL-Q42-K",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22462046.0,
+     37186074.7,
+     -943.4
+    ]
+   },
+   {
+    "name": "MT SecurityCenter 9WB-HV7-P",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22461908.3,
+     37186046.1,
+     -938.2
+    ]
+   },
+   {
+    "name": "MT SecurityCenter BH5-KEH-6",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22461832.4,
+     37186034.9,
+     -924.2
+    ]
+   },
+   {
+    "name": "MT SecurityCenter CTB-B3U-1",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22525658.6,
+     37202840.8,
+     -28.7
+    ]
+   },
+   {
+    "name": "MT SecurityCenter D66-CRW-F",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22462080.7,
+     37186401.1,
+     -755.0
+    ]
+   },
+   {
+    "name": "MT SecurityCenter DRC-F2S-6",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22462010.5,
+     37186496.4,
+     -656.2
+    ]
+   },
+   {
+    "name": "MT SecurityCenter DXC-25G-L",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22525676.3,
+     37202851.5,
+     -33.3
+    ]
+   },
+   {
+    "name": "MT SecurityCenter E6C-BRT-M",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22462148.6,
+     37186640.6,
+     -443.7
+    ]
+   },
+   {
+    "name": "MT SecurityCenter FQ5-URX-8",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22525695.2,
+     37202849.1,
+     -81.2
+    ]
+   },
+   {
+    "name": "MT SecurityCenter GSW-NM3-E",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22462380.5,
+     37186697.2,
+     -91.1
+    ]
+   },
+   {
+    "name": "MT SecurityCenter H36-YBG-R",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22525732.6,
+     37202855.8,
+     -101.3
+    ]
+   },
+   {
+    "name": "MT SecurityCenter JWB-D9L-4",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22525756.0,
+     37202864.7,
+     -95.9
+    ]
+   },
+   {
+    "name": "MT SecurityCenter KWS-GPZ-5",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22525773.0,
+     37202854.7,
+     -120.9
+    ]
+   },
+   {
+    "name": "MT SecurityCenter OEE-5RG-5",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22462259.4,
+     37186656.6,
+     -373.8
+    ]
+   },
+   {
+    "name": "MT SecurityCenter PLM-9YW-Q",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22525762.7,
+     37202844.4,
+     -134.6
+    ]
+   },
+   {
+    "name": "MT SecurityCenter SLP-VC3-W",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22462243.5,
+     37186690.1,
+     -287.5
+    ]
+   },
+   {
+    "name": "MT SecurityCenter UDB-Z4W-2",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22462191.5,
+     37186717.5,
+     -211.2
+    ]
+   },
+   {
+    "name": "MT SecurityCenter VD9-87R-P",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22525800.7,
+     37202869.9,
+     -94.3
+    ]
+   },
+   {
+    "name": "MT SecurityCenter XGT-33W-7",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22462094.9,
+     37186639.3,
+     450.0
+    ]
+   },
+   {
+    "name": "Mainline",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19022985.4,
+     -2613694.0,
+     -46.1
+    ]
+   },
+   {
+    "name": "Maker's Point",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850303.1,
+     128.3,
+     979.8
+    ]
+   },
+   {
+    "name": "Minlo Spire",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930507.5,
+     -2610362.3,
+     211.2
+    ]
+   },
+   {
+    "name": "Mogote Aid Shelter",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987809.8,
+     -2708958.9,
+     160.9
+    ]
+   },
+   {
+    "name": "NT-999-XX",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19023122.5,
+     -2614070.1,
+     224.3
+    ]
+   },
+   {
+    "name": "NT-999-XXII",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19022862.2,
+     -2613940.2,
+     -303.3
+    ]
+   },
+   {
+    "name": "Nakamura Valley Aid Shelter",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19023192.5,
+     -2613872.1,
+     81.7
+    ]
+   },
+   {
+    "name": "Nevermind",
+    "kind": "outpost",
+    "parent": "Magda",
+    "pos": [
+     12792472.3,
+     -74644.9,
+     194.5
+    ]
+   },
+   {
+    "name": "Nuen Waste Management",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930558.5,
+     -2609865.4,
+     25.5
+    ]
+   },
+   {
+    "name": "Nuiqsut Emergency Shelter",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22462835.9,
+     37185537.1,
+     -627.2
+    ]
+   },
+   {
+    "name": "Outpost 54",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22462198.8,
+     37185759.4,
+     -994.4
+    ]
+   },
+   {
+    "name": "PRIVATE PROPERTY",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987513.4,
+     -2709183.4,
+     167.1
+    ]
+   },
+   {
+    "name": "Paradise Cove",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379729.3,
+     -22000684.7,
+     162.3
+    ]
+   },
+   {
+    "name": "Picker's Field",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12849777.3,
+     262.3,
+     -686.1
+    ]
+   },
+   {
+    "name": "Point Wain Emergency Shelter",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22461457.8,
+     37185259.7,
+     611.7
+    ]
+   },
+   {
+    "name": "Prospect Point",
+    "kind": "outpost",
+    "parent": "Crusader",
+    "pos": [
+     -18958921.7,
+     -2666185.2,
+     6683.7
+    ]
+   },
+   {
+    "name": "Rappel",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850810.0,
+     -661.9,
+     663.9
+    ]
+   },
+   {
+    "name": "Raven's Roost",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22462441.2,
+     37185669.4,
+     932.6
+    ]
+   },
+   {
+    "name": "Rayari Anvik Research Outpost",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22525616.6,
+     37202521.5,
+     84.7
+    ]
+   },
+   {
+    "name": "Rayari Cantwell Research Outpost",
+    "kind": "outpost",
+    "parent": "Clio",
+    "pos": [
+     22447225.1,
+     37280685.1,
+     142.8
+    ]
+   },
+   {
+    "name": "Rayari Deltana Research Outpost",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22461391.3,
+     37185096.7,
+     316.7
+    ]
+   },
+   {
+    "name": "Rayari Kaltag Research Outpost",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22526006.5,
+     37202655.5,
+     -124.5
+    ]
+   },
+   {
+    "name": "Rayari McGrath Research Outpost",
+    "kind": "outpost",
+    "parent": "Clio",
+    "pos": [
+     22447116.4,
+     37280384.1,
+     -18.8
+    ]
+   },
+   {
+    "name": "Reclamation & Disposal Orinth",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850458.3,
+     -794.2,
+     607.7
+    ]
+   },
+   {
+    "name": "Regiment Downs",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22525741.1,
+     37202875.7,
+     -52.7
+    ]
+   },
+   {
+    "name": "Rico's Remains",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850338.4,
+     -23.8,
+     993.8
+    ]
+   },
+   {
+    "name": "Rock Bottom",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703688.8,
+     -22121510.3,
+     154.7
+    ]
+   },
+   {
+    "name": "Rolo's Crater",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19023041.2,
+     -2614187.4,
+     -214.9
+    ]
+   },
+   {
+    "name": "Ruptura OLP",
+    "kind": "outpost",
+    "parent": "Aberdeen",
+    "pos": [
+     12905613.9,
+     41031.0,
+     237.4
+    ]
+   },
+   {
+    "name": "Ruptura PAF-I",
+    "kind": "outpost",
+    "parent": "Aberdeen",
+    "pos": [
+     12905622.5,
+     41025.5,
+     229.3
+    ]
+   },
+   {
+    "name": "Ruptura PAF-II",
+    "kind": "outpost",
+    "parent": "Aberdeen",
+    "pos": [
+     12905616.4,
+     41024.6,
+     226.0
+    ]
+   },
+   {
+    "name": "Ruptura PAF-III",
+    "kind": "outpost",
+    "parent": "Aberdeen",
+    "pos": [
+     12905619.2,
+     41031.5,
+     224.9
+    ]
+   },
+   {
+    "name": "Sakura Sun Goldenrod Workcenter",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22461911.8,
+     37184821.3,
+     -343.3
+    ]
+   },
+   {
+    "name": "Sakura Sun Magnolia Workcenter",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850227.7,
+     -864.8,
+     -447.0
+    ]
+   },
+   {
+    "name": "Samson & Son's Salvage Center",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379606.7,
+     -22000187.7,
+     19.2
+    ]
+   },
+   {
+    "name": "Scuttle",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379659.3,
+     -22000747.5,
+     -26.6
+    ]
+   },
+   {
+    "name": "Security Post Awala",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987369.4,
+     -2708976.7,
+     92.3
+    ]
+   },
+   {
+    "name": "Security Post Birbari",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987763.6,
+     -2709205.2,
+     81.4
+    ]
+   },
+   {
+    "name": "Security Post Chilad",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987834.6,
+     -2709125.4,
+     66.9
+    ]
+   },
+   {
+    "name": "Security Post Dawu",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930400.7,
+     -2610418.6,
+     18.4
+    ]
+   },
+   {
+    "name": "Security Post Erden",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930424.9,
+     -2610428.7,
+     32.1
+    ]
+   },
+   {
+    "name": "Security Post Gandan",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987567.1,
+     -2709188.8,
+     184.2
+    ]
+   },
+   {
+    "name": "Security Post Hasik",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19022708.4,
+     -2613900.7,
+     213.2
+    ]
+   },
+   {
+    "name": "Security Post Iteke",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19022723.1,
+     -2613889.4,
+     221.4
+    ]
+   },
+   {
+    "name": "Security Post Klipra",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19022734.3,
+     -2613875.3,
+     224.1
+    ]
+   },
+   {
+    "name": "Security Post Kota",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987543.9,
+     -2709104.8,
+     233.0
+    ]
+   },
+   {
+    "name": "Security Post Menian",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930420.1,
+     -2610422.1,
+     -62.7
+    ]
+   },
+   {
+    "name": "Security Post Moka",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19022729.1,
+     -2613859.5,
+     210.1
+    ]
+   },
+   {
+    "name": "Security Post Opal",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19022675.7,
+     -2613899.9,
+     -175.0
+    ]
+   },
+   {
+    "name": "Security Post Pakote",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987516.9,
+     -2709081.0,
+     232.4
+    ]
+   },
+   {
+    "name": "Security Post Peska",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19022777.4,
+     -2613827.8,
+     224.7
+    ]
+   },
+   {
+    "name": "Security Post Reawick",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930434.3,
+     -2610420.8,
+     -87.9
+    ]
+   },
+   {
+    "name": "Security Post Saktigar",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987484.3,
+     -2709081.6,
+     216.0
+    ]
+   },
+   {
+    "name": "Security Post Sharga",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987508.4,
+     -2709065.2,
+     233.9
+    ]
+   },
+   {
+    "name": "Security Post Tavan",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930384.9,
+     -2610397.0,
+     -82.1
+    ]
+   },
+   {
+    "name": "Security Post Triolet",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19022795.2,
+     -2613844.6,
+     246.0
+    ]
+   },
+   {
+    "name": "Security Post Ulaga",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930388.7,
+     -2610403.3,
+     -70.0
+    ]
+   },
+   {
+    "name": "Security Post Walvis",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19022814.3,
+     -2613833.5,
+     247.0
+    ]
+   },
+   {
+    "name": "Security Post Wan",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19023125.2,
+     -2613943.0,
+     -227.5
+    ]
+   },
+   {
+    "name": "Security Post Yafa",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930389.5,
+     -2610408.9,
+     -48.4
+    ]
+   },
+   {
+    "name": "Shady Glen Farms",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379628.7,
+     -22000197.8,
+     87.5
+    ]
+   },
+   {
+    "name": "Shanks",
+    "kind": "outpost",
+    "parent": "Euterpe",
+    "pos": [
+     22436273.4,
+     37290361.8,
+     18.2
+    ]
+   },
+   {
+    "name": "Shubin Mining Facility SAL-2",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703757.8,
+     -22121703.8,
+     156.7
+    ]
+   },
+   {
+    "name": "Shubin Mining Facility SAL-5",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703705.2,
+     -22121571.8,
+     185.8
+    ]
+   },
+   {
+    "name": "Shubin Mining Facility SCD-1",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930413.5,
+     -2610308.3,
+     221.3
+    ]
+   },
+   {
+    "name": "Shubin Mining Facility SM0-10",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22462170.7,
+     37184794.1,
+     298.8
+    ]
+   },
+   {
+    "name": "Shubin Mining Facility SM0-13",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22461912.4,
+     37184763.7,
+     97.8
+    ]
+   },
+   {
+    "name": "Shubin Mining Facility SM0-18",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22463005.5,
+     37185355.4,
+     43.8
+    ]
+   },
+   {
+    "name": "Shubin Mining Facility SM0-22",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22462109.6,
+     37184922.4,
+     568.2
+    ]
+   },
+   {
+    "name": "Shubin Mining Facility SMCa-6",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22525851.3,
+     37202882.7,
+     24.9
+    ]
+   },
+   {
+    "name": "Shubin Mining Facility SMCa-8",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22525961.4,
+     37202818.2,
+     -58.4
+    ]
+   },
+   {
+    "name": "Shubin Processing Facility SPAL-12",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703433.7,
+     -22121525.3,
+     66.8
+    ]
+   },
+   {
+    "name": "Shubin Processing Facility SPAL-16",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703567.1,
+     -22121716.4,
+     209.9
+    ]
+   },
+   {
+    "name": "Shubin Processing Facility SPAL-21",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703587.6,
+     -22121636.7,
+     222.7
+    ]
+   },
+   {
+    "name": "Shubin Processing Facility SPAL-3",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703398.8,
+     -22121638.9,
+     -81.3
+    ]
+   },
+   {
+    "name": "Shubin Processing Facility SPAL-7",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703645.1,
+     -22121776.3,
+     181.4
+    ]
+   },
+   {
+    "name": "Shubin Processing Facility SPAL-9",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703753.8,
+     -22121819.2,
+     8.3
+    ]
+   },
+   {
+    "name": "Shubin Processing Facility SPMC-10",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22525578.2,
+     37202575.1,
+     -48.9
+    ]
+   },
+   {
+    "name": "Shubin Processing Facility SPMC-11",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22525873.8,
+     37202461.5,
+     131.0
+    ]
+   },
+   {
+    "name": "Shubin Processing Facility SPMC-14",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22526029.8,
+     37202628.1,
+     71.0
+    ]
+   },
+   {
+    "name": "Shubin Processing Facility SPMC-3",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22526040.8,
+     37202637.8,
+     8.8
+    ]
+   },
+   {
+    "name": "Shubin Processing Facility SPMC-5",
+    "kind": "outpost",
+    "parent": "Calliope",
+    "pos": [
+     22525571.2,
+     37202715.9,
+     19.4
+    ]
+   },
+   {
+    "name": "Smokestack",
+    "kind": "outpost",
+    "parent": "Arial",
+    "pos": [
+     12892361.4,
+     -31623.5,
+     -10.7
+    ]
+   },
+   {
+    "name": "Stone's Throw",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987798.5,
+     -2709081.2,
+     -166.1
+    ]
+   },
+   {
+    "name": "Talarine Divide Aid Shelter",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19022938.0,
+     -2613685.4,
+     30.9
+    ]
+   },
+   {
+    "name": "Tamdon Plains Aid Shelter",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930677.7,
+     -2610183.2,
+     -259.8
+    ]
+   },
+   {
+    "name": "Teddy's Playhouse",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703702.6,
+     -22121489.2,
+     -122.8
+    ]
+   },
+   {
+    "name": "Terra Mills HydroFarm",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987511.0,
+     -2708982.0,
+     239.0
+    ]
+   },
+   {
+    "name": "The Barrens",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22462317.2,
+     37184771.7,
+     -1.7
+    ]
+   },
+   {
+    "name": "The Dregs",
+    "kind": "outpost",
+    "parent": "Arial",
+    "pos": [
+     12892817.0,
+     -31708.9,
+     210.2
+    ]
+   },
+   {
+    "name": "The Grove",
+    "kind": "outpost",
+    "parent": "Aberdeen",
+    "pos": [
+     12905570.6,
+     41125.5,
+     -108.4
+    ]
+   },
+   {
+    "name": "The Hollows",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987608.2,
+     -2708808.4,
+     165.5
+    ]
+   },
+   {
+    "name": "The Necropolis",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22462148.9,
+     37185582.9,
+     985.7
+    ]
+   },
+   {
+    "name": "The Orphanage",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703515.2,
+     -22121557.6,
+     182.2
+    ]
+   },
+   {
+    "name": "The Shades",
+    "kind": "outpost",
+    "parent": "Ita",
+    "pos": [
+     12830362.4,
+     115144.8,
+     -155.3
+    ]
+   },
+   {
+    "name": "Thimblerig",
+    "kind": "outpost",
+    "parent": "Ita",
+    "pos": [
+     12829979.1,
+     114766.3,
+     -193.9
+    ]
+   },
+   {
+    "name": "Tram & Myers Mining",
+    "kind": "outpost",
+    "parent": "Cellin",
+    "pos": [
+     -18987852.3,
+     -2709007.3,
+     -98.7
+    ]
+   },
+   {
+    "name": "Tremonte",
+    "kind": "outpost",
+    "parent": "Clio",
+    "pos": [
+     22447612.9,
+     37280199.4,
+     107.5
+    ]
+   },
+   {
+    "name": "Trilo",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850878.3,
+     -901.9,
+     115.1
+    ]
+   },
+   {
+    "name": "Utopia",
+    "kind": "outpost",
+    "parent": "Yela",
+    "pos": [
+     -19022917.0,
+     -2613998.0,
+     -313.1
+    ]
+   },
+   {
+    "name": "Vivere OLP",
+    "kind": "outpost",
+    "parent": "Aberdeen",
+    "pos": [
+     12905957.4,
+     41053.8,
+     -182.2
+    ]
+   },
+   {
+    "name": "Vivere PAF-I",
+    "kind": "outpost",
+    "parent": "Aberdeen",
+    "pos": [
+     12905952.0,
+     41051.1,
+     -169.7
+    ]
+   },
+   {
+    "name": "Vivere PAF-II",
+    "kind": "outpost",
+    "parent": "Aberdeen",
+    "pos": [
+     12905948.4,
+     41044.9,
+     -177.2
+    ]
+   },
+   {
+    "name": "Vivere PAF-III",
+    "kind": "outpost",
+    "parent": "Aberdeen",
+    "pos": [
+     12905945.3,
+     41053.3,
+     -176.1
+    ]
+   },
+   {
+    "name": "Wailing Rock",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930248.3,
+     -2610144.4,
+     44.4
+    ]
+   },
+   {
+    "name": "Washout",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379449.0,
+     -22000287.7,
+     90.4
+    ]
+   },
+   {
+    "name": "Weeping Cove",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850001.7,
+     -202.8,
+     866.9
+    ]
+   },
+   {
+    "name": "Wiley Flats",
+    "kind": "outpost",
+    "parent": "Wala",
+    "pos": [
+     18379418.1,
+     -22000531.7,
+     -150.3
+    ]
+   },
+   {
+    "name": "Wolf Point Aid Shelter",
+    "kind": "outpost",
+    "parent": "Daymar",
+    "pos": [
+     -18930544.0,
+     -2609879.7,
+     95.7
+    ]
+   },
+   {
+    "name": "World's End",
+    "kind": "outpost",
+    "parent": "Lyria",
+    "pos": [
+     18703689.5,
+     -22121806.0,
+     138.6
+    ]
+   },
+   {
+    "name": "Zephyr",
+    "kind": "outpost",
+    "parent": "Hurston",
+    "pos": [
+     12850565.3,
+     -133.7,
+     986.7
+    ]
+   },
+   {
+    "name": "microTech Logistics Depot S4LD01",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22462969.9,
+     37186212.8,
+     -19.2
+    ]
+   },
+   {
+    "name": "microTech Logistics Depot S4LD13",
+    "kind": "outpost",
+    "parent": "microTech",
+    "pos": [
+     22462929.1,
+     37185565.4,
+     505.8
+    ]
+   },
+   {
+    "name": "ARC-L1 Wide Forest Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     16729220.0,
+     -19942048.2,
+     2239.8
+    ]
+   },
+   {
+    "name": "ARC-L2 Lively Pathway Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     20451005.9,
+     -24368053.5,
+     -293.8
+    ]
+   },
+   {
+    "name": "ARC-L3 Modern Express Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     -25045525.5,
+     14463255.2,
+     -1892.8
+    ]
+   },
+   {
+    "name": "ARC-L4 Faint Glen Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     28476140.2,
+     5018904.2,
+     959.7
+    ]
+   },
+   {
+    "name": "ARC-L5 Yellow Core Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     -9895751.6,
+     -27175156.7,
+     882.5
+    ]
+   },
+   {
+    "name": "Baijini Point",
+    "kind": "station",
+    "parent": "ArcCorp",
+    "pos": [
+     18586892.8,
+     -22152238.3,
+     -359.5
+    ]
+   },
+   {
+    "name": "CRU-L1 Ambitious Dream Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     -17068753.7,
+     -2399482.3,
+     -20.0
+    ]
+   },
+   {
+    "name": "CRU-L4 Shallow Fields Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     -7173768.3,
+     -17750056.5,
+     -2174.8
+    ]
+   },
+   {
+    "name": "CRU-L5 Beautiful Glen Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     -11785012.2,
+     15091235.8,
+     -2796.4
+    ]
+   },
+   {
+    "name": "Covalex Shipping Hub Gundo",
+    "kind": "station",
+    "parent": "Daymar",
+    "pos": [
+     -18930780.7,
+     -2609720.8,
+     -300.0
+    ]
+   },
+   {
+    "name": "Everus Harbor",
+    "kind": "station",
+    "parent": "Hurston",
+    "pos": [
+     12849949.4,
+     -903.5,
+     496.5
+    ]
+   },
+   {
+    "name": "Grim HEX",
+    "kind": "station",
+    "parent": "Yela",
+    "pos": [
+     -19023485.5,
+     -2613612.6,
+     -2.0
+    ]
+   },
+   {
+    "name": "HUR-L1 Green Glade Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     11561412.6,
+     -262.9,
+     -484.6
+    ]
+   },
+   {
+    "name": "HUR-L2 Faithful Dream Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     14139635.6,
+     -1967.3,
+     -527.8
+    ]
+   },
+   {
+    "name": "HUR-L3 Thundering Express Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     -12844743.6,
+     -1554.4,
+     1335.0
+    ]
+   },
+   {
+    "name": "HUR-L4 Melodic Fields Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     6427627.6,
+     11124766.8,
+     666.3
+    ]
+   },
+   {
+    "name": "HUR-L5 High Course Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     6425723.0,
+     -11128362.1,
+     -842.0
+    ]
+   },
+   {
+    "name": "MIC-L1 Shallow Frontier Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     20215827.3,
+     33467069.5,
+     -0.9
+    ]
+   },
+   {
+    "name": "MIC-L2 Long Forest Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     24713774.9,
+     40912934.4,
+     -10634.8
+    ]
+   },
+   {
+    "name": "MIC-L3 Endless Odyssey Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     -22452218.3,
+     -37179923.0,
+     -10590.4
+    ]
+   },
+   {
+    "name": "MIC-L4 Red Crossroads Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     -20968720.7,
+     38056058.4,
+     -11799.3
+    ]
+   },
+   {
+    "name": "MIC-L5 Modern Icarus Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     43448559.9,
+     -857708.0,
+     -7824.4
+    ]
+   },
+   {
+    "name": "Port Tressler",
+    "kind": "station",
+    "parent": "microTech",
+    "pos": [
+     22462646.7,
+     37186290.8,
+     808.8
+    ]
+   },
+   {
+    "name": "Security Post Kareah",
+    "kind": "station",
+    "parent": "Cellin",
+    "pos": [
+     -18987599.5,
+     -2709429.5,
+     200.0
+    ]
+   },
+   {
+    "name": "Seraphim Station",
+    "kind": "station",
+    "parent": "Crusader",
+    "pos": [
+     -18956299.9,
+     -2666344.2,
+     5565.9
+    ]
+   },
+   {
+    "name": "Wikelo Emporium Dasi Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     14333387.2,
+     2001161.6,
+     0.0
+    ]
+   },
+   {
+    "name": "Wikelo Emporium Kinga Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     23761435.4,
+     39225377.3,
+     0.0
+    ]
+   },
+   {
+    "name": "Wikelo Emporium Selo Station",
+    "kind": "station",
+    "parent": "Stanton",
+    "pos": [
+     -20156591.6,
+     -1263139.7,
+     0.0
+    ]
+   }
+  ]
+ },
+ "gateways": [
+  {
+   "from_system": "Nyx",
+   "from": "Pyro Gateway",
+   "to_system": "Pyro",
+   "to": "Nyx Gateway"
+  },
+  {
+   "from_system": "Nyx",
+   "from": "Stanton Gateway",
+   "to_system": "Stanton",
+   "to": "Nyx Gateway"
+  },
+  {
+   "from_system": "Pyro",
+   "from": "Nyx Gateway",
+   "to_system": "Nyx",
+   "to": "Pyro Gateway"
+  },
+  {
+   "from_system": "Pyro",
+   "from": "Stanton Gateway",
+   "to_system": "Stanton",
+   "to": "Pyro Gateway"
+  },
+  {
+   "from_system": "Stanton",
+   "from": "Nyx Gateway",
+   "to_system": "Nyx",
+   "to": "Stanton Gateway"
+  },
+  {
+   "from_system": "Stanton",
+   "from": "Pyro Gateway",
+   "to_system": "Pyro",
+   "to": "Stanton Gateway"
+  }
+ ]
+}

@@ -1,8 +1,9 @@
 # sc-outfitter
 
 Builds the best purchasable loadout for a Star Citizen ship and plans the shopping trip
-through Stanton: which shop to visit in which order, how far each quantum jump is, how long
-it takes and how much quantum fuel it burns. Comes as a CLI and a small GUI.
+through Stanton, Pyro and Nyx: which shop to visit in which order, how far each quantum jump
+is, how long it takes and how much quantum fuel it burns. Jump points between systems are
+part of the route. Comes as a CLI and a small GUI.
 
 Python 3.10+, standard library only (tkinter for the GUI). No account, no API key.
 
@@ -35,8 +36,9 @@ Route from Everus Harbor (quantum drive: Beacon):
 
 ## GUI
 
-`python -m outfitter gui` opens a window: ship, start location, tick the goals that matter
-(with a weight each), hit **Plan route**. The route table lists the stops in flying order with
+`python -m outfitter gui` (or double-click `gui.pyw`) opens a window: pick the ship, where
+you are (system, then planet/moon, then station or city), tick the goals that matter (with a
+weight each), hit **Plan route**. The route table lists the stops in flying order with
 distance, time and fuel; clicking a stop shows what to buy there and in which shop. The
 loadout table below shows every slot with the chosen part, its stats and whether you keep the
 stock part or what it costs.
@@ -74,13 +76,13 @@ radar. Stock parts are kept when nothing sold beats them.
 | `slots <ship>` | list the hull's component slots and stock parts |
 | `components <kind> [--size N] [--goal ...]` | rank parts of one kind |
 | `ships [filter]` | list flight-ready ship names (`--all` incl. concepts) |
-| `locations` | known start locations for `--start` |
+| `locations [system]` | start locations grouped by system and body |
 
 `plan` options:
 
 | Option | Meaning |
 |---|---|
-| `--start LOC` | where you are now (station, city or body; default Everus Harbor) |
+| `--start LOC` | where you are now: a station, city or body, optionally with system, e.g. `Pyro/Checkmate` (default Everus Harbor) |
 | `--goal NAME[=WEIGHT]` | repeatable, see Goals |
 | `--gimbal` | keep gimbal mounts (guns one size smaller) instead of fixed max-size guns |
 | `--turrets` | include manned turret guns in the shopping list |
@@ -97,9 +99,9 @@ Ship names are the wiki names (`ships [filter]` lists them; the GUI dropdown fil
 - Component stats, ship hardpoints and shop prices: [Star Citizen Wiki API](https://api.star-citizen.wiki)
   (the wiki mirrors UEX Corp prices per shop terminal).
 - Shop locations (which station/city a terminal belongs to): [UEX Corp API](https://uexcorp.space/api/documentation/).
-- In-game coordinates of Stanton bodies, Lagrange points and stations: derived from
-  [Valalol/Star-Citizen-Navigation](https://github.com/Valalol/Star-Citizen-Navigation) (MIT),
-  rebuilt with `tools/build_starmap.py`.
+- In-game positions of bodies, stations, outposts and gateways in Stanton, Pyro and Nyx:
+  `starmap_positions.json` from [StarCitizenWiki/scunpacked-data](https://github.com/StarCitizenWiki/scunpacked-data)
+  (extracted game data), reduced to `data/starmap.json` by `tools/build_starmap.py`.
 
 Responses are cached for 24 h in `.cache/`. Delete the folder to force a refresh.
 
@@ -108,20 +110,20 @@ Responses are cached for 24 h in `.cache/`. Delete the folder to force a refresh
 - **Route**: every shop location that sells one of the needed parts is a candidate. All
   subsets of up to `--max-stops` locations and all visiting orders are enumerated; the plan
   with the lowest travel time (plus price, if `--auec-per-minute` is set) wins. Each item is
-  bought at the cheapest shop on the route. Parts only sold where there are no coordinates
-  (Pyro) are listed as extra stops without order or distance.
+  bought at the cheapest shop on the route. A stop in another system is reached through the
+  gateways (Stanton–Pyro, Stanton–Nyx, Pyro–Nyx); the leg shows how many jump points it uses.
 - **Jump time**: spool + 5 s calibration + accelerate/cruise/decelerate at the drive's
   stage-two acceleration + cooldown, plus a fixed landing/shopping/take-off overhead per stop
-  (station 3 min, outpost 4 min, city 7 min).
+  (station 3 min, outpost 4 min, city 7 min) and 2 min per jump point.
 - **Fuel**: distance × the drive's fuel rate. The tank size is the wiki's quantum fuel
   capacity × 1000, which matches the wiki's own range figure. Legs needing more than one tank
   are flagged; refuelling is up to you.
 
 ## Known limits
 
-- Coordinates for Stanton only. Pyro shops appear as unordered extra stops.
-- Positions are the parent body's centre; surface cities and orbital stations sit at the planet.
-  The error is a few thousand km on jumps of tens of millions of km.
+- Positions are static snapshots from the game files. Bodies orbit and rotate, so surface
+  cities drift by up to a planet diameter; irrelevant on jumps of tens of millions of km.
+- Shops at places the map does not know appear as unordered extra stops without distance.
 - Countermeasures, jump modules and paints are not part of the loadout.
 - Prices and availability are what UEX users last reported, not live server data.
 - Power/cooling is reported, not enforced: being over budget is normal on some hulls and only

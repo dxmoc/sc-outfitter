@@ -63,9 +63,9 @@ def make_plan(ship_name: str, start_name: str, goals: dict[str, float] | None = 
               auec_per_minute: float = 0.0, max_stops: int = 5) -> Plan:
     goals = goals or dict(DEFAULT_GOALS)
     starmap = Starmap()
-    start = starmap.locate(start_name, "station")
+    start = starmap.locate(start_name)
     if not start:
-        raise LookupError(f"unknown start location {start_name!r}")
+        raise LookupError(f"unknown start location {start_name!r} (try 'Pyro/Checkmate' or `locations`)")
     ship = load_ship(ship_name, fixed_guns=not gimbal, manned_turrets=turrets)
     catalog = load_catalog()
     picks = choose(ship, catalog, goals, keep_equal=not replace_all, max_grade=max_grade)
@@ -75,12 +75,7 @@ def make_plan(ship_name: str, start_name: str, goals: dict[str, float] | None = 
     return Plan(ship, picks, trip, budget_report(ship, picks), totals(picks), qd, goals)
 
 
-def start_locations() -> list[str]:
-    """Sensible --start choices: stations, cities and bodies."""
+def start_locations() -> list[tuple[str, str, list[str]]]:
+    """(system, body, [stations/cities]) for every body, for menus and the `locations` command."""
     sm = Starmap()
-    out = []
-    for cname, c in sm.containers.items():
-        out.append(cname)
-        out.extend(p for p in c["pois"] if any(k in p for k in (
-            "Station", "Harbor", "Point", "Tressler", "HEX", "Lorville", "Area 18", "New Babbage", "Orison")))
-    return out
+    return [(system, body, sm.places(system, body)) for system in sm.systems() for body in sm.bodies(system)]

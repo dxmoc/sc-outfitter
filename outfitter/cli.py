@@ -63,18 +63,18 @@ def print_plan(plan: Plan) -> None:
         return
     tank = ship.quantum_fuel_units
     if trip.planned:
-        print(f"\nRoute from {trip.start.name} (quantum drive: {plan.quantum_drive.name}):")
+        print(f"\nRoute from {trip.start.label} [{trip.start.system}] (quantum drive: {plan.quantum_drive.name}):")
     for i, s in enumerate(trip.planned, 1):
-        where = s.location.name if s.location.name == s.location.container else \
-            f"{s.location.name} ({s.location.container})"
+        where = f"{s.location.label} [{s.system}]"
         warn = "  !! more than one tank" if tank and s.leg_fuel > tank else ""
-        print(f"  {i}. {where:<40} {s.leg_km / 1e6:>6.2f} Gm  {fmt_duration(s.leg_seconds):>8}  "
-              f"fuel {s.leg_fuel:>6.0f}{warn}")
+        jump = f"  via {s.jumps} jump point(s)" if s.jumps else ""
+        print(f"  {i}. {where:<44} {s.leg_km / 1e6:>6.2f} Gm  {fmt_duration(s.leg_seconds):>8}  "
+              f"fuel {s.leg_fuel:>6.0f}{jump}{warn}")
         for b in s.buys:
             qty = f"{b.quantity}x " if b.quantity > 1 else ""
             print(f"       buy {qty + b.item:<30} {b.price:>8,} aUEC   @ {b.shop}")
     if trip.extra:
-        print("\nOnly sold outside the Stanton map (no order/distance):")
+        print("\nOnly sold at places missing from the map (no order/distance):")
         for s in trip.extra:
             print(f"  - {s.location.name} ({s.system})")
             for b in s.buys:
@@ -118,8 +118,12 @@ def cmd_ships(args: argparse.Namespace) -> int:
 
 
 def cmd_locations(args: argparse.Namespace) -> int:
-    for name in start_locations():
-        print(name)
+    for system, body, places in start_locations():
+        if args.system and system.lower() != args.system.lower():
+            continue
+        print(f"{system} / {body}")
+        for pl in places:
+            print(f"    {pl}")
     return 0
 
 
@@ -143,7 +147,8 @@ def main(argv: list[str] | None = None) -> int:
 
     p = sub.add_parser("plan", help="best loadout + shopping route")
     ship_opts(p)
-    p.add_argument("--start", default="Everus Harbor", help="where you are now (default: Everus Harbor)")
+    p.add_argument("--start", default="Everus Harbor",
+                   help="where you are now, e.g. 'Everus Harbor' or 'Pyro/Checkmate' (default: Everus Harbor)")
     p.add_argument("--goal", action="append", help=goal_help)
     p.add_argument("--max-grade", choices=["A", "B", "C", "D"], help="cap component grade (cheaper builds)")
     p.add_argument("--replace-all", action="store_true", help="buy even if the stock part scores equal")
@@ -170,7 +175,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--all", action="store_true", help="include concept ships")
     p.set_defaults(func=cmd_ships)
 
-    p = sub.add_parser("locations", help="list known start locations")
+    p = sub.add_parser("locations", help="list known start locations by system and body")
+    p.add_argument("system", nargs="?", help="Stanton, Pyro or Nyx")
     p.set_defaults(func=cmd_locations)
 
     p = sub.add_parser("gui", help="open the graphical planner")

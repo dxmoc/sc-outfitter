@@ -1,4 +1,4 @@
-"""Turn a shopping list into the shortest shopping trip through Stanton."""
+"""Turn a shopping list into the shortest shopping trip through Stanton, Pyro and Nyx."""
 from __future__ import annotations
 
 import itertools
@@ -10,8 +10,9 @@ from .optimizer import Pick
 from .starmap import Location, Starmap
 
 # Fixed overhead per stop: approach after quantum exit, landing, walking to the shop, take-off.
-STOP_OVERHEAD_S = {"station": 180.0, "city": 420.0, "outpost": 240.0, "body": 300.0}
+STOP_OVERHEAD_S = {"station": 180.0, "city": 420.0, "outpost": 240.0, "body": 300.0, "gateway": 180.0}
 CALIBRATION_S = 5.0
+JUMP_S = 120.0  # line up, enter and traverse a jump point
 
 
 @dataclass
@@ -56,7 +57,8 @@ class Stop:
     leg_fuel: float = 0.0
     leg_km: float = 0.0
     system: str = "Stanton"
-    planned: bool = True  # False: outside the coordinate data, listed without distance/order
+    planned: bool = True  # False: not in the coordinate data, listed without distance/order
+    jumps: int = 0        # system jumps on the way here
 
     @property
     def cost(self) -> int:
@@ -127,10 +129,11 @@ def _shop_options(picks: list[Pick], terminals: dict[int, dict], starmap: Starma
             if not term:
                 continue
             shop = term.get("name") or o.terminal_name
-            loc = starmap.locate_terminal(term) if term.get("star_system_name") == "Stanton" else None
+            loc = starmap.locate_terminal(term)
             if loc:
-                if loc.name not in per_loc or o.price < per_loc[loc.name][2]:
-                    per_loc[loc.name] = (loc, shop, o.price)
+                key = f"{loc.system}/{loc.name}"  # gateway names repeat across systems
+                if key not in per_loc or o.price < per_loc[key][2]:
+                    per_loc[key] = (loc, shop, o.price)
             else:
                 key = (term.get("star_system_name") or "?", _terminal_place(term))
                 if key not in per_place or o.price < per_place[key][1]:
@@ -149,8 +152,8 @@ def plan_trip(picks: list[Pick], terminals: dict[int, dict], starmap: Starmap, s
     """Pick the set of shops + visiting order that minimizes travel time (+ optional price weight).
 
     Small search space (a dozen shop locations, a handful of items), so we enumerate location
-    subsets up to max_stops and all visiting orders. Items only sold outside the coordinate data
-    (Pyro) are appended as unordered extra stops.
+    subsets up to max_stops and all visiting orders. Items only sold at places missing from the
+    coordinate data are appended as unordered extra stops.
     """
     needed, mapped, unmapped, unavailable = _shop_options(picks, terminals, starmap)
     stops: list[Stop] = []
@@ -160,10 +163,19 @@ def plan_trip(picks: list[Pick], terminals: dict[int, dict], starmap: Starmap, s
         for loc_name, (loc, _, _) in per_loc.items():
             locations[loc_name] = loc
 
-    def leg(a: Location, b: Location) -> tuple[float, float, float]:
-        d_m = a.distance_km(b) * 1000
-        secs, fuel = qd.hop(d_m)
-        return secs + STOP_OVERHEAD_S.get(b.kind, 300.0), fuel, d_m / 1000
+    def leg(a: Location, b: Location) -> tuple[float, float, float, int]:
+        """(seconds, fuel, km, jumps) from a to b, through gateways if they are in different systems."""
+        secs = fuel = km = 0.0
+        jumps = 0
+        for x, y, is_jump in starmap.path(a, b):
+            if is_jump:
+                secs += JUMP_S
+                jumps += 1
+                continue
+            d_m = x.distance_km(y) * 1000
+            s, f = qd.hop(d_m)
+            secs, fuel, km = secs + s, fuel + f, km + d_m / 1000
+        return secs + STOP_OVERHEAD_S.get(b.kind, 300.0), fuel, km, jumps
 
     best: tuple[float, list[Stop]] | None = None
     names = sorted(locations)
@@ -187,8 +199,8 @@ def plan_trip(picks: list[Pick], terminals: dict[int, dict], starmap: Starmap, s
                 total_s = 0.0
                 for l in order:
                     loc = locations[l]
-                    secs, fuel, km = leg(prev, loc)
-                    route.append(Stop(loc, buys[l], secs, fuel, km))
+                    secs, fuel, km, jumps = leg(prev, loc)
+                    route.append(Stop(loc, buys[l], secs, fuel, km, loc.system, True, jumps))
                     total_s += secs
                     prev = loc
                 # price is converted into minutes when the user values their time
@@ -198,11 +210,11 @@ def plan_trip(picks: list[Pick], terminals: dict[int, dict], starmap: Starmap, s
     if best:
         stops.extend(best[1])
 
-    # items only sold where we have no coordinates: cheapest place per item, grouped by place
+    # items only sold at places missing from the coordinate data: cheapest place per item
     extra: dict[tuple[str, str], Stop] = {}
     for item, places in unmapped.items():
         (system, place), (shop, price) = min(places.items(), key=lambda kv: kv[1][1])
-        stop = extra.setdefault((system, place), Stop(Location(place, place, (0, 0, 0), "station"),
+        stop = extra.setdefault((system, place), Stop(Location(place, system, place, (0, 0, 0), "station"),
                                                       system=system, planned=False))
         qty = needed[item]
         stop.buys.append(Buy(item, shop, qty, price * qty))

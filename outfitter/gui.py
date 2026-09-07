@@ -8,7 +8,8 @@ from tkinter import ttk
 
 from . import api
 from .optimizer import GOALS
-from .planner import DEFAULT_GOALS, Plan, make_plan, start_locations
+from .planner import DEFAULT_GOALS, Plan, make_plan
+from .starmap import Starmap
 from .routing import fmt_duration
 
 FALLBACK_SHIPS = ["Gladius", "Arrow", "Cutlass Black", "Avenger Titan", "Hornet F7C Mk II",
@@ -39,20 +40,34 @@ class App(tk.Tk):
         self._all_ships: list[str] = FALLBACK_SHIPS
         threading.Thread(target=self._load_ships, daemon=True).start()
 
-        ttk.Label(top, text="Start").grid(row=0, column=2, sticky="w")
-        self.start = ttk.Combobox(top, values=start_locations(), width=32)
-        self.start.set("Everus Harbor")
-        self.start.grid(row=0, column=3, sticky="w", padx=(4, 16))
-
         self.gimbal = tk.BooleanVar(value=False)
         self.turrets = tk.BooleanVar(value=False)
-        ttk.Checkbutton(top, text="keep gimbals", variable=self.gimbal).grid(row=0, column=4, sticky="w")
-        ttk.Checkbutton(top, text="manned turrets", variable=self.turrets).grid(row=0, column=5, sticky="w")
+        ttk.Checkbutton(top, text="keep gimbals", variable=self.gimbal).grid(row=0, column=2, sticky="w")
+        ttk.Checkbutton(top, text="manned turrets", variable=self.turrets).grid(row=0, column=3, sticky="w")
 
-        ttk.Label(top, text="Max grade").grid(row=0, column=6, sticky="w", padx=(16, 0))
+        ttk.Label(top, text="Max grade").grid(row=0, column=4, sticky="w", padx=(16, 0))
         self.grade = ttk.Combobox(top, values=["any", "A", "B", "C", "D"], width=5, state="readonly")
         self.grade.set("any")
-        self.grade.grid(row=0, column=7, sticky="w", padx=4)
+        self.grade.grid(row=0, column=5, sticky="w", padx=4)
+
+        # where am I: system -> body -> station/city
+        self.starmap = Starmap()
+        ttk.Label(top, text="I am in").grid(row=1, column=0, sticky="w", pady=(6, 0))
+        where = ttk.Frame(top)
+        where.grid(row=1, column=1, columnspan=7, sticky="w", pady=(6, 0))
+        self.system = ttk.Combobox(where, values=self.starmap.systems(), width=10, state="readonly")
+        self.body = ttk.Combobox(where, width=22, state="readonly")
+        self.place = ttk.Combobox(where, width=32, state="readonly")
+        self.system.pack(side="left", padx=(4, 8))
+        self.body.pack(side="left", padx=(0, 8))
+        self.place.pack(side="left")
+        self.system.bind("<<ComboboxSelected>>", self._system_changed)
+        self.body.bind("<<ComboboxSelected>>", self._body_changed)
+        self.system.set("Stanton")
+        self._system_changed()
+        self.body.set("Hurston")
+        self._body_changed()
+        self.place.set("Everus Harbor")
 
         goals = ttk.LabelFrame(self, text="What matters (weight)", padding=8)
         goals.pack(fill="x", padx=8)
@@ -117,6 +132,22 @@ class App(tk.Tk):
         self.loadout_total = ttk.Label(load_frame, text="")
         self.loadout_total.pack(anchor="w", pady=(4, 0))
 
+    def _system_changed(self, _event=None) -> None:
+        bodies = self.starmap.bodies(self.system.get())
+        self.body["values"] = bodies
+        self.body.set(bodies[0] if bodies else "")
+        self._body_changed()
+
+    def _body_changed(self, _event=None) -> None:
+        places = self.starmap.places(self.system.get(), self.body.get())
+        self.place["values"] = ["(in orbit)"] + places
+        self.place.set(places[0] if places else "(in orbit)")
+
+    def _start_name(self) -> str:
+        place = self.place.get()
+        body = self.body.get().replace(" (deep space)", "")
+        return f"{self.system.get()}/{body if place == '(in orbit)' else place}"
+
     def _load_ships(self) -> None:
         try:
             self._queue.put(("ships", api.wiki_vehicles()))
@@ -141,7 +172,7 @@ class App(tk.Tk):
         return goals or dict(DEFAULT_GOALS)
 
     def _start_plan(self) -> None:
-        ship, start = self.ship.get().strip(), self.start.get().strip()
+        ship, start = self.ship.get().strip(), self._start_name()
         if not ship:
             self.status.config(text="enter a ship name")
             return
@@ -185,8 +216,9 @@ class App(tk.Tk):
             tree.delete(*tree.get_children())
         tank = ship.quantum_fuel_units
         for i, s in enumerate(trip.planned, 1):
-            where = s.location.name if s.location.name == s.location.container else \
-                f"{s.location.name}  ({s.location.container})"
+            where = s.location.label
+            if s.jumps:
+                where += f"   (via {s.jumps} jump point{'s' if s.jumps > 1 else ''})"
             fuel = f"{s.leg_fuel:.0f}" + ("  !!" if tank and s.leg_fuel > tank else "")
             items = ", ".join(f"{b.quantity}x {b.item}" if b.quantity > 1 else b.item for b in s.buys)
             self.route.insert("", "end", iid=f"p{i}", values=(
@@ -194,11 +226,11 @@ class App(tk.Tk):
         for j, s in enumerate(trip.extra):
             items = ", ".join(f"{b.quantity}x {b.item}" if b.quantity > 1 else b.item for b in s.buys)
             self.route.insert("", "end", iid=f"x{j}", values=(
-                "-", s.location.name, s.system, "?", "?", "?", items + "  (outside Stanton map)"))
+                "-", s.location.name, s.system, "?", "?", "?", items + "  (not on the map)"))
         if trip.stops:
             pct = f" ({trip.fuel / tank * 100:.0f}% of tank)" if tank else ""
             self.route_total.config(text=(
-                f"Start {trip.start.name}, quantum drive {plan.quantum_drive.name}. "
+                f"Start {trip.start.label} [{trip.start.system}], quantum drive {plan.quantum_drive.name}. "
                 f"Total {fmt_duration(trip.seconds)} incl. landings, {trip.km / 1e6:.2f} Gm, "
                 f"fuel {trip.fuel:.0f}{pct}, {trip.cost:,} aUEC"))
             self.route.selection_set(self.route.get_children()[0])
