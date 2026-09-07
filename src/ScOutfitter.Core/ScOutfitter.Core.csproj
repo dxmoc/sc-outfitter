@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>ScOutfitter.Core</RootNamespace>
+    <AssemblyName>ScOutfitter.Core</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Positions of bodies, stations and gateways; rebuilt by tools/build_starmap.py -->
+    <EmbeddedResource Include="Data\starmap.json" LogicalName="starmap.json" />
+  </ItemGroup>
+
+</Project>

@@ -16,7 +16,7 @@ KEEP = {
 }
 
 src = pathlib.Path(__file__).with_name("scunpacked_starmap_positions.json")
-dst = pathlib.Path(__file__).resolve().parent.parent / "data" / "starmap.json"
+dst = pathlib.Path(__file__).resolve().parent.parent / "src" / "ScOutfitter.Core" / "Data" / "starmap.json"
 
 raw = json.loads(src.read_text(encoding="utf-8"))
 ents = raw["entities"]

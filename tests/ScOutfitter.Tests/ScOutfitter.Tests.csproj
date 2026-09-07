@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ScOutfitter.Tests</RootNamespace>
+    <AssemblyName>sc-outfitter-tests</AssemblyName>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="System.IO" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ScOutfitter.Core\ScOutfitter.Core.csproj" />
+    <ProjectReference Include="..\..\src\ScOutfitter.App\ScOutfitter.App.csproj" />
+  </ItemGroup>
+
+</Project>

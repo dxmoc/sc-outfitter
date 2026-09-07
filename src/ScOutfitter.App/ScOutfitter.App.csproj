@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>ScOutfitter.App</RootNamespace>
+    <AssemblyName>sc-outfitter</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ScOutfitter.Core\ScOutfitter.Core.csproj" />
+  </ItemGroup>
+
+</Project>

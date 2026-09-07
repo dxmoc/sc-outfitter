@@ -1,0 +1,264 @@
+<Window x:Class="ScOutfitter.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ScOutfitter.App"
+        Title="sc-outfitter" Width="1380" Height="920" MinWidth="1100" MinHeight="700"
+        Background="{StaticResource Bg}" WindowStartupLocation="CenterScreen"
+        FontFamily="Segoe UI" FontSize="13"
+        d:DataContext="{d:DesignInstance Type=local:MainViewModel}"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <Style x:Key="FieldLabel" TargetType="TextBlock" BasedOn="{StaticResource MutedText}">
+            <Setter Property="Margin" Value="0,10,0,4" />
+        </Style>
+        <Style x:Key="RouteRowStyle" TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsWarning}" Value="True">
+                    <Setter Property="Foreground" Value="{StaticResource Warn}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsExtra}" Value="True">
+                    <Setter Property="Foreground" Value="{StaticResource Muted}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="LoadoutRowStyle" TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsKeep}" Value="True">
+                    <Setter Property="Foreground" Value="{StaticResource Muted}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="16">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="380" />
+            <ColumnDefinition Width="16" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- sidebar -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,8">
+            <StackPanel Margin="0,0,6,0">
+                <StackPanel Orientation="Horizontal" Margin="4,0,0,14">
+                    <Border Width="34" Height="34" CornerRadius="8" Background="{StaticResource Accent}" VerticalAlignment="Center">
+                        <Path Data="M6,30 L22,6 L38,30 L22,24 Z" Fill="{StaticResource Bg}" Stretch="Uniform" Margin="8" />
+                    </Border>
+                    <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="sc-outfitter" FontSize="20" FontWeight="SemiBold" />
+                        <TextBlock Text="best loadout + shopping route" Style="{StaticResource MutedText}" />
+                    </StackPanel>
+                </StackPanel>
+
+                <Border Style="{StaticResource Card}">
+                    <StackPanel>
+                        <TextBlock Text="SHIP" Style="{StaticResource SectionTitle}" />
+                        <ComboBox x:Name="ShipBox" IsEditable="True" IsTextSearchEnabled="False"
+                                  Text="{Binding ShipText, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding ShipNames}" />
+                        <TextBlock Text="Type to filter, e.g. 'stingray' or 'cutlass'" Style="{StaticResource MutedText}" FontSize="11" Margin="0,6,0,0" />
+
+                        <TextBlock Text="Options" Style="{StaticResource FieldLabel}" />
+                        <CheckBox Content="keep gimbal mounts (guns one size smaller)" IsChecked="{Binding KeepGimbals}" Margin="0,4" />
+                        <CheckBox Content="include manned turret guns" IsChecked="{Binding MannedTurrets}" Margin="0,4" />
+                        <CheckBox Content="buy every slot (ignore stock parts)" IsChecked="{Binding BuyAll}" Margin="0,4"
+                                  ToolTip="Use when your ship does not spawn with what the wiki lists as stock." />
+                        <Grid Margin="0,8,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="90" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Max grade" VerticalAlignment="Center" Margin="0,0,10,0" />
+                            <ComboBox Grid.Column="1" ItemsSource="{Binding Grades}" SelectedItem="{Binding MaxGrade}" />
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Card}" Margin="0,12,0,0">
+                    <StackPanel>
+                        <TextBlock Text="WHERE I AM" Style="{StaticResource SectionTitle}" />
+                        <TextBlock Text="System" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
+                        <ComboBox ItemsSource="{Binding Systems}" SelectedItem="{Binding SelectedSystem}" />
+                        <TextBlock Text="Planet / moon" Style="{StaticResource FieldLabel}" />
+                        <ComboBox ItemsSource="{Binding Bodies}" SelectedItem="{Binding SelectedBody}" />
+                        <TextBlock Text="Station / city" Style="{StaticResource FieldLabel}" />
+                        <ComboBox ItemsSource="{Binding Places}" SelectedItem="{Binding SelectedPlace}" />
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Card}" Margin="0,12,0,0">
+                    <StackPanel>
+                        <TextBlock Text="WHAT MATTERS" Style="{StaticResource SectionTitle}" />
+                        <ItemsControl ItemsSource="{Binding GoalRows}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,3">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="110" />
+                                            <ColumnDefinition Width="52" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox Content="{Binding Name}" IsChecked="{Binding Enabled}" VerticalAlignment="Center" />
+                                        <TextBox Grid.Column="1" Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged}" Padding="6,3"
+                                                 HorizontalContentAlignment="Center" ToolTip="weight" />
+                                        <TextBlock Grid.Column="2" Text="{Binding Description}" Style="{StaticResource MutedText}" FontSize="11"
+                                                   VerticalAlignment="Center" Margin="10,0,0,0" TextWrapping="Wrap" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock Style="{StaticResource MutedText}" FontSize="11" Margin="0,8,0,0" TextWrapping="Wrap"
+                                   Text="Unticked kinds fall back to a balanced score. Power plants and coolers always take the highest output." />
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+            <StackPanel Grid.Row="1" Margin="0,0,6,0">
+                <Button Content="Plan route" Style="{StaticResource AccentButton}" Command="{Binding PlanCommand}"
+                        HorizontalAlignment="Stretch" AutomationProperties.Name="Plan route" />
+                <ProgressBar IsIndeterminate="True" Visibility="{Binding Busy, Converter={StaticResource BoolToVis}}" Margin="0,8,0,0" />
+                <TextBlock Text="{Binding Status}" Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="2,8,0,0" MinHeight="32" />
+            </StackPanel>
+        </Grid>
+
+        <!-- results -->
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="2*" MinHeight="140" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="1.2*" MinHeight="100" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="2.2*" MinHeight="140" />
+            </Grid.RowDefinitions>
+
+            <!-- summary -->
+            <Border Style="{StaticResource Card}" Margin="0,0,0,12" Padding="16,12">
+                <StackPanel>
+                    <Grid>
+                        <TextBlock Text="{Binding ShipTitle}" FontSize="18" FontWeight="SemiBold" />
+                        <TextBlock Text="{Binding GoalsText}" Style="{StaticResource MutedText}" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+                    </Grid>
+                    <WrapPanel Margin="0,12,0,0">
+                        <Border Style="{StaticResource Tile}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding DpsText}" Style="{StaticResource TileValue}" />
+                                <TextBlock Text="gun dps" Style="{StaticResource TileLabel}" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource Tile}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding ShieldText}" Style="{StaticResource TileValue}" />
+                                <TextBlock Text="shield hp" Style="{StaticResource TileLabel}" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource Tile}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding MissileText}" Style="{StaticResource TileValue}" />
+                                <TextBlock Text="missile dmg" Style="{StaticResource TileLabel}" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource Tile}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding PowerText}" Style="{StaticResource TileValue}" />
+                                <TextBlock Text="power use / gen" Style="{StaticResource TileLabel}" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource Tile}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding CoolingText}" Style="{StaticResource TileValue}" />
+                                <TextBlock Text="cooling use / gen" Style="{StaticResource TileLabel}" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource Tile}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding TimeText}" Style="{StaticResource TileValue}" Foreground="{StaticResource Accent}" />
+                                <TextBlock Text="flight incl. landings" Style="{StaticResource TileLabel}" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource Tile}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding DistanceText}" Style="{StaticResource TileValue}" />
+                                <TextBlock Text="distance" Style="{StaticResource TileLabel}" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource Tile}">
+                            <StackPanel>
+                                <TextBlock Text="{Binding FuelText}" Style="{StaticResource TileValue}" />
+                                <TextBlock Text="quantum fuel (of tank)" Style="{StaticResource TileLabel}" />
+                            </StackPanel>
+                        </Border>
+                        <Border Style="{StaticResource Tile}" Margin="0">
+                            <StackPanel>
+                                <TextBlock Text="{Binding CostText}" Style="{StaticResource TileValue}" Foreground="{StaticResource Good}" />
+                                <TextBlock Text="aUEC to spend" Style="{StaticResource TileLabel}" />
+                            </StackPanel>
+                        </Border>
+                    </WrapPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- route -->
+            <Border Grid.Row="1" Style="{StaticResource Card}" Padding="16,12">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Text="ROUTE - FLY IN THIS ORDER" Style="{StaticResource SectionTitle}" />
+                    <TextBlock DockPanel.Dock="Bottom" Text="{Binding RouteNote}" Style="{StaticResource MutedText}" Margin="0,8,0,0" TextWrapping="Wrap" />
+                    <DataGrid ItemsSource="{Binding RouteRows}" SelectedItem="{Binding SelectedRoute}" RowStyle="{StaticResource RouteRowStyle}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="#" Binding="{Binding StepText}" Width="40" />
+                            <DataGridTextColumn Header="Where" Binding="{Binding Where}" Width="2.2*" />
+                            <DataGridTextColumn Header="System" Binding="{Binding System}" Width="80" />
+                            <DataGridTextColumn Header="Distance" Binding="{Binding Distance}" Width="90" />
+                            <DataGridTextColumn Header="Time" Binding="{Binding Time}" Width="80" />
+                            <DataGridTextColumn Header="Fuel" Binding="{Binding Fuel}" Width="80" />
+                            <DataGridTextColumn Header="Buy there" Binding="{Binding Items}" Width="3*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </Border>
+            <GridSplitter Grid.Row="2" />
+
+            <!-- shopping list -->
+            <Border Grid.Row="3" Style="{StaticResource Card}" Padding="16,12">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Text="SHOPPING LIST AT THE SELECTED STOP" Style="{StaticResource SectionTitle}" />
+                    <DataGrid ItemsSource="{Binding BuyRows}" IsHitTestVisible="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Item" Binding="{Binding Item}" Width="2*" />
+                            <DataGridTextColumn Header="Qty" Binding="{Binding Quantity}" Width="60" />
+                            <DataGridTextColumn Header="Shop" Binding="{Binding Shop}" Width="3*" />
+                            <DataGridTextColumn Header="aUEC" Binding="{Binding Price}" Width="110" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </Border>
+            <GridSplitter Grid.Row="4" />
+
+            <!-- loadout -->
+            <Border Grid.Row="5" Style="{StaticResource Card}" Padding="16,12">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Text="LOADOUT" Style="{StaticResource SectionTitle}" />
+                    <DataGrid ItemsSource="{Binding LoadoutRows}" RowStyle="{StaticResource LoadoutRowStyle}" IsHitTestVisible="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Slot" Binding="{Binding Kind}" Width="110" />
+                            <DataGridTextColumn Header="S" Binding="{Binding Size}" Width="44" />
+                            <DataGridTextColumn Header="Item" Binding="{Binding Item}" Width="2*" />
+                            <DataGridTextColumn Header="Gr" Binding="{Binding Grade}" Width="44" />
+                            <DataGridTextColumn Header="Buy / keep" Binding="{Binding Status}" Width="100" />
+                            <DataGridTextColumn Header="Stock (wiki)" Binding="{Binding Stock}" Width="1.4*" />
+                            <DataGridTextColumn Header="Stats" Binding="{Binding Stats}" Width="2.6*" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
