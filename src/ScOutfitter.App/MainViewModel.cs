@@ -64,8 +64,7 @@ public sealed class GoalRow(string name, string description, bool enabled, doubl
         double.TryParse(Weight.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out double w) && w > 0 ? w : 1;
 }
 
-public sealed record RouteRow(int Step, string StepText, string Where, string System, string Distance, string Time, string Fuel,
-    string Items, bool IsWarning, bool IsExtra, Stop Stop);
+public sealed record RouteRow(int Step, string StepText, string Where, string System, string Distance, string Items, bool IsExtra, Stop Stop);
 
 public sealed record BuyRow(string Item, int Quantity, string Shop, string Price);
 
@@ -214,21 +213,12 @@ public sealed class MainViewModel : Observable
     public string ShieldText => _plan is null ? "-" : Inv($"{_plan.Totals.ShieldHp:N0}");
     public string MissileText => _plan is null ? "-" : Inv($"{_plan.Totals.MissileDamage:N0}");
     public string CostText => _plan is null ? "-" : Inv($"{_plan.Trip.Cost:N0}");
-    public string TimeText => _plan is null ? "-" : Router.FormatDuration(_plan.Trip.Seconds);
     public string DistanceText => _plan is null ? "-" : Inv($"{_plan.Trip.Km / 1e6:0.00} Gm");
-    public string FuelText => _plan is null ? "-" : FuelOf(_plan);
     public string PowerText => _plan is null ? "-" : Inv($"{_plan.Budget.PowerUsage:0.#} / {_plan.Budget.PowerGeneration:0}");
     public string CoolingText => _plan is null ? "-" : Inv($"{_plan.Budget.CoolingUsage:0.#} / {_plan.Budget.CoolingGeneration:0}");
     public string RouteNote { get; private set; } = string.Empty;
 
     private static string Inv(FormattableString f) => f.ToString(CultureInfo.InvariantCulture);
-
-    private static string FuelOf(Plan plan)
-    {
-        double tank = plan.Ship.QuantumFuelUnits;
-        string pct = tank > 0 ? Inv($" ({plan.Trip.Fuel / tank * 100:0}%)") : string.Empty;
-        return Inv($"{plan.Trip.Fuel:0}{pct}");
-    }
 
     private void RefreshBodies()
     {
@@ -319,21 +309,18 @@ public sealed class MainViewModel : Observable
         RouteRows.Clear();
         LoadoutRows.Clear();
         BuyRows.Clear();
-        double tank = plan.Ship.QuantumFuelUnits;
         int i = 0;
         foreach (Stop s in plan.Trip.Planned)
         {
             i++;
             string where = s.Location.Label + (s.Jumps > 0 ? $"   via {s.Jumps} jump point{(s.Jumps > 1 ? "s" : "")}" : string.Empty);
-            bool over = tank > 0 && s.LegFuel > tank;
             RouteRows.Add(new RouteRow(i, i.ToString(CultureInfo.InvariantCulture), where, s.System,
-                Inv($"{s.LegKm / 1e6:0.00} Gm"), Router.FormatDuration(s.LegSeconds),
-                Inv($"{s.LegFuel:0}") + (over ? "  !!" : string.Empty), Items(s), over, false, s));
+                Inv($"{s.LegKm / 1e6:0.00} Gm"), Items(s), false, s));
         }
 
         foreach (Stop s in plan.Trip.Extra)
         {
-            RouteRows.Add(new RouteRow(0, "-", s.Location.Name, s.System, "?", "?", "?", Items(s) + "  (not on the map)", false, true, s));
+            RouteRows.Add(new RouteRow(0, "-", s.Location.Name, s.System, "?", Items(s) + "  (not on the map)", true, s));
         }
 
         foreach (Pick p in plan.Picks)
@@ -351,7 +338,7 @@ public sealed class MainViewModel : Observable
         SelectedRoute = RouteRows.FirstOrDefault();
 
         foreach (string prop in new[] { nameof(HasPlan), nameof(ShipTitle), nameof(GoalsText), nameof(DpsText), nameof(ShieldText),
-                     nameof(MissileText), nameof(CostText), nameof(TimeText), nameof(DistanceText), nameof(FuelText),
+                     nameof(MissileText), nameof(CostText), nameof(DistanceText),
                      nameof(PowerText), nameof(CoolingText), nameof(RouteNote) })
         {
             Raise(prop);

@@ -1,9 +1,8 @@
 # sc-outfitter
 
 Windows desktop app that builds the best purchasable loadout for a Star Citizen ship and plans
-the shopping trip through Stanton, Pyro and Nyx: which shop to visit in which order, how far
-each quantum jump is, how long it takes and how much quantum fuel it burns. Jump points between
-systems are part of the route.
+the shopping trip through Stanton, Pyro and Nyx: which shop to visit in which order and how far
+each quantum jump is. Jump points between systems are part of the route.
 
 .NET 8 / WPF, C# 12, no NuGet packages. No account, no API key.
 
@@ -30,7 +29,7 @@ Or build it yourself (the .NET SDK is expected in `%USERPROFILE%\.dotnet`, see `
    units can be mixed. Kinds none of your goals touch fall back to a balanced score; `stealth`
    and `cheap` only count when ticked. Power plants and coolers always take the highest output.
 4. **Plan route**. The summary tiles show dps, shield, missile damage, power and cooling budget,
-   flight time, distance, fuel and cost. The route table lists the stops in flying order; click a
+   distance and cost. The route table lists the stops in flying order; click a
    stop to see what to buy there and in which shop. The loadout table shows every slot.
 
 | Goal | Affects |
@@ -75,13 +74,9 @@ as `fixed`, missiles inside them are still chosen.
   five locations and all visiting orders are enumerated; the plan with the lowest travel time
   wins. Each item is bought at the cheapest shop on the route. Stops in another system are
   reached through the gateways.
-- **Jump time**: spool + 5 s calibration + accelerate/cruise/decelerate at the drive's stage-two
-  acceleration + cooldown, plus a fixed landing/shopping/take-off overhead per stop (station
-  3 min, outpost 4 min, city 7 min) and 2 min per jump point. The equipped quantum drive is used,
-  since you fly the trip before fitting the new one.
-- **Fuel**: distance × the drive's fuel rate. Tank size is the wiki's quantum fuel capacity
-  × 1000, which matches the wiki's own range figure. Legs needing more than one tank are flagged
-  in red; refuelling is up to you.
+- **Ordering**: stops are ordered by modelled flight time (spool, acceleration, cruise speed and
+  cooldown of the equipped quantum drive, a fixed landing/shopping/take-off overhead per stop and
+  2 min per jump point). The time itself is not shown, only the resulting order and distances.
 
 ## Layout
 

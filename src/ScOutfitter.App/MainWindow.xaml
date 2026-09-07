@@ -16,9 +16,6 @@
         </Style>
         <Style x:Key="RouteRowStyle" TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding IsWarning}" Value="True">
-                    <Setter Property="Foreground" Value="{StaticResource Warn}" />
-                </DataTrigger>
                 <DataTrigger Binding="{Binding IsExtra}" Value="True">
                     <Setter Property="Foreground" Value="{StaticResource Muted}" />
                 </DataTrigger>
@@ -180,20 +177,8 @@
                         </Border>
                         <Border Style="{StaticResource Tile}">
                             <StackPanel>
-                                <TextBlock Text="{Binding TimeText}" Style="{StaticResource TileValue}" Foreground="{StaticResource Accent}" />
-                                <TextBlock Text="flight incl. landings" Style="{StaticResource TileLabel}" />
-                            </StackPanel>
-                        </Border>
-                        <Border Style="{StaticResource Tile}">
-                            <StackPanel>
                                 <TextBlock Text="{Binding DistanceText}" Style="{StaticResource TileValue}" />
                                 <TextBlock Text="distance" Style="{StaticResource TileLabel}" />
-                            </StackPanel>
-                        </Border>
-                        <Border Style="{StaticResource Tile}">
-                            <StackPanel>
-                                <TextBlock Text="{Binding FuelText}" Style="{StaticResource TileValue}" />
-                                <TextBlock Text="quantum fuel (of tank)" Style="{StaticResource TileLabel}" />
                             </StackPanel>
                         </Border>
                         <Border Style="{StaticResource Tile}" Margin="0">
@@ -217,8 +202,6 @@
                             <DataGridTextColumn Header="Where" Binding="{Binding Where}" Width="2.2*" />
                             <DataGridTextColumn Header="System" Binding="{Binding System}" Width="80" />
                             <DataGridTextColumn Header="Distance" Binding="{Binding Distance}" Width="90" />
-                            <DataGridTextColumn Header="Time" Binding="{Binding Time}" Width="80" />
-                            <DataGridTextColumn Header="Fuel" Binding="{Binding Fuel}" Width="80" />
                             <DataGridTextColumn Header="Buy there" Binding="{Binding Items}" Width="3*" />
                         </DataGrid.Columns>
                     </DataGrid>
