@@ -244,6 +244,27 @@ public static class ShipTests
 {
     public static Task RunAsync(TestRunner t)
     {
+        List<ShipRef> ships = Fixtures.Store().Ships;
+        t.Equal("five entries labelled", 5, ships.Count);
+        t.Check("base variant keeps the plain name", ships.Any(s => s.Label == "S-65 Stingray" && s.Slug == "krig-s65-stingray"));
+        t.Check("edition gets a tag", ships.Any(s => s.Label == "S-65 Stingray (Ballistic)"));
+        t.Check("BIS edition tag keeps digits", ships.Any(s => s.Label == "Cutlass Black (BIS2950)"));
+        t.Equal("plain name resolves to the base slug", "krig-s65-stingray", ShipResolver.Resolve(ships, "S-65 Stingray").Slug);
+        t.Equal("label resolves to the variant", "krig-s65-stingray-ballistic", ShipResolver.Resolve(ships, "S-65 Stingray (Ballistic)").Slug);
+        t.Equal("substring resolves to the base", "krig-s65-stingray", ShipResolver.Resolve(ships, "stingray").Slug);
+        t.Equal("case does not matter", "aegs-gladius", ShipResolver.Resolve(ships, "GLADIUS").Slug);
+        bool ambiguous = false;
+        try
+        {
+            ShipResolver.Resolve(ships, "a");
+        }
+        catch (LookupException)
+        {
+            ambiguous = true;
+        }
+
+        t.Check("ambiguous substring is reported", ambiguous);
+
         Ship ship = ShipLoader.FromJson(Fixtures.ShipJson());
         t.Equal("name", "Test Ship", ship.Name);
         t.Close("fuel units = capacity x 1000", 600, ship.QuantumFuelUnits);

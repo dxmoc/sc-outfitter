@@ -25,6 +25,8 @@ Or build it yourself (the .NET SDK is expected in `%USERPROFILE%\.dotnet`, see `
 ## Using it
 
 1. **Ship**: type part of the name, the list filters as you type (`stingray` finds `S-65 Stingray`).
+   Editions and variants that share a name are listed with a tag, e.g. `S-65 Stingray (Ballistic)`
+   or `Cutlass Black (BIS2950)`; the plain name is always the base ship.
 2. **Where I am**: system, then planet/moon (or the star for deep-space stations), then station/city.
 3. **What matters**: tick the goals and give them a weight. Every goal maps to one stat per
    component kind; stats are normalized against the best candidate for the slot so different

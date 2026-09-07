@@ -94,7 +94,13 @@ public static class Fixtures
         Catalog = catalog ?? Catalog(),
         Terminals = Terminals(),
         Starmap = Starmap.LoadEmbedded(),
-        ShipNames = ["Gladius", "Cutlass Black", "S-65 Stingray"],
+        Ships = ShipResolver.Label([
+            new ShipRef("Gladius", "aegs-gladius", "AEGS_Gladius", true),
+            new ShipRef("Cutlass Black", "drak-cutlass-black", "DRAK_Cutlass_Black", true),
+            new ShipRef("Cutlass Black", "drak-cutlass-black-bis2950", "DRAK_Cutlass_Black_BIS2950", true),
+            new ShipRef("S-65 Stingray", "krig-s65-stingray-ballistic", "KRIG_S65_Stingray_BALLISTIC", true),
+            new ShipRef("S-65 Stingray", "krig-s65-stingray", "KRIG_S65_Stingray", true),
+        ]),
     };
 
     /// <summary>A Gladius-like hull: 3 gun mounts (one gimballed), 2 racks, shields, plant, coolers, QD, radar.</summary>

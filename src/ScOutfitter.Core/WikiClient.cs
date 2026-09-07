@@ -81,51 +81,33 @@ public sealed class WikiClient
         return node;
     }
 
-    /// <summary>Full vehicle record incl. ports. "Stingray" resolves to "S-65 Stingray".</summary>
-    public async Task<JsonNode> VehicleAsync(string name, CancellationToken ct = default)
+    /// <summary>Full vehicle record incl. ports, fetched by slug so the right variant comes back.</summary>
+    public async Task<JsonNode> VehicleAsync(ShipRef ship, CancellationToken ct = default) =>
+        (await GetJsonAsync($"{Wiki}/vehicles/{Uri.EscapeDataString(ship.Slug)}", ct).ConfigureAwait(false))["data"]
+        ?? throw new InvalidDataException("vehicle without data");
+
+    /// <summary>Resolve a typed name through the ship list, then fetch by slug.</summary>
+    public async Task<JsonNode> VehicleAsync(string query, CancellationToken ct = default)
     {
-        try
-        {
-            return (await GetJsonAsync($"{Wiki}/vehicles/{Uri.EscapeDataString(name)}", ct).ConfigureAwait(false))["data"]
-                   ?? throw new InvalidDataException("vehicle without data");
-        }
-        catch (NotFoundException)
-        {
-            // fall back to a unique substring match on the ship list
-        }
-
-        List<string> all = await VehicleNamesAsync(flightReadyOnly: false, ct).ConfigureAwait(false);
-        List<string> hits = all.Where(n => n.Contains(name, StringComparison.OrdinalIgnoreCase)).ToList();
-        List<string> exact = hits.Where(n => n.Equals(name, StringComparison.OrdinalIgnoreCase)).ToList();
-        if (exact.Count > 0)
-        {
-            hits = exact;
-        }
-
-        if (hits.Count == 1)
-        {
-            return (await GetJsonAsync($"{Wiki}/vehicles/{Uri.EscapeDataString(hits[0])}", ct).ConfigureAwait(false))["data"]
-                   ?? throw new InvalidDataException("vehicle without data");
-        }
-
-        throw hits.Count > 0
-            ? new LookupException($"Ambiguous ship name '{name}': {string.Join(", ", hits.Take(8))}")
-            : new LookupException($"Ship not found on the wiki: '{name}'");
+        List<ShipRef> ships = await VehiclesAsync(flightReadyOnly: false, ct).ConfigureAwait(false);
+        return await VehicleAsync(ShipResolver.Resolve(ships, query), ct).ConfigureAwait(false);
     }
 
-    /// <summary>Names of all spaceships on the wiki, sorted.</summary>
-    public async Task<List<string>> VehicleNamesAsync(bool flightReadyOnly = true, CancellationToken ct = default)
+    /// <summary>All spaceships on the wiki with variant labels, sorted by label.</summary>
+    public async Task<List<ShipRef>> VehiclesAsync(bool flightReadyOnly = true, CancellationToken ct = default)
     {
-        var names = new HashSet<string>(StringComparer.Ordinal);
+        var ships = new List<ShipRef>();
+        var seen = new HashSet<string>(StringComparer.Ordinal);
         for (int page = 1; ; page++)
         {
             JsonNode data = await GetJsonAsync($"{Wiki}/vehicles?limit=50&page={page}", ct).ConfigureAwait(false);
             foreach (JsonNode v in data.Arr("data"))
             {
-                string status = v.Str("production_status", "en_EN").ToLowerInvariant();
-                if (v.Bool("is_spaceship") && (!flightReadyOnly || status == "flight-ready"))
+                string slug = v.Str("slug");
+                bool ready = v.Str("production_status", "en_EN").Equals("flight-ready", StringComparison.OrdinalIgnoreCase);
+                if (v.Bool("is_spaceship") && slug.Length > 0 && seen.Add(slug) && (!flightReadyOnly || ready))
                 {
-                    names.Add(v.Str("name"));
+                    ships.Add(new ShipRef(v.Str("name"), slug, v.Str("class_name"), ready));
                 }
             }
 
@@ -135,7 +117,7 @@ public sealed class WikiClient
             }
         }
 
-        return names.OrderBy(n => n, StringComparer.OrdinalIgnoreCase).ToList();
+        return ShipResolver.Label(ships);
     }
 
     /// <summary>All items of one wiki type (QuantumDrive, Shield, WeaponGun, ...).</summary>

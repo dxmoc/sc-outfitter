@@ -9,7 +9,10 @@ public sealed class DataStore
     public required Dictionary<Kind, List<Component>> Catalog { get; init; }
     public required Dictionary<int, JsonNode> Terminals { get; init; }
     public required Starmap Starmap { get; init; }
-    public required List<string> ShipNames { get; init; }
+    public required List<ShipRef> Ships { get; init; }
+
+    /// <summary>Labels for the ship picker ("S-65 Stingray", "S-65 Stingray (Ballistic)").</summary>
+    public List<string> ShipNames => Ships.Select(s => s.Label).ToList();
     /// <summary>When this data was assembled (local time).</summary>
     public DateTime LoadedAt { get; init; } = DateTime.Now;
     /// <summary>Newest price report UEX has, UTC; null when prices came from the wiki mirror only.</summary>
@@ -20,7 +23,7 @@ public sealed class DataStore
     public static async Task<DataStore> LoadAsync(WikiClient client, IProgress<string>? progress = null, CancellationToken ct = default)
     {
         progress?.Report("Loading ship list ...");
-        List<string> ships = await client.VehicleNamesAsync(true, ct).ConfigureAwait(false);
+        List<ShipRef> ships = await client.VehiclesAsync(true, ct).ConfigureAwait(false);
         Dictionary<Kind, List<Component>> catalog = await Core.Catalog.LoadAsync(client, progress, ct).ConfigureAwait(false);
         progress?.Report("Loading shop locations ...");
         Dictionary<int, JsonNode> terminals = await client.TerminalsAsync(ct).ConfigureAwait(false);
@@ -43,7 +46,7 @@ public sealed class DataStore
         Starmap starmap = Starmap.LoadEmbedded();
         return new DataStore
         {
-            Client = client, Catalog = catalog, Terminals = terminals, Starmap = starmap, ShipNames = ships,
+            Client = client, Catalog = catalog, Terminals = terminals, Starmap = starmap, Ships = ships,
             PricesNewestUtc = newest, LivePriced = live,
         };
     }
@@ -88,7 +91,8 @@ public static class Planner
         goals ??= Goals.Default();
         Location start = data.Starmap.Locate(startName)
                          ?? throw new LookupException($"Unknown start location '{startName}' (try 'Pyro/Checkmate').");
-        JsonNode vehicle = await data.Client.VehicleAsync(shipName, ct).ConfigureAwait(false);
+        ShipRef ship = ShipResolver.Resolve(data.Ships, shipName);
+        JsonNode vehicle = await data.Client.VehicleAsync(ship, ct).ConfigureAwait(false);
         return Make(data, vehicle, start, goals, options);
     }
 
