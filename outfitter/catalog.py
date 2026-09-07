@@ -66,7 +66,7 @@ class Component:
         if self.kind == "missile":
             return f"{s['damage']:.0f} dmg, {s['speed']:.0f} m/s, {s['range'] / 1000:.0f} km, {s['signal']}"
         if self.kind == "radar":
-            return f"sensitivity {s['sensitivity']:.2f}"
+            return f"aim assist {s['aim_range']:.0f} m, EM {s['em']:.0f}"
         return ""
 
 
@@ -128,9 +128,14 @@ def _stats(kind: str, item: dict) -> dict | None:
         r = item.get("radar") or {}
         sens = r.get("sensitivity") or {}
         vals = [sens.get(k) for k in ("infrared", "cross_section", "electromagnetic") if sens.get(k)]
-        if not vals:
+        aim = (r.get("aim_assist") or {}).get("distance_max_assignment") or 0
+        if not vals and not aim:
             return None
-        return {"sensitivity": sum(vals) / len(vals), "sub_type": item.get("sub_type") or ""}
+        # sensitivity is identical across all radars in 4.x; what differs is the aim-assist range
+        # (the number Erkul shows in green) and the EM signature
+        em = (item.get("emission") or {}).get("em_max") or 0
+        return {"aim_range": float(aim), "sensitivity": sum(vals) / len(vals) if vals else 0.0,
+                "em": float(em), "sub_type": item.get("sub_type") or ""}
     return None
 
 

@@ -20,7 +20,8 @@ GOALS = {
     "regen": "shield regeneration",
     "speed": "quantum drive speed",
     "fuel": "quantum fuel efficiency",
-    "detection": "radar sensitivity",
+    "detection": "radar aim-assist range",
+    "stealth": "low EM signature (radar)",
     "cheap": "prefer cheaper parts",
 }
 
@@ -29,7 +30,7 @@ KIND_GOALS = {
     "gun": {"dps": "dps", "range": "range"},
     "shield": {"tank": "hp", "regen": "regen"},
     "quantum_drive": {"speed": "speed", "fuel": "efficiency"},
-    "radar": {"detection": "sensitivity"},
+    "radar": {"detection": "aim_range", "stealth": "low_em"},
     "missile": {"damage": "damage", "range": "range"},
     "missile_rack": {"damage": "payload", "range": "range"},
     "power_plant": {"_": "power"},
@@ -41,6 +42,9 @@ def _stat(comp: Component, key: str) -> float:
     if key == "efficiency":
         fr = comp.stats.get("fuel_rate") or 0
         return 1.0 / fr if fr else 0.0
+    if key == "low_em":
+        em = comp.stats.get("em") or 0
+        return 1.0 / em if em else 0.0
     return float(comp.stats.get(key) or 0.0)
 
 

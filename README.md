@@ -59,7 +59,8 @@ back to a balanced score, and power plants/coolers always take the highest outpu
 | `regen` | shield regeneration |
 | `speed` | quantum drive speed |
 | `fuel` | quantum fuel per Gm (less is better) |
-| `detection` | radar sensitivity |
+| `detection` | radar aim-assist range |
+| `stealth` | low radar EM signature |
 | `cheap` | lower price, across all kinds |
 
 Default when nothing is chosen: `dps damage tank regen=0.5 speed`.
