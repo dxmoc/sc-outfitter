@@ -37,6 +37,8 @@ class Component:
     power_draw: float = 0.0
     coolant_draw: float = 0.0
     offers: list[Offer] = field(default_factory=list)
+    tags: frozenset = frozenset()           # e.g. {"LaserRepeater", "Wolf_Gun"}
+    required_tags: frozenset = frozenset()  # bespoke parts: only fit ports that carry these
 
     @property
     def buyable(self) -> bool:
@@ -157,7 +159,8 @@ def load_catalog(kinds: set[str] | None = None) -> dict[str, list[Component]]:
             power, coolant = _usage(item)
             comp = Component(item["name"], kind, int(item.get("size") or 0),
                              str(item.get("grade") or "?"), str(item.get("class") or ""),
-                             stats, power, coolant, _offers(item))
+                             stats, power, coolant, _offers(item),
+                             frozenset(item.get("tags") or []), frozenset(item.get("required_tags") or []))
             key = (comp.name, comp.size)
             if key in by_key:
                 by_key[key].offers.extend(comp.offers)

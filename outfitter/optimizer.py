@@ -77,10 +77,21 @@ class Pick:
         return 0 if self.keep else (self.component.cheapest or 0) * self.quantity
 
 
-def _candidates(comps: list[Component], slot_size: int, exact: bool) -> list[Component]:
-    if exact:
-        return [c for c in comps if c.size == slot_size and c.buyable]
-    return [c for c in comps if c.size <= slot_size and c.buyable]
+def fits(comp: Component, slot: Slot) -> bool:
+    """Bespoke ports (e.g. the Stingray's Merlin_Nose / Wolf_Gun) only take parts with those tags,
+    and bespoke parts only go into ports that offer their tag."""
+    if not slot.required_tags <= comp.tags:
+        return False
+    return comp.required_tags <= slot.port_tags
+
+
+def _candidates(comps: list[Component], slot: Slot, exact: bool) -> list[Component]:
+    size_ok = (lambda c: c.size == slot.size) if exact else (lambda c: c.size <= slot.size)
+    return [c for c in comps if size_ok(c) and c.buyable and fits(c, slot)]
+
+
+def _missile_candidates(missiles: list[Component], size: int) -> list[Component]:
+    return [c for c in missiles if c.size == size and c.buyable and not c.required_tags]
 
 
 def _best(cands: list[Component], goals: dict[str, float]) -> Component | None:
@@ -97,7 +108,7 @@ def _attach_rack_stats(racks: list[Component], missiles: list[Component], goals:
     """
     best_missiles: dict[str, Component] = {}
     for rack in racks:
-        cands = _candidates(missiles, rack.stats["missile_size"], exact=True)
+        cands = _missile_candidates(missiles, rack.stats["missile_size"])
         m = _best(cands, goals)
         if m is None:
             rack.stats["payload"] = rack.stats["range"] = 0.0
@@ -122,7 +133,7 @@ def choose(ship: Ship, catalog: dict[str, list[Component]], goals: dict[str, flo
 
     for slot in ship.slots:
         comps = catalog.get(slot.kind, [])
-        cands = _candidates(comps, slot.size, exact=slot.kind not in ("gun",))
+        cands = _candidates(comps, slot, exact=slot.kind not in ("gun",))
         if max_grade:
             cands = [c for c in cands if c.grade <= max_grade] or cands
         current = by_name.get(slot.equipped or "") if trust_stock else None

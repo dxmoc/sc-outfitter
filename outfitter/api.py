@@ -34,9 +34,18 @@ def wiki_vehicle(name: str) -> dict:
     try:
         return _get_json(url)["data"]
     except urllib.error.HTTPError as e:  # type: ignore[attr-defined]
-        if e.code == 404:
-            raise LookupError(f"ship not found on the wiki: {name!r}") from None
-        raise
+        if e.code != 404:
+            raise
+    # "Stingray" -> "S-65 Stingray": fall back to a unique substring match on the ship list
+    hits = [n for n in wiki_vehicles(flight_ready_only=False) if name.lower() in n.lower()]
+    exact = [n for n in hits if n.lower() == name.lower()]
+    if exact:
+        hits = exact
+    if len(hits) == 1:
+        return _get_json(f"{WIKI}/vehicles/{urllib.parse.quote(hits[0])}")["data"]
+    if hits:
+        raise LookupError(f"ambiguous ship name {name!r}: {', '.join(hits[:8])}")
+    raise LookupError(f"ship not found on the wiki: {name!r}")
 
 
 def wiki_vehicles(flight_ready_only: bool = True) -> list[str]:

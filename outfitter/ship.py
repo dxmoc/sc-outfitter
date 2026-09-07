@@ -17,6 +17,8 @@ class Slot:
     equipped: str | None
     gimbal: bool = False              # gun slot currently carrying a gimbal mount
     equipped_missile: str | None = None  # missile_rack slots: what the stock rack is loaded with
+    required_tags: frozenset = frozenset()  # bespoke ports (Stingray "Merlin_Nose"): item must carry these
+    port_tags: frozenset = frozenset()      # tags this port offers to items that require some
 
     def __str__(self) -> str:
         return f"{self.kind} S{self.size} ({self.port})"
@@ -45,19 +47,32 @@ def _compatible(port: dict, type_name: str) -> bool:
     return any(c.get("type") == type_name for c in (port.get("compatible_types") or []))
 
 
-def _walk_ports(ports: list[dict], slots: list[Slot], *, fixed_guns: bool, manned: bool) -> None:
+def _tags(*ports: dict, vehicle_tags: frozenset = frozenset()) -> tuple[frozenset, frozenset]:
+    req: set[str] = set()
+    offered: set[str] = set(vehicle_tags)
+    for p in ports:
+        if p:
+            req |= set(p.get("required_tags") or [])
+            offered |= set(p.get("port_tags") or []) | set(p.get("required_tags") or [])
+    return frozenset(req), frozenset(offered)
+
+
+def _walk_ports(ports: list[dict], slots: list[Slot], *, fixed_guns: bool, manned: bool,
+                vehicle_tags: frozenset = frozenset()) -> None:
     for p in ports or []:
         ptype = p.get("type")
         size = int((p.get("sizes") or {}).get("max") or 0)
         eq = (p.get("equipped_item") or {}).get("name")
         children = p.get("ports") or []
+        req, offered = _tags(p, vehicle_tags=vehicle_tags)
         if ptype == "MissileLauncher":
             missile = next(((c.get("equipped_item") or {}).get("name") for c in children
                             if c.get("type") == "Missile"), None)
-            slots.append(Slot("missile_rack", size, p["name"], eq, equipped_missile=missile))
+            slots.append(Slot("missile_rack", size, p["name"], eq, equipped_missile=missile,
+                              required_tags=req, port_tags=offered))
             continue
         if ptype in PORT_TYPES:
-            slots.append(Slot(PORT_TYPES[ptype], size, p["name"], eq))
+            slots.append(Slot(PORT_TYPES[ptype], size, p["name"], eq, required_tags=req, port_tags=offered))
             continue
         if _compatible(p, "WeaponGun") and size > 0:
             # a gun hardpoint; may currently hold a gimbal mount whose child port is one size smaller
@@ -65,13 +80,16 @@ def _walk_ports(ports: list[dict], slots: list[Slot], *, fixed_guns: bool, manne
                               if c.get("type") == "WeaponGun" or _compatible(c, "WeaponGun")), None)
             eq_is_gimbal = child_gun is not None and "gimbal" in (eq or "").lower()
             child_eq = (child_gun.get("equipped_item") or {}).get("name") if child_gun else None
+            req, offered = _tags(p, child_gun, vehicle_tags=vehicle_tags)
             if fixed_guns or not eq_is_gimbal:
-                slots.append(Slot("gun", size, p["name"], child_eq if eq_is_gimbal else eq, False))
+                slots.append(Slot("gun", size, p["name"], child_eq if eq_is_gimbal else eq, False,
+                                  required_tags=req, port_tags=offered))
             else:
-                slots.append(Slot("gun", size - 1, p["name"], child_eq, True))
+                slots.append(Slot("gun", size - 1, p["name"], child_eq, True,
+                                  required_tags=req, port_tags=offered))
             continue
         if ptype in ("Turret", "TurretBase") and manned:
-            _walk_ports(children, slots, fixed_guns=fixed_guns, manned=manned)
+            _walk_ports(children, slots, fixed_guns=fixed_guns, manned=manned, vehicle_tags=vehicle_tags)
 
 
 def load_ship(name: str, *, fixed_guns: bool = True, manned_turrets: bool = False) -> Ship:
@@ -83,5 +101,6 @@ def load_ship(name: str, *, fixed_guns: bool = True, manned_turrets: bool = Fals
     ship.power_generation = float((v.get("power") or {}).get("generation_segments") or 0)
     ship.cooling_generation = float((v.get("cooling") or {}).get("generation_segments") or 0)
     ship.role = str(v.get("role") or v.get("career") or "")
-    _walk_ports(v.get("ports") or [], ship.slots, fixed_guns=fixed_guns, manned=manned_turrets)
+    _walk_ports(v.get("ports") or [], ship.slots, fixed_guns=fixed_guns, manned=manned_turrets,
+                vehicle_tags=frozenset(v.get("port_tags") or []))
     return ship

@@ -65,7 +65,8 @@ back to a balanced score, and power plants/coolers always take the highest outpu
 Default when nothing is chosen: `dps damage tank regen=0.5 speed`.
 
 Covered slots: guns, missile racks + missiles, shields, power plant, coolers, quantum drive,
-radar. Stock parts are kept when nothing sold beats them. The stock loadout comes from the
+radar. Bespoke hardpoints (e.g. the Stingray's Kruger-only guns) only get parts that fit them.
+Stock parts are kept when nothing sold beats them. The stock loadout comes from the
 wiki's hardpoint data; the `Stock (wiki)` column shows what it assumes. If that is not what your
 ship actually spawns with, tick **buy every slot** in the GUI or pass `--buy-all`.
 
@@ -95,7 +96,8 @@ ship actually spawns with, tick **buy every slot** in the GUI or pass `--buy-all
 | `--auec-per-minute N` | value of your time; lets the router trade travel time against cheaper shops |
 | `--json` | machine-readable output |
 
-Ship names are the wiki names (`ships [filter]` lists them; the GUI dropdown filters as you type).
+Ship names are the wiki names; a unique substring works too (`Stingray` finds `S-65 Stingray`).
+`ships [filter]` lists them and the GUI dropdown filters as you type.
 
 ## Data sources
 
