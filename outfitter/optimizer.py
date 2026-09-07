@@ -25,6 +25,9 @@ GOALS = {
     "cheap": "prefer cheaper parts",
 }
 
+# goals that only count when chosen explicitly; they never enter the balanced fallback
+OPT_IN_GOALS = {"stealth", "cheap"}
+
 # kind -> {goal: stat key inside Component.stats}
 KIND_GOALS = {
     "gun": {"dps": "dps", "range": "range"},
@@ -52,8 +55,8 @@ def score(comp: Component, goals: dict[str, float], cands: list[Component]) -> f
     """Weighted, normalized score of comp among cands (comp should be part of cands)."""
     mapping = KIND_GOALS.get(comp.kind, {})
     active = {g: w for g, w in goals.items() if g in mapping and w > 0}
-    if not active:  # nothing chosen touches this kind -> balanced over all its stats
-        active = {g: 1.0 for g in mapping}
+    if not active:  # nothing chosen touches this kind -> balanced over its stats, minus opt-in ones
+        active = {g: 1.0 for g in mapping if g not in OPT_IN_GOALS}
     total = 0.0
     for goal, weight in active.items():
         key = mapping[goal]

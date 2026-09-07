@@ -48,7 +48,8 @@ stock part or what it costs.
 "Best" is whatever you tick. Every goal maps to one stat per component kind; stats are
 normalized against the best candidate for the slot so goals with different units can be mixed
 and weighted. Kinds that none of your goals touch (e.g. shields when you only tick `dps`) fall
-back to a balanced score, and power plants/coolers always take the highest output.
+back to a balanced score (`stealth` and `cheap` only count when ticked), and power plants/coolers
+always take the highest output.
 
 | Goal | Affects |
 |---|---|
