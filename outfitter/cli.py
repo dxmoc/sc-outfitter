@@ -47,7 +47,7 @@ def print_plan(plan: Plan) -> None:
     print(f"== {ship.name} - goals: {goals}\n")
     print("Loadout:")
     for p in plan.picks:
-        tag = "keep " if p.keep else f"{p.price:>7,} aUEC"
+        tag = "fixed" if p.fixed else ("keep " if p.keep else f"{p.price:>7,} aUEC")
         qty = f"{p.quantity}x " if p.quantity > 1 else ""
         stock = f"   [stock: {p.stock}]" if p.stock and not p.keep else ""
         print(f"  {p.component.kind:<14} S{p.component.size}  {qty + p.component.name:<30} "

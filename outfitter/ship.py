@@ -19,6 +19,7 @@ class Slot:
     equipped_missile: str | None = None  # missile_rack slots: what the stock rack is loaded with
     required_tags: frozenset = frozenset()  # bespoke ports (Stingray "Merlin_Nose"): item must carry these
     port_tags: frozenset = frozenset()      # tags this port offers to items that require some
+    fixed: bool = False               # port is not editable in game: keep whatever is fitted
 
     def __str__(self) -> str:
         return f"{self.kind} S{self.size} ({self.port})"
@@ -69,10 +70,11 @@ def _walk_ports(ports: list[dict], slots: list[Slot], *, fixed_guns: bool, manne
             missile = next(((c.get("equipped_item") or {}).get("name") for c in children
                             if c.get("type") == "Missile"), None)
             slots.append(Slot("missile_rack", size, p["name"], eq, equipped_missile=missile,
-                              required_tags=req, port_tags=offered))
+                              required_tags=req, port_tags=offered, fixed=not p.get("editable", True)))
             continue
         if ptype in PORT_TYPES:
-            slots.append(Slot(PORT_TYPES[ptype], size, p["name"], eq, required_tags=req, port_tags=offered))
+            slots.append(Slot(PORT_TYPES[ptype], size, p["name"], eq, required_tags=req, port_tags=offered,
+                              fixed=not p.get("editable", True)))
             continue
         if _compatible(p, "WeaponGun") and size > 0:
             # a gun hardpoint; may currently hold a gimbal mount whose child port is one size smaller
@@ -81,9 +83,15 @@ def _walk_ports(ports: list[dict], slots: list[Slot], *, fixed_guns: bool, manne
             eq_is_gimbal = child_gun is not None and "gimbal" in (eq or "").lower()
             child_eq = (child_gun.get("equipped_item") or {}).get("name") if child_gun else None
             req, offered = _tags(p, child_gun, vehicle_tags=vehicle_tags)
-            if fixed_guns or not eq_is_gimbal:
+            mount_fixed = not p.get("editable", True)  # mount is welded on (Stingray): only the gun swaps
+            if mount_fixed and child_gun is not None:
+                child_size = int((child_gun.get("sizes") or {}).get("max") or size)
+                slots.append(Slot("gun", child_size, p["name"], child_eq, eq_is_gimbal,
+                                  required_tags=req, port_tags=offered,
+                                  fixed=not child_gun.get("editable", True)))
+            elif fixed_guns or not eq_is_gimbal:
                 slots.append(Slot("gun", size, p["name"], child_eq if eq_is_gimbal else eq, False,
-                                  required_tags=req, port_tags=offered))
+                                  required_tags=req, port_tags=offered, fixed=mount_fixed))
             else:
                 slots.append(Slot("gun", size - 1, p["name"], child_eq, True,
                                   required_tags=req, port_tags=offered))

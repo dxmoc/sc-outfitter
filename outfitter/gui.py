@@ -246,7 +246,7 @@ class App(tk.Tk):
                                     f"   Not sold anywhere: {', '.join(trip.unavailable)}")
 
         for p in plan.picks:
-            status = "keep" if p.keep else f"{p.price:,}"
+            status = "fixed" if p.fixed else ("keep" if p.keep else f"{p.price:,}")
             name = f"{p.quantity}x {p.component.name}" if p.quantity > 1 else p.component.name
             self.loadout.insert("", "end", values=(p.component.kind, p.component.size, name,
                                                    p.component.grade, status, p.stock or "-",

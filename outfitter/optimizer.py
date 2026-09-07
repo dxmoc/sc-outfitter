@@ -75,6 +75,7 @@ class Pick:
     keep: bool          # already equipped, nothing to buy
     quantity: int = 1   # missiles: one per rack tube
     stock: str | None = None  # what the wiki says is fitted in this slot by default
+    fixed: bool = False       # slot cannot be changed in game
 
     @property
     def price(self) -> int:
@@ -140,17 +141,27 @@ def choose(ship: Ship, catalog: dict[str, list[Component]], goals: dict[str, flo
         cands = _candidates(comps, slot, exact=slot.kind not in ("gun",))
         if max_grade:
             cands = [c for c in cands if c.grade <= max_grade] or cands
-        current = by_name.get(slot.equipped or "") if trust_stock else None
-        if current is not None and current not in cands:
-            cands = cands + [current]  # stock part competes even if it is not sold
-        best = _best(cands, goals)
-        if best is None:
-            continue
-        keep = current is not None and (current.name == best.name or
-                                        (keep_equal and score(current, goals, cands) >= score(best, goals, cands)))
-        if keep:
-            best = current
-        picks.append(Pick(slot, best, keep, stock=slot.equipped))
+        stock_comp = by_name.get(slot.equipped or "")
+        if slot.fixed:
+            # welded-on part (Stingray racks): nothing to choose, but missiles below may still be swapped
+            if stock_comp is None:
+                continue
+            best, keep = stock_comp, True
+            picks.append(Pick(slot, best, keep, stock=slot.equipped, fixed=True))
+        else:
+            current = stock_comp if trust_stock else None
+            if current is not None and current not in cands:
+                cands = cands + [current]  # stock part competes even if it is not sold
+            best = _best(cands, goals)
+            if best is None:
+                if stock_comp is not None:  # nothing sold fits this port: show the stock part as-is
+                    picks.append(Pick(slot, stock_comp, True, stock=slot.equipped, fixed=True))
+                continue
+            keep = current is not None and (current.name == best.name or
+                                            (keep_equal and score(current, goals, cands) >= score(best, goals, cands)))
+            if keep:
+                best = current
+            picks.append(Pick(slot, best, keep, stock=slot.equipped))
 
         if slot.kind == "missile_rack":
             m = best_missiles.get(best.name)
