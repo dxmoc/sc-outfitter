@@ -219,6 +219,23 @@ public static class CatalogTests
         t.Check("missile without damage rejected", Catalog.FromJson(Kind.Missile, JsonNode.Parse("""{"name":"m","size":2,"missile":{}}""")!) is null);
         t.Check("rack keeps required_tags entries", Catalog.FromJson(Kind.MissileRack,
             JsonNode.Parse("""{"name":"MSD","size":3,"required_tags":["x"],"missile_rack":{"missile_count":2,"missile_size":2}}""")!) is not null);
+
+        // live UEX prices replace the wiki mirror, matched by uuid first and name second
+        Dictionary<Kind, List<Component>> cat = Fixtures.Catalog();
+        Component big = cat[Kind.Gun].First(c => c.Name == "Big Gun");
+        var withUuid = new Component { Name = "Renamed Gun", Kind = Kind.Gun, Size = 3, Uuid = "u-1" };
+        cat[Kind.Gun].Add(withUuid);
+        DateTime now = DateTime.UtcNow;
+        int n = Catalog.ApplyUexPrices(cat, [
+            new UexPrice("", "Big Gun", 9, "UEX Shop", 42000, now),
+            new UexPrice("", "Big Gun", 10, "UEX Shop 2", 41000, now),
+            new UexPrice("u-1", "Whatever UEX calls it", 11, "UEX Shop 3", 5, now),
+        ]);
+        t.Equal("two components got live prices", 2, n);
+        t.Equal("wiki offers replaced by UEX rows", 2, big.Offers.Count);
+        t.Equal("cheapest live price", 41000, big.Cheapest);
+        t.Equal("uuid beats name", 5, withUuid.Cheapest);
+        t.Check("unmatched parts keep wiki offers", cat[Kind.Gun].First(c => c.Name == "Cheap Gun").Cheapest == 10000);
         return Task.CompletedTask;
     }
 }

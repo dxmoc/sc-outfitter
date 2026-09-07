@@ -10,6 +10,12 @@ public sealed class DataStore
     public required Dictionary<int, JsonNode> Terminals { get; init; }
     public required Starmap Starmap { get; init; }
     public required List<string> ShipNames { get; init; }
+    /// <summary>When this data was assembled (local time).</summary>
+    public DateTime LoadedAt { get; init; } = DateTime.Now;
+    /// <summary>Newest price report UEX has, UTC; null when prices came from the wiki mirror only.</summary>
+    public DateTime? PricesNewestUtc { get; init; }
+    /// <summary>How many components carry live UEX prices.</summary>
+    public int LivePriced { get; init; }
 
     public static async Task<DataStore> LoadAsync(WikiClient client, IProgress<string>? progress = null, CancellationToken ct = default)
     {
@@ -18,9 +24,35 @@ public sealed class DataStore
         Dictionary<Kind, List<Component>> catalog = await Core.Catalog.LoadAsync(client, progress, ct).ConfigureAwait(false);
         progress?.Report("Loading shop locations ...");
         Dictionary<int, JsonNode> terminals = await client.TerminalsAsync(ct).ConfigureAwait(false);
+
+        progress?.Report("Loading current prices from UEX ...");
+        int live = 0;
+        DateTime? newest = null;
+        try
+        {
+            List<UexPrice> prices = await client.PricesAsync(ct).ConfigureAwait(false);
+            live = Core.Catalog.ApplyUexPrices(catalog, prices);
+            newest = prices.Count > 0 ? prices.Max(p => p.Modified) : null;
+        }
+        catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException or InvalidDataException)
+        {
+            // UEX down: the wiki mirror prices already in the catalog are good enough for today
+        }
+
         progress?.Report("Loading star map ...");
         Starmap starmap = Starmap.LoadEmbedded();
-        return new DataStore { Client = client, Catalog = catalog, Terminals = terminals, Starmap = starmap, ShipNames = ships };
+        return new DataStore
+        {
+            Client = client, Catalog = catalog, Terminals = terminals, Starmap = starmap, ShipNames = ships,
+            PricesNewestUtc = newest, LivePriced = live,
+        };
+    }
+
+    /// <summary>Throw the cache away and load everything again.</summary>
+    public Task<DataStore> ReloadAsync(IProgress<string>? progress = null, CancellationToken ct = default)
+    {
+        Client.ClearCache();
+        return LoadAsync(Client, progress, ct);
     }
 }
 

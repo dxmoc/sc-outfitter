@@ -72,7 +72,7 @@ public sealed record LoadoutRow(string Kind, int Size, string Item, string Grade
 
 public sealed class MainViewModel : Observable
 {
-    private readonly DataStore _data;
+    private DataStore _data;
     private string _shipText = "Gladius";
     private string _selectedSystem = "Stanton";
     private string _selectedBody = "Hurston";
@@ -96,10 +96,56 @@ public sealed class MainViewModel : Observable
         }
 
         PlanCommand = new RelayCommand(PlanAsync, () => !Busy);
+        RefreshCommand = new RelayCommand(RefreshAsync, () => !Busy);
         RefreshBodies();
     }
 
-    public IReadOnlyList<string> ShipNames { get; }
+    public IReadOnlyList<string> ShipNames { get; private set; }
+    public RelayCommand RefreshCommand { get; }
+
+    /// <summary>"prices: UEX, newest report 2 h ago · loaded 15:40"</summary>
+    public string DataText
+    {
+        get
+        {
+            string prices = _data.PricesNewestUtc is { } n
+                ? $"prices: UEX live ({_data.LivePriced} parts), newest report {Ago(n)}"
+                : "prices: wiki mirror (UEX unreachable)";
+            return $"{prices}  ·  loaded {_data.LoadedAt:HH:mm}";
+        }
+    }
+
+    private static string Ago(DateTime utc)
+    {
+        TimeSpan d = DateTime.UtcNow - utc;
+        return d.TotalMinutes < 90 ? $"{Math.Max(1, (int)d.TotalMinutes)} min ago"
+            : d.TotalHours < 36 ? $"{(int)d.TotalHours} h ago"
+            : $"{(int)d.TotalDays} days ago";
+    }
+
+    private async Task RefreshAsync()
+    {
+        Busy = true;
+        Status = "Reloading everything from the wiki and UEX ...";
+        var progress = new Progress<string>(text => Status = text);
+        try
+        {
+            DataStore fresh = await Task.Run(() => _data.ReloadAsync(progress));
+            _data = fresh;
+            ShipNames = fresh.ShipNames;
+            Raise(nameof(ShipNames));
+            Raise(nameof(DataText));
+            Status = "Data refreshed. Plan again to use the new prices.";
+        }
+        catch (Exception ex) when (ex is HttpRequestException or InvalidDataException or TaskCanceledException or IOException)
+        {
+            Status = $"Refresh failed: {ex.Message}";
+        }
+        finally
+        {
+            Busy = false;
+        }
+    }
     public IReadOnlyList<string> Systems { get; }
     public ObservableCollection<string> Bodies { get; } = [];
     public ObservableCollection<string> Places { get; } = [];
@@ -178,6 +224,7 @@ public sealed class MainViewModel : Observable
             if (Set(ref _busy, value))
             {
                 PlanCommand.Refresh();
+                RefreshCommand.Refresh();
             }
         }
     }

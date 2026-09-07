@@ -119,10 +119,19 @@
             </StackPanel>
         </ScrollViewer>
             <StackPanel Grid.Row="1" Margin="0,0,6,0">
-                <Button Content="Plan route" Style="{StaticResource AccentButton}" Command="{Binding PlanCommand}"
-                        HorizontalAlignment="Stretch" AutomationProperties.Name="Plan route" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Plan route" Style="{StaticResource AccentButton}" Command="{Binding PlanCommand}"
+                            HorizontalAlignment="Stretch" AutomationProperties.Name="Plan route" />
+                    <Button Grid.Column="1" Content="Refresh data" Style="{StaticResource GhostButton}" Command="{Binding RefreshCommand}"
+                            Margin="8,0,0,0" ToolTip="Throw the cache away and reload ships, parts and current UEX prices" />
+                </Grid>
                 <ProgressBar IsIndeterminate="True" Visibility="{Binding Busy, Converter={StaticResource BoolToVis}}" Margin="0,8,0,0" />
                 <TextBlock Text="{Binding Status}" Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="2,8,0,0" MinHeight="32" />
+                <TextBlock Text="{Binding DataText}" Style="{StaticResource MutedText}" FontSize="11" TextWrapping="Wrap" Margin="2,2,0,0" />
             </StackPanel>
         </Grid>
 

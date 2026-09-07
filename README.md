@@ -10,7 +10,9 @@ each quantum jump is. Jump points between systems are part of the route.
 
 Download `sc-outfitter.exe` from the [releases](https://github.com/dxmoc/sc-outfitter/releases)
 and start it. The first start downloads the component catalogue (about a minute) behind the
-splash screen; after that everything is cached for a day in `%LOCALAPPDATA%\sc-outfitter\cache`.
+splash screen. Stats and hardpoints are cached for a day, prices for an hour, in
+`%LOCALAPPDATA%\sc-outfitter\cache`. **Refresh data** throws the cache away and reloads everything;
+the line under the buttons shows how old the newest UEX price report is.
 
 Or build it yourself (the .NET SDK is expected in `%USERPROFILE%\.dotnet`, see `build.ps1`):
 
@@ -61,9 +63,10 @@ as `fixed`, missiles inside them are still chosen.
 
 ## Data sources
 
-- Component stats, ship hardpoints and shop prices: [Star Citizen Wiki API](https://api.star-citizen.wiki)
-  (the wiki mirrors UEX Corp prices per shop terminal).
-- Shop locations (which station/city a terminal belongs to): [UEX Corp API](https://uexcorp.space/api/documentation/).
+- Component stats and ship hardpoints: [Star Citizen Wiki API](https://api.star-citizen.wiki).
+- Prices per shop terminal and shop locations: [UEX Corp API](https://uexcorp.space/api/documentation/),
+  fetched live (`items_prices_all`, matched to wiki items by uuid). The wiki's mirrored prices are
+  the fallback when UEX is unreachable.
 - Positions of bodies, stations, outposts and gateways: `starmap_positions.json` from
   [StarCitizenWiki/scunpacked-data](https://github.com/StarCitizenWiki/scunpacked-data) (extracted
   game data), reduced by `tools/build_starmap.py` and embedded into the app.

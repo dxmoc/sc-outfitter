@@ -39,6 +39,8 @@ public sealed class Component
     public required string Name { get; init; }
     public required Kind Kind { get; init; }
     public required int Size { get; init; }
+    /// <summary>Game uuid; UEX carries the same one, so prices can be matched without name games.</summary>
+    public string Uuid { get; init; } = string.Empty;
     public string Grade { get; init; } = "?";
     public string Class { get; init; } = string.Empty;
     public Dictionary<string, double> Stats { get; } = new(StringComparer.Ordinal);
@@ -134,6 +136,33 @@ public static class Catalog
         }
 
         return byKey.Values.ToList();
+    }
+
+    /// <summary>
+    /// Replace the wiki's mirrored offers with what UEX reports right now. Components UEX does not
+    /// know keep their wiki offers. Returns the number of components that got live prices.
+    /// </summary>
+    public static int ApplyUexPrices(IReadOnlyDictionary<Kind, List<Component>> catalog, IReadOnlyList<UexPrice> prices)
+    {
+        ILookup<string, UexPrice> byUuid = prices.Where(p => p.ItemUuid.Length > 0).ToLookup(p => p.ItemUuid, StringComparer.OrdinalIgnoreCase);
+        ILookup<string, UexPrice> byName = prices.ToLookup(p => p.ItemName, StringComparer.OrdinalIgnoreCase);
+        int updated = 0;
+        foreach (Component comp in catalog.Values.SelectMany(c => c))
+        {
+            List<UexPrice> rows = comp.Uuid.Length > 0 && byUuid.Contains(comp.Uuid)
+                ? byUuid[comp.Uuid].ToList()
+                : byName[comp.Name].ToList();
+            if (rows.Count == 0)
+            {
+                continue;
+            }
+
+            comp.Offers.Clear();
+            comp.Offers.AddRange(rows.Select(r => new Offer(r.TerminalId, r.TerminalName, r.PriceBuy)));
+            updated++;
+        }
+
+        return updated;
     }
 
     public static Component? FromJson(Kind kind, JsonNode item)
@@ -285,6 +314,7 @@ public static class Catalog
             Name = item.Str("name"),
             Kind = kind,
             Size = item.Int("size"),
+            Uuid = item.Str("uuid"),
             Grade = item.StrOrNull("grade") is { Length: > 0 } g ? g : "?",
             Class = item.Str("class"),
             Ammo = ammo,

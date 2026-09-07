@@ -40,10 +40,15 @@ public sealed class WikiClient
         }
     }
 
-    public async Task<JsonNode> GetJsonAsync(string url, CancellationToken ct = default)
+    /// <summary>Prices change daily, so they get a shorter cache life than stats and hardpoints.</summary>
+    public TimeSpan PriceTtl { get; set; } = TimeSpan.FromHours(1);
+
+    public Task<JsonNode> GetJsonAsync(string url, CancellationToken ct = default) => GetJsonAsync(url, CacheTtl, ct);
+
+    public async Task<JsonNode> GetJsonAsync(string url, TimeSpan ttl, CancellationToken ct)
     {
         string path = Path.Combine(CacheDir, Convert.ToHexString(SHA1.HashData(Encoding.UTF8.GetBytes(url))) + ".json");
-        if (File.Exists(path) && DateTime.UtcNow - File.GetLastWriteTimeUtc(path) < CacheTtl)
+        if (File.Exists(path) && DateTime.UtcNow - File.GetLastWriteTimeUtc(path) < ttl)
         {
             try
             {
@@ -152,6 +157,29 @@ public sealed class WikiClient
         return items;
     }
 
+    /// <summary>
+    /// Every item price UEX knows, straight from UEX (the wiki mirror lags about a day).
+    /// One request, ~24k rows; matched to wiki items by uuid, by name as fallback.
+    /// </summary>
+    public async Task<List<UexPrice>> PricesAsync(CancellationToken ct = default)
+    {
+        JsonNode data = await GetJsonAsync($"{Uex}/items_prices_all", PriceTtl, ct).ConfigureAwait(false);
+        var rows = new List<UexPrice>();
+        foreach (JsonNode p in data.Arr("data"))
+        {
+            int price = p.Int("price_buy");
+            if (price <= 0)
+            {
+                continue;
+            }
+
+            rows.Add(new UexPrice(p.Str("item_uuid"), p.Str("item_name"), p.Int("id_terminal"), p.Str("terminal_name"), price,
+                DateTimeOffset.FromUnixTimeSeconds((long)p.Num("date_modified")).UtcDateTime));
+        }
+
+        return rows;
+    }
+
     /// <summary>UEX item terminals keyed by id: which station/city every shop belongs to.</summary>
     public async Task<Dictionary<int, JsonNode>> TerminalsAsync(CancellationToken ct = default)
     {
@@ -174,6 +202,8 @@ public sealed class WikiClient
         return http;
     }
 }
+
+public sealed record UexPrice(string ItemUuid, string ItemName, int TerminalId, string TerminalName, int PriceBuy, DateTime Modified);
 
 public sealed class NotFoundException(string url) : Exception($"404: {url}");
 
