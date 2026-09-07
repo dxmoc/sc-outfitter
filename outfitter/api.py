@@ -39,6 +39,21 @@ def wiki_vehicle(name: str) -> dict:
         raise
 
 
+def wiki_vehicles(flight_ready_only: bool = True) -> list[str]:
+    """Names of all spaceships on the wiki (sorted, deduplicated)."""
+    names: set[str] = set()
+    page = 1
+    while True:
+        data = _get_json(f"{WIKI}/vehicles?limit=50&page={page}")
+        for v in data["data"]:
+            status = ((v.get("production_status") or {}).get("en_EN") or "").lower()
+            if v.get("is_spaceship") and (not flight_ready_only or status == "flight-ready"):
+                names.add(v["name"])
+        if page >= data["meta"]["last_page"]:
+            return sorted(names)
+        page += 1
+
+
 def wiki_items(item_type: str) -> list[dict]:
     """All items of one wiki type (QuantumDrive, Shield, PowerPlant, Cooler, WeaponGun, ...)."""
     items: list[dict] = []

@@ -73,6 +73,7 @@ radar. Stock parts are kept when nothing sold beats them.
 | `plan <ship>` | best loadout + shopping route |
 | `slots <ship>` | list the hull's component slots and stock parts |
 | `components <kind> [--size N] [--goal ...]` | rank parts of one kind |
+| `ships [filter]` | list flight-ready ship names (`--all` incl. concepts) |
 | `locations` | known start locations for `--start` |
 
 `plan` options:
@@ -89,7 +90,7 @@ radar. Stock parts are kept when nothing sold beats them.
 | `--auec-per-minute N` | value of your time; lets the router trade travel time against cheaper shops |
 | `--json` | machine-readable output |
 
-Ship names are the wiki names: `Gladius`, `Cutlass Black`, `Constellation Andromeda`, ...
+Ship names are the wiki names (`ships [filter]` lists them; the GUI dropdown filters as you type).
 
 ## Data sources
 

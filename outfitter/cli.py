@@ -5,7 +5,7 @@ import argparse
 import json
 import sys
 
-from . import __version__
+from . import __version__, api
 from .catalog import KINDS, load_catalog
 from .optimizer import GOALS, score
 from .planner import DEFAULT_GOALS, Plan, make_plan, start_locations
@@ -110,6 +110,13 @@ def cmd_components(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_ships(args: argparse.Namespace) -> int:
+    for name in api.wiki_vehicles(flight_ready_only=not args.all):
+        if not args.filter or args.filter.lower() in name.lower():
+            print(name)
+    return 0
+
+
 def cmd_locations(args: argparse.Namespace) -> int:
     for name in start_locations():
         print(name)
@@ -157,6 +164,11 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--size", type=int)
     p.add_argument("--goal", action="append", help=goal_help)
     p.set_defaults(func=cmd_components)
+
+    p = sub.add_parser("ships", help="list ship names known to the wiki")
+    p.add_argument("filter", nargs="?", help="substring to search for")
+    p.add_argument("--all", action="store_true", help="include concept ships")
+    p.set_defaults(func=cmd_ships)
 
     p = sub.add_parser("locations", help="list known start locations")
     p.set_defaults(func=cmd_locations)

@@ -6,12 +6,13 @@ import threading
 import tkinter as tk
 from tkinter import ttk
 
+from . import api
 from .optimizer import GOALS
 from .planner import DEFAULT_GOALS, Plan, make_plan, start_locations
 from .routing import fmt_duration
 
-SHIP_SUGGESTIONS = ["Gladius", "Arrow", "Cutlass Black", "Avenger Titan", "Hornet F7C Mk II",
-                    "Freelancer", "Constellation Andromeda", "Vanguard Warden", "Corsair", "Mercury Star Runner"]
+FALLBACK_SHIPS = ["Gladius", "Arrow", "Cutlass Black", "Avenger Titan", "Hornet F7C Mk II",
+                  "Freelancer", "Constellation Andromeda", "Vanguard Warden", "Corsair", "Mercury Star Runner"]
 
 
 class App(tk.Tk):
@@ -31,9 +32,12 @@ class App(tk.Tk):
         top.pack(fill="x")
 
         ttk.Label(top, text="Ship").grid(row=0, column=0, sticky="w")
-        self.ship = ttk.Combobox(top, values=SHIP_SUGGESTIONS, width=28)
+        self.ship = ttk.Combobox(top, values=FALLBACK_SHIPS, width=28)
         self.ship.set("Gladius")
         self.ship.grid(row=0, column=1, sticky="w", padx=(4, 16))
+        self.ship.bind("<KeyRelease>", self._filter_ships)
+        self._all_ships: list[str] = FALLBACK_SHIPS
+        threading.Thread(target=self._load_ships, daemon=True).start()
 
         ttk.Label(top, text="Start").grid(row=0, column=2, sticky="w")
         self.start = ttk.Combobox(top, values=start_locations(), width=32)
@@ -113,6 +117,18 @@ class App(tk.Tk):
         self.loadout_total = ttk.Label(load_frame, text="")
         self.loadout_total.pack(anchor="w", pady=(4, 0))
 
+    def _load_ships(self) -> None:
+        try:
+            self._queue.put(("ships", api.wiki_vehicles()))
+        except Exception:  # noqa: BLE001 - offline: keep the fallback list
+            pass
+
+    def _filter_ships(self, _event=None) -> None:
+        """Narrow the dropdown to names containing what was typed."""
+        typed = self.ship.get().strip().lower()
+        hits = [n for n in self._all_ships if typed in n.lower()] if typed else self._all_ships
+        self.ship["values"] = hits or self._all_ships
+
     # ---------- planning ----------
     def _goals(self) -> dict[str, float]:
         goals = {}
@@ -147,6 +163,11 @@ class App(tk.Tk):
         try:
             kind, payload = self._queue.get_nowait()
         except queue.Empty:
+            self.after(200, self._poll)
+            return
+        if kind == "ships":
+            self._all_ships = payload
+            self.ship["values"] = payload
             self.after(200, self._poll)
             return
         self.button.state(["!disabled"])
