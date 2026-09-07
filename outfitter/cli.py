@@ -31,7 +31,7 @@ def cmd_plan(args: argparse.Namespace) -> int:
         plan = make_plan(args.ship, args.start, parse_goals(args.goal), gimbal=args.gimbal,
                          turrets=args.turrets, max_grade=args.max_grade, replace_all=args.replace_all,
                          plan_with_new_qd=args.plan_with_new_qd, auec_per_minute=args.auec_per_minute,
-                         max_stops=args.max_stops)
+                         max_stops=args.max_stops, trust_stock=not args.buy_all)
     except LookupError as e:
         sys.exit(str(e))
     if args.json:
@@ -49,8 +49,9 @@ def print_plan(plan: Plan) -> None:
     for p in plan.picks:
         tag = "keep " if p.keep else f"{p.price:>7,} aUEC"
         qty = f"{p.quantity}x " if p.quantity > 1 else ""
+        stock = f"   [stock: {p.stock}]" if p.stock and not p.keep else ""
         print(f"  {p.component.kind:<14} S{p.component.size}  {qty + p.component.name:<30} "
-              f"{p.component.grade:<2} {tag:<13} {p.component.summary()}")
+              f"{p.component.grade:<2} {tag:<13} {p.component.summary()}{stock}")
     print(f"\n  guns {tot['dps']:.0f} dps | shields {tot['shield_hp']:.0f} hp | "
           f"missiles {tot['missile_damage']:.0f} dmg | "
           f"power {budget['power_usage']:.1f}/{budget['power_generation']:.0f} | "
@@ -152,6 +153,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--goal", action="append", help=goal_help)
     p.add_argument("--max-grade", choices=["A", "B", "C", "D"], help="cap component grade (cheaper builds)")
     p.add_argument("--replace-all", action="store_true", help="buy even if the stock part scores equal")
+    p.add_argument("--buy-all", action="store_true",
+                   help="ignore the wiki's stock loadout entirely and buy every slot")
     p.add_argument("--plan-with-new-qd", action="store_true",
                    help="compute travel with the planned quantum drive instead of the equipped one")
     p.add_argument("--auec-per-minute", type=float, default=0.0,

@@ -30,7 +30,8 @@ class Plan:
             "goals": self.goals,
             "loadout": [{"slot": p.slot.port, "kind": p.component.kind, "size": p.slot.size,
                          "item": p.component.name, "grade": p.component.grade, "keep": p.keep,
-                         "quantity": p.quantity, "stats": p.component.stats, "price": p.price}
+                         "quantity": p.quantity, "stats": p.component.stats, "price": p.price,
+                         "stock": p.stock}
                         for p in self.picks],
             "budget": self.budget,
             "totals": self.totals,
@@ -60,7 +61,7 @@ def _trip_drive(picks: list[Pick], catalog: dict[str, list[Component]], ship: Sh
 def make_plan(ship_name: str, start_name: str, goals: dict[str, float] | None = None, *,
               gimbal: bool = False, turrets: bool = False, max_grade: str | None = None,
               replace_all: bool = False, plan_with_new_qd: bool = False,
-              auec_per_minute: float = 0.0, max_stops: int = 5) -> Plan:
+              auec_per_minute: float = 0.0, max_stops: int = 5, trust_stock: bool = True) -> Plan:
     goals = goals or dict(DEFAULT_GOALS)
     starmap = Starmap()
     start = starmap.locate(start_name)
@@ -68,7 +69,8 @@ def make_plan(ship_name: str, start_name: str, goals: dict[str, float] | None = 
         raise LookupError(f"unknown start location {start_name!r} (try 'Pyro/Checkmate' or `locations`)")
     ship = load_ship(ship_name, fixed_guns=not gimbal, manned_turrets=turrets)
     catalog = load_catalog()
-    picks = choose(ship, catalog, goals, keep_equal=not replace_all, max_grade=max_grade)
+    picks = choose(ship, catalog, goals, keep_equal=not replace_all, max_grade=max_grade,
+                   trust_stock=trust_stock)
     terminals = api.uex_terminals()
     qd = _trip_drive(picks, catalog, ship, plan_with_new_qd)
     trip = plan_trip(picks, terminals, starmap, start, qd, auec_per_minute, max_stops)

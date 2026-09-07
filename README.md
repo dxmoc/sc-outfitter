@@ -65,7 +65,9 @@ back to a balanced score, and power plants/coolers always take the highest outpu
 Default when nothing is chosen: `dps damage tank regen=0.5 speed`.
 
 Covered slots: guns, missile racks + missiles, shields, power plant, coolers, quantum drive,
-radar. Stock parts are kept when nothing sold beats them.
+radar. Stock parts are kept when nothing sold beats them. The stock loadout comes from the
+wiki's hardpoint data; the `Stock (wiki)` column shows what it assumes. If that is not what your
+ship actually spawns with, tick **buy every slot** in the GUI or pass `--buy-all`.
 
 ## Commands
 
@@ -88,6 +90,7 @@ radar. Stock parts are kept when nothing sold beats them.
 | `--turrets` | include manned turret guns in the shopping list |
 | `--max-grade A..D` | cap the component grade for cheaper builds |
 | `--replace-all` | buy even if the stock part scores equal |
+| `--buy-all` | ignore the wiki's stock loadout and buy every slot (use when your ship does not spawn with what the wiki lists) |
 | `--plan-with-new-qd` | compute travel with the planned quantum drive instead of the equipped one |
 | `--auec-per-minute N` | value of your time; lets the router trade travel time against cheaper shops |
 | `--json` | machine-readable output |

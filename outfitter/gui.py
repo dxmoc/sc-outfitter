@@ -42,13 +42,17 @@ class App(tk.Tk):
 
         self.gimbal = tk.BooleanVar(value=False)
         self.turrets = tk.BooleanVar(value=False)
+        self.buy_all = tk.BooleanVar(value=False)
         ttk.Checkbutton(top, text="keep gimbals", variable=self.gimbal).grid(row=0, column=2, sticky="w")
         ttk.Checkbutton(top, text="manned turrets", variable=self.turrets).grid(row=0, column=3, sticky="w")
 
-        ttk.Label(top, text="Max grade").grid(row=0, column=4, sticky="w", padx=(16, 0))
+        ttk.Checkbutton(top, text="buy every slot (ignore stock parts)", variable=self.buy_all).grid(
+            row=0, column=4, sticky="w")
+
+        ttk.Label(top, text="Max grade").grid(row=0, column=5, sticky="w", padx=(16, 0))
         self.grade = ttk.Combobox(top, values=["any", "A", "B", "C", "D"], width=5, state="readonly")
         self.grade.set("any")
-        self.grade.grid(row=0, column=5, sticky="w", padx=4)
+        self.grade.grid(row=0, column=6, sticky="w", padx=4)
 
         # where am I: system -> body -> station/city
         self.starmap = Starmap()
@@ -121,11 +125,12 @@ class App(tk.Tk):
 
         load_frame = ttk.LabelFrame(panes, text="Loadout", padding=4)
         panes.add(load_frame, weight=3)
-        cols = ("kind", "size", "item", "grade", "status", "stats")
+        cols = ("kind", "size", "item", "grade", "status", "stock", "stats")
         self.loadout = ttk.Treeview(load_frame, columns=cols, show="headings", height=8)
         for c, title, w, anchor in (("kind", "Slot", 110, "w"), ("size", "S", 30, "center"),
-                                    ("item", "Item", 260, "w"), ("grade", "Gr", 30, "center"),
-                                    ("status", "Buy / keep", 100, "e"), ("stats", "Stats", 400, "w")):
+                                    ("item", "Item", 240, "w"), ("grade", "Gr", 30, "center"),
+                                    ("status", "Buy / keep", 90, "e"), ("stock", "Stock (wiki)", 180, "w"),
+                                    ("stats", "Stats", 360, "w")):
             self.loadout.heading(c, text=title)
             self.loadout.column(c, width=w, anchor=anchor, stretch=c in ("item", "stats"))
         self.loadout.pack(fill="both", expand=True)
@@ -178,7 +183,7 @@ class App(tk.Tk):
             return
         self.button.state(["disabled"])
         self.status.config(text=f"planning {ship} from {start} ... (first run downloads ~1 min of data)")
-        kw = dict(gimbal=self.gimbal.get(), turrets=self.turrets.get(),
+        kw = dict(gimbal=self.gimbal.get(), turrets=self.turrets.get(), trust_stock=not self.buy_all.get(),
                   max_grade=None if self.grade.get() == "any" else self.grade.get())
         goals = self._goals()
 
@@ -244,7 +249,8 @@ class App(tk.Tk):
             status = "keep" if p.keep else f"{p.price:,}"
             name = f"{p.quantity}x {p.component.name}" if p.quantity > 1 else p.component.name
             self.loadout.insert("", "end", values=(p.component.kind, p.component.size, name,
-                                                   p.component.grade, status, p.component.summary()))
+                                                   p.component.grade, status, p.stock or "-",
+                                                   p.component.summary()))
         t, b = plan.totals, plan.budget
         self.loadout_total.config(text=(
             f"guns {t['dps']:.0f} dps | shields {t['shield_hp']:.0f} hp | missiles {t['missile_damage']:.0f} dmg | "

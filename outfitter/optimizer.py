@@ -70,6 +70,7 @@ class Pick:
     component: Component
     keep: bool          # already equipped, nothing to buy
     quantity: int = 1   # missiles: one per rack tube
+    stock: str | None = None  # what the wiki says is fitted in this slot by default
 
     @property
     def price(self) -> int:
@@ -108,8 +109,12 @@ def _attach_rack_stats(racks: list[Component], missiles: list[Component], goals:
 
 
 def choose(ship: Ship, catalog: dict[str, list[Component]], goals: dict[str, float],
-           keep_equal: bool = True, max_grade: str | None = None) -> list[Pick]:
-    """One Pick per slot (plus one per missile rack for its missiles)."""
+           keep_equal: bool = True, max_grade: str | None = None, trust_stock: bool = True) -> list[Pick]:
+    """One Pick per slot (plus one per missile rack for its missiles).
+
+    trust_stock=False ignores what the wiki lists as fitted (its default loadouts are not always
+    what a ship spawns with) and buys every slot.
+    """
     picks: list[Pick] = []
     by_name = {c.name: c for comps in catalog.values() for c in comps}
     missiles = catalog.get("missile", [])
@@ -120,7 +125,7 @@ def choose(ship: Ship, catalog: dict[str, list[Component]], goals: dict[str, flo
         cands = _candidates(comps, slot.size, exact=slot.kind not in ("gun",))
         if max_grade:
             cands = [c for c in cands if c.grade <= max_grade] or cands
-        current = by_name.get(slot.equipped or "")
+        current = by_name.get(slot.equipped or "") if trust_stock else None
         if current is not None and current not in cands:
             cands = cands + [current]  # stock part competes even if it is not sold
         best = _best(cands, goals)
@@ -130,15 +135,15 @@ def choose(ship: Ship, catalog: dict[str, list[Component]], goals: dict[str, flo
                                         (keep_equal and score(current, goals, cands) >= score(best, goals, cands)))
         if keep:
             best = current
-        picks.append(Pick(slot, best, keep))
+        picks.append(Pick(slot, best, keep, stock=slot.equipped))
 
         if slot.kind == "missile_rack":
             m = best_missiles.get(best.name)
             if m is None:
                 continue
             count = int(best.stats["count"])
-            m_keep = keep and slot.equipped_missile == m.name
-            picks.append(Pick(slot, m, m_keep, count))
+            m_keep = keep and trust_stock and slot.equipped_missile == m.name
+            picks.append(Pick(slot, m, m_keep, count, stock=slot.equipped_missile))
     return picks
 
 
