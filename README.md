@@ -118,3 +118,12 @@ tools/build_starmap.py   regenerates Core/Data/starmap.json from scunpacked-data
 - Prices and availability are what UEX users last reported, not live server data.
 - Power/cooling is reported, not enforced: being over budget is normal on some hulls and only
   means items get throttled when everything runs at once.
+
+## License
+
+[MIT](LICENSE) for the code. The star map data under `tools/` and `src/ScOutfitter.Core/Data/`
+is derived from Star Citizen game files and is not covered by it.
+
+This is an unofficial Star Citizen fan project, not affiliated with the Cloud Imperium group of
+companies. Star Citizen®, Roberts Space Industries® and Cloud Imperium® are registered
+trademarks of Cloud Imperium Rights LLC.
