@@ -29,7 +29,6 @@ public sealed class Ship
     public List<Slot> Slots { get; } = [];
     /// <summary>Wiki capacity x 1000; matches quantum_range / fuel_rate.</summary>
     public double QuantumFuelUnits { get; init; }
-    public double QuantumRangeM { get; init; }
     public double PowerGeneration { get; init; }
     public double CoolingGeneration { get; init; }
 
@@ -57,7 +56,6 @@ public static class ShipLoader
         {
             Name = v.Str("name") is { Length: > 0 } n ? n : "?",
             QuantumFuelUnits = v.Num("quantum", "quantum_fuel_capacity") * 1000,
-            QuantumRangeM = v.Num("quantum", "quantum_range"),
             PowerGeneration = v.Num("power", "generation_segments"),
             CoolingGeneration = v.Num("cooling", "generation_segments"),
         };

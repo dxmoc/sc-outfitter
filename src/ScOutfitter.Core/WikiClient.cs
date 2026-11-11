@@ -86,13 +86,6 @@ public sealed class WikiClient
         (await GetJsonAsync($"{Wiki}/vehicles/{Uri.EscapeDataString(ship.Slug)}", ct).ConfigureAwait(false))["data"]
         ?? throw new InvalidDataException("vehicle without data");
 
-    /// <summary>Resolve a typed name through the ship list, then fetch by slug.</summary>
-    public async Task<JsonNode> VehicleAsync(string query, CancellationToken ct = default)
-    {
-        List<ShipRef> ships = await VehiclesAsync(flightReadyOnly: false, ct).ConfigureAwait(false);
-        return await VehicleAsync(ShipResolver.Resolve(ships, query), ct).ConfigureAwait(false);
-    }
-
     /// <summary>All spaceships on the wiki with variant labels, sorted by label.</summary>
     public async Task<List<ShipRef>> VehiclesAsync(bool flightReadyOnly = true, CancellationToken ct = default)
     {
