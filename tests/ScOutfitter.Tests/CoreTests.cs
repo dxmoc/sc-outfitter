@@ -101,6 +101,19 @@ public static class RoutingTests
             string.Join(",", thrifty.Stops.Select(s => s.Location.Name)));
         t.Equal("each item at the cheapest stop of the route", 90000, thrifty.Cost);
 
+        // parts spread over more places than allowed are reported, not dropped from the trip
+        bool tooSpread = false;
+        try
+        {
+            Router.Plan(picks, store.Terminals, map, start, qd, maxStops: 1);
+        }
+        catch (LookupException)
+        {
+            tooSpread = true;
+        }
+
+        t.Check("more places needed than maxStops is reported", tooSpread);
+
         // Pyro shop reached through the gateway
         Component pyroOnly = Fixtures.Comp("Pyro Gun", Kind.Gun, 3, new() { ["dps"] = 1 }, 100, terminal: 3);
         Trip pyro = Router.Plan([new Pick { Slot = gunSlot, Component = pyroOnly }], store.Terminals, map, start, qd);

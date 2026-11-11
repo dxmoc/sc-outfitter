@@ -95,7 +95,8 @@ as `fixed`, missiles inside them are still chosen.
 - **Route**: every shop location that sells a needed part is a candidate. All subsets of up to
   five locations and all visiting orders are enumerated; the plan with the lowest travel time
   wins. Each item is bought at the cheapest shop on the route. Stops in another system are
-  reached through the gateways.
+  reached through the gateways. Parts that cannot all be bought at five places are reported
+  instead of planned.
 - **Ordering**: stops are ordered by modelled flight time (spool, acceleration, cruise speed and
   cooldown of the equipped quantum drive, a fixed landing/shopping/take-off overhead per stop and
   2 min per jump point). The time itself is not shown, only the resulting order and distances.

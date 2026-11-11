@@ -92,6 +92,7 @@ public static class Router
     /// <paramref name="auecPerMinute"/> is set). The search space is small (a dozen shop locations,
     /// a handful of items), so subsets up to <paramref name="maxStops"/> and all orders are enumerated.
     /// Items only sold at places missing from the map are appended as unordered extra stops.
+    /// Throws <see cref="LookupException"/> when no <paramref name="maxStops"/> places sell everything between them.
     /// </summary>
     public static Trip Plan(IReadOnlyList<Pick> picks, IReadOnlyDictionary<int, JsonNode> terminals, Starmap starmap,
         Location start, QuantumDrive qd, double auecPerMinute = 0, int maxStops = 5)
@@ -306,6 +307,10 @@ public static class Router
                 stops.Add(new Stop { Location = loc, Buys = buys[l], LegSeconds = secs, LegFuel = fuel, LegKm = km, Jumps = jumps });
                 prev = loc;
             }
+        }
+        else if (items.Length > 0)
+        {
+            throw new LookupException($"No route: the parts cannot all be bought at {maxStops} or fewer places.");
         }
 
         // items only sold at places missing from the coordinate data: cheapest place per item
