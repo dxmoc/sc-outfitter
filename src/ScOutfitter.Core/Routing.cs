@@ -185,63 +185,127 @@ public static class Router
             return (secs + Overhead(b.Kind), fuel, km, jumps);
         }
 
-        List<string> names = locations.Keys.OrderBy(k => k, StringComparer.Ordinal).ToList();
-        double bestObjective = double.PositiveInfinity;
-        List<Stop>? bestRoute = null;
+        string[] names = locations.Keys.OrderBy(k => k, StringComparer.Ordinal).ToArray();
+        string[] items = mapped.Keys.ToArray();
+        int count = names.Length;
+        // offers[item][location]: what the item costs there, null when that place does not sell it
+        Option?[][] offers = items.Select(item => names.Select(l => mapped[item].GetValueOrDefault(l)).ToArray()).ToArray();
+        int[] quantity = items.Select(item => needed[item]).ToArray();
 
-        for (int n = 1; n <= Math.Min(maxStops, names.Count); n++)
+        // seconds of every leg, worked out on first use; row `count` is the start
+        double[] legSeconds = new double[(count + 1) * count];
+        Array.Fill(legSeconds, double.NaN);
+        double Seconds(int from, int to)
         {
-            foreach (string[] subset in Combinations(names, n))
+            ref double s = ref legSeconds[from * count + to];
+            if (double.IsNaN(s))
             {
-                if (!mapped.Keys.All(item => subset.Any(l => mapped[item].ContainsKey(l))))
-                {
-                    continue;
-                }
-
-                var buys = subset.ToDictionary(l => l, _ => new List<Buy>(), StringComparer.Ordinal);
-                int priceTotal = 0;
-                foreach ((string item, Dictionary<string, Option> options) in mapped)
-                {
-                    string l = subset.Where(options.ContainsKey).MinBy(x => options[x].UnitPrice)!;
-                    Option opt = options[l];
-                    int qty = needed[item];
-                    buys[l].Add(new Buy(item, opt.Shop, qty, opt.UnitPrice * qty));
-                    priceTotal += opt.UnitPrice * qty;
-                }
-
-                if (buys.Values.Any(b => b.Count == 0))
-                {
-                    continue; // a smaller subset covers the same shops
-                }
-
-                foreach (string[] order in Permutations(subset))
-                {
-                    var route = new List<Stop>();
-                    Location prev = start;
-                    double totalS = 0;
-                    foreach (string l in order)
-                    {
-                        Location loc = locations[l];
-                        (double secs, double fuel, double km, int jumps) = LegTo(prev, loc);
-                        route.Add(new Stop { Location = loc, Buys = buys[l], LegSeconds = secs, LegFuel = fuel, LegKm = km, Jumps = jumps });
-                        totalS += secs;
-                        prev = loc;
-                    }
-
-                    // price is converted into minutes when the user values their time
-                    double objective = totalS + (auecPerMinute > 0 ? priceTotal / auecPerMinute * 60 : 0);
-                    if (objective < bestObjective)
-                    {
-                        bestObjective = objective;
-                        bestRoute = route;
-                    }
-                }
+                s = LegTo(from == count ? start : locations[names[from]], locations[names[to]]).Seconds;
             }
+
+            return s;
         }
 
-        if (bestRoute is not null)
+        double bestObjective = double.PositiveInfinity;
+        int[]? bestOrder = null;   // locations in visiting order
+        int[]? bestShop = null;    // per item: the location it is bought at
+        int[] shopOf = new int[items.Length];
+
+        for (int n = 1; n <= Math.Min(maxStops, count); n++)
         {
-            stops.AddRange(bestRoute);
+            int[] subset = Enumerable.Range(0, n).ToArray();
+            int[] buysAt = new int[n];
+            int[] order = new int[n];
+            bool[] used = new bool[n];
+            double priceSeconds = 0;
+
+            // all visiting orders of the subset, first to last
+            void Visit(int depth, int prev, double totalS)
+            {
+                // legs never take negative time, so an order that is already too slow cannot recover
+                if (!(totalS + priceSeconds < bestObjective))
+                {
+                    return;
+                }
+
+                if (depth == n)
+                {
+                    bestObjective = totalS + priceSeconds;
+                    bestOrder = [.. order];
+                    bestShop = [.. shopOf];
+                    return;
+                }
+
+                for (int pos = 0; pos < n; pos++)
+                {
+                    if (used[pos])
+                    {
+                        continue;
+                    }
+
+                    used[pos] = true;
+                    order[depth] = subset[pos];
+                    Visit(depth + 1, subset[pos], totalS + Seconds(prev, subset[pos]));
+                    used[pos] = false;
+                }
+            }
+
+            do
+            {
+                // every item at the cheapest place of the subset, the first one on a tie
+                int priceTotal = 0;
+                bool covered = true;
+                Array.Clear(buysAt);
+                for (int i = 0; i < items.Length && covered; i++)
+                {
+                    int at = -1;
+                    for (int pos = 0; pos < n; pos++)
+                    {
+                        Option? o = offers[i][subset[pos]];
+                        if (o is not null && (at < 0 || o.UnitPrice < offers[i][subset[at]]!.UnitPrice))
+                        {
+                            at = pos;
+                        }
+                    }
+
+                    covered = at >= 0;
+                    if (covered)
+                    {
+                        shopOf[i] = subset[at];
+                        buysAt[at]++;
+                        priceTotal += offers[i][shopOf[i]]!.UnitPrice * quantity[i];
+                    }
+                }
+
+                if (!covered || buysAt.Contains(0))
+                {
+                    continue; // an item is not sold here, or a smaller subset covers the same shops
+                }
+
+                // price is converted into minutes when the user values their time
+                priceSeconds = auecPerMinute > 0 ? priceTotal / auecPerMinute * 60 : 0;
+                Visit(0, count, 0);
+            }
+            while (NextCombination(subset, count));
+        }
+
+        if (bestOrder is not null && bestShop is not null)
+        {
+            var buys = bestOrder.ToDictionary(l => l, _ => new List<Buy>());
+            for (int i = 0; i < items.Length; i++)
+            {
+                Option opt = offers[i][bestShop[i]]!;
+                buys[bestShop[i]].Add(new Buy(items[i], opt.Shop, quantity[i], opt.UnitPrice * quantity[i]));
+            }
+
+            Location prev = start;
+            foreach (int l in bestOrder)
+            {
+                Location loc = locations[names[l]];
+                (double secs, double fuel, double km, int jumps) = LegTo(prev, loc);
+                stops.Add(new Stop { Location = loc, Buys = buys[l], LegSeconds = secs, LegFuel = fuel, LegKm = km, Jumps = jumps });
+                prev = loc;
+            }
         }
 
         // items only sold at places missing from the coordinate data: cheapest place per item
@@ -277,52 +341,27 @@ public static class Router
         return term.Str("name") is { Length: > 0 } n ? n : "?";
     }
 
-    public static IEnumerable<string[]> Combinations(IReadOnlyList<string> items, int k)
+    /// <summary>Advances idx to the next k-of-count combination in lexicographic order; false after the last.</summary>
+    private static bool NextCombination(int[] idx, int count)
     {
-        int n = items.Count;
-        if (k > n)
+        int k = idx.Length;
+        int pos = k - 1;
+        while (pos >= 0 && idx[pos] == count - k + pos)
         {
-            yield break;
+            pos--;
         }
 
-        int[] idx = Enumerable.Range(0, k).ToArray();
-        while (true)
+        if (pos < 0)
         {
-            yield return idx.Select(i => items[i]).ToArray();
-            int pos = k - 1;
-            while (pos >= 0 && idx[pos] == n - k + pos)
-            {
-                pos--;
-            }
-
-            if (pos < 0)
-            {
-                yield break;
-            }
-
-            idx[pos]++;
-            for (int j = pos + 1; j < k; j++)
-            {
-                idx[j] = idx[j - 1] + 1;
-            }
-        }
-    }
-
-    public static IEnumerable<string[]> Permutations(string[] items)
-    {
-        if (items.Length <= 1)
-        {
-            yield return items;
-            yield break;
+            return false;
         }
 
-        for (int i = 0; i < items.Length; i++)
+        idx[pos]++;
+        for (int j = pos + 1; j < k; j++)
         {
-            string[] rest = items.Where((_, j) => j != i).ToArray();
-            foreach (string[] tail in Permutations(rest))
-            {
-                yield return [items[i], .. tail];
-            }
+            idx[j] = idx[j - 1] + 1;
         }
+
+        return true;
     }
 }

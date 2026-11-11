@@ -65,10 +65,6 @@ public static class RoutingTests
         t.Equal("duration formatting minutes", "8m 05s", Router.FormatDuration(485));
         t.Equal("duration formatting hours", "1h 01m", Router.FormatDuration(3660));
 
-        t.Equal("C(4,2) = 6", 6, Router.Combinations(["a", "b", "c", "d"], 2).Count());
-        t.Equal("4! = 24", 24, Router.Permutations(["a", "b", "c", "d"]).Count());
-        t.Equal("C(3,4) is empty", 0, Router.Combinations(["a", "b", "c"], 4).Count());
-
         DataStore store = Fixtures.Store();
         Starmap map = store.Starmap;
         Location start = map.Locate("Everus Harbor")!;
@@ -92,6 +88,18 @@ public static class RoutingTests
         t.Equal("trip cost sums all buys", 160000, trip.Cost);
         t.Check("second leg is the long one", trip.Stops[1].LegKm > trip.Stops[0].LegKm);
         t.Check("no jumps inside Stanton", trip.Stops.All(s => s.Jumps == 0));
+
+        // one shop that sells everything beats a detour, until money counts more than time
+        Component either = Fixtures.Comp("Either Gun", Kind.Gun, 3, new() { ["dps"] = 1 }, 30000, terminal: 1);
+        either.Offers.Add(new Offer(2, "shop-2", 40000));
+        var both = new List<Pick> { new() { Slot = gunSlot, Component = either }, new() { Slot = shieldSlot, Component = tank } };
+        Trip direct = Router.Plan(both, store.Terminals, map, start, qd);
+        t.Equal("one shop with everything beats two stops", "Port Tressler", direct.Stops.Single().Location.Name);
+        t.Equal("bought at that shop's price", 100000, direct.Cost);
+        Trip thrifty = Router.Plan(both, store.Terminals, map, start, qd, auecPerMinute: 100);
+        t.Equal("cheap time: detour to the cheaper shop, nearest first", "HUR-L2 Faithful Dream Station,Port Tressler",
+            string.Join(",", thrifty.Stops.Select(s => s.Location.Name)));
+        t.Equal("each item at the cheapest stop of the route", 90000, thrifty.Cost);
 
         // Pyro shop reached through the gateway
         Component pyroOnly = Fixtures.Comp("Pyro Gun", Kind.Gun, 3, new() { ["dps"] = 1 }, 100, terminal: 3);
