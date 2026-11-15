@@ -64,8 +64,50 @@ public static class ErkulTests
         t.Check("plan title names the build", plan.Source.Contains("Test build"));
         t.Check("route has stops", plan.Trip.Stops.Count > 0);
         t.Check("cost counts the swapped parts", plan.Trip.Cost >= 50000 + 10000 + 60000 + 3000);
+
+        // two turrets with identically named gun ports (Constellation Mk V): only the full path tells them apart
+        JsonNode turretHull = Fixtures.ShipJson();
+        JsonArray ports = turretHull["ports"]!.AsArray();
+        ports.Add(Turret("hardpoint_turret_upper"));
+        ports.Add(Turret("hardpoint_turret_lower"));
+        ErkulBuild turretBuild = ErkulBuild.FromJson("abc", JsonNode.Parse("""
+            {"payload":{"ship":"aegs_gladius","gimbalMode":"lock","slotOverrides":{
+              "hardpoint_turret_upper/hardpoint_gun_top/hardpoint_class_2":{"kind":"weapon","className":"GUN_BIG_S3"}}}}
+            """)!);
+        Plan turretPlan = Planner.FromErkul(store, turretBuild, turretHull, store.Starmap.Locate("Everus Harbor")!);
+        t.Equal("turret gun override applied", "Big Gun",
+            turretPlan.Picks.First(p => p.Slot.Path == "hardpoint_turret_upper/hardpoint_gun_top/hardpoint_class_2").Component.Name);
+        t.Check("same port name in the other turret keeps stock",
+            turretPlan.Picks.First(p => p.Slot.Path == "hardpoint_turret_lower/hardpoint_gun_top/hardpoint_class_2").Keep);
+        t.Equal("turret override is not reported as unknown", 0, turretPlan.Unknown.Count);
+
+        // snub fighter: no quantum drive port at all, the route is still planned
+        JsonNode snub = Fixtures.ShipJson();
+        JsonArray snubPorts = snub["ports"]!.AsArray();
+        snubPorts.Remove(snubPorts.First(n => n!["type"]!.ToString() == "QuantumDrive"));
+        Plan snubPlan = Planner.FromErkul(store, build, snub, store.Starmap.Locate("Everus Harbor")!);
+        t.Check("hull without a drive still gets a route", snubPlan.Trip.Stops.Count > 0);
+        t.Check("stand-in drive is labelled", snubPlan.Drive.Name.StartsWith("none", StringComparison.Ordinal));
         return Task.CompletedTask;
     }
+
+    private static JsonObject Turret(string name) => new()
+    {
+        ["name"] = name, ["type"] = "Turret", ["sizes"] = new JsonObject { ["min"] = 3, ["max"] = 3 },
+        ["equipped_item"] = new JsonObject { ["name"] = "Remote Turret" },
+        ["compatible_types"] = new JsonArray(new JsonObject { ["type"] = "Turret" }),
+        ["ports"] = new JsonArray(new JsonObject
+        {
+            ["name"] = "hardpoint_gun_top", ["type"] = "Turret", ["sizes"] = new JsonObject { ["min"] = 3, ["max"] = 3 },
+            ["equipped_item"] = new JsonObject { ["name"] = "Gimbal Mount S3" },
+            ["ports"] = new JsonArray(new JsonObject
+            {
+                ["name"] = "hardpoint_class_2", ["type"] = "WeaponGun", ["sizes"] = new JsonObject { ["min"] = 3, ["max"] = 3 },
+                ["editable"] = true, ["equipped_item"] = new JsonObject { ["name"] = "Stock Gun" },
+                ["compatible_types"] = new JsonArray(new JsonObject { ["type"] = "WeaponGun" }),
+            }),
+        }),
+    };
 
     private static void Give(Dictionary<Kind, List<Component>> cat, string name, string className)
     {

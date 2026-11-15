@@ -8,6 +8,9 @@ public sealed class Slot
     public required Kind Kind { get; init; }
     public required int Size { get; init; }
     public required string Port { get; init; }
+    /// <summary>Port names from the hull down to this port, joined by '/'. Turrets repeat child names, so only the path is unique.</summary>
+    public string Path { get => _path ?? Port; init => _path = value; }
+    private readonly string? _path;
     public string? Equipped { get; init; }
     /// <summary>Gun slot currently carrying a gimbal mount.</summary>
     public bool Gimbal { get; init; }
@@ -86,11 +89,12 @@ public static class ShipLoader
         return (req, offered);
     }
 
-    private static void Walk(IEnumerable<JsonNode> ports, List<Slot> slots, bool fixedGuns, bool manned, HashSet<string> vehicleTags)
+    private static void Walk(IEnumerable<JsonNode> ports, List<Slot> slots, bool fixedGuns, bool manned, HashSet<string> vehicleTags, string prefix = "")
     {
         foreach (JsonNode p in ports)
         {
             string type = p.Str("type");
+            string path = prefix + p.Str("name");
             int size = p.Int("sizes", "max");
             string? equipped = p.StrOrNull("equipped_item", "name");
             List<JsonNode> children = p.Arr("ports").ToList();
@@ -102,7 +106,7 @@ public static class ShipLoader
                 string? missile = children.FirstOrDefault(c => c.Str("type") == "Missile").StrOrNull("equipped_item", "name");
                 slots.Add(new Slot
                 {
-                    Kind = Kind.MissileRack, Size = size, Port = p.Str("name"), Equipped = equipped,
+                    Kind = Kind.MissileRack, Size = size, Port = p.Str("name"), Path = path, Equipped = equipped,
                     EquippedMissile = missile, RequiredTags = req, PortTags = offered, Fixed = !editable,
                 });
                 continue;
@@ -112,7 +116,7 @@ public static class ShipLoader
             {
                 slots.Add(new Slot
                 {
-                    Kind = kind, Size = size, Port = p.Str("name"), Equipped = equipped,
+                    Kind = kind, Size = size, Port = p.Str("name"), Path = path, Equipped = equipped,
                     RequiredTags = req, PortTags = offered, Fixed = !editable,
                 });
                 continue;
@@ -132,7 +136,7 @@ public static class ShipLoader
                     int childSize = childGun.Int("sizes", "max");
                     slots.Add(new Slot
                     {
-                        Kind = Kind.Gun, Size = childSize > 0 ? childSize : size, Port = p.Str("name"),
+                        Kind = Kind.Gun, Size = childSize > 0 ? childSize : size, Port = p.Str("name"), Path = path,
                         Equipped = childEquipped, Gimbal = isGimbal, RequiredTags = req, PortTags = offered,
                         Fixed = !childGun.BoolOr(true, "editable"),
                     });
@@ -141,7 +145,7 @@ public static class ShipLoader
                 {
                     slots.Add(new Slot
                     {
-                        Kind = Kind.Gun, Size = size, Port = p.Str("name"),
+                        Kind = Kind.Gun, Size = size, Port = p.Str("name"), Path = path,
                         Equipped = isGimbal ? childEquipped : equipped, Gimbal = false,
                         RequiredTags = req, PortTags = offered, Fixed = !editable,
                     });
@@ -150,7 +154,7 @@ public static class ShipLoader
                 {
                     slots.Add(new Slot
                     {
-                        Kind = Kind.Gun, Size = size - 1, Port = p.Str("name"), Equipped = childEquipped, Gimbal = true,
+                        Kind = Kind.Gun, Size = size - 1, Port = p.Str("name"), Path = path, Equipped = childEquipped, Gimbal = true,
                         RequiredTags = req, PortTags = offered,
                     });
                 }
@@ -160,7 +164,7 @@ public static class ShipLoader
 
             if ((type == "Turret" || type == "TurretBase") && manned)
             {
-                Walk(children, slots, fixedGuns, manned, vehicleTags);
+                Walk(children, slots, fixedGuns, manned, vehicleTags, path + "/");
             }
         }
     }

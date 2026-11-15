@@ -149,10 +149,12 @@ public sealed class MainViewModel : Observable
             ShipText = plan.Ship.Name;
             Status = plan.Unknown.Count == 0
                 ? $"{plan.Ship.Name}: {plan.Trip.Stops.Count} stop(s) for the erkul build"
-                : $"{plan.Ship.Name}: {plan.Trip.Stops.Count} stop(s). Not in the catalog: {string.Join(", ", plan.Unknown.Take(4))}";
+                : $"{plan.Ship.Name}: {plan.Trip.Stops.Count} stop(s). {plan.Unknown.Count} part(s) not in the catalog: {string.Join(", ", plan.Unknown.Take(4))}"
+                  + (plan.Unknown.Count > 4 ? ", ..." : string.Empty);
         }
         catch (Exception ex) when (ex is LookupException or HttpRequestException or InvalidDataException or TaskCanceledException)
         {
+            Render(null); // the previous plan must not sit under the error as if it were the answer
             Status = ex.Message;
         }
         finally
@@ -404,6 +406,7 @@ public sealed class MainViewModel : Observable
         }
         catch (Exception ex) when (ex is LookupException or HttpRequestException or InvalidDataException or TaskCanceledException)
         {
+            Render(null); // the previous plan must not sit under the error as if it were the answer
             Status = ex.Message;
         }
         finally
@@ -412,12 +415,20 @@ public sealed class MainViewModel : Observable
         }
     }
 
-    private void Render(Plan plan)
+    private void Render(Plan? plan)
     {
         _plan = plan;
         RouteRows.Clear();
         LoadoutRows.Clear();
         BuyRows.Clear();
+        if (plan is null)
+        {
+            RouteNote = string.Empty;
+            SelectedRoute = null;
+            RaisePlan();
+            return;
+        }
+
         int i = 0;
         foreach (Stop s in plan.Trip.Planned)
         {
@@ -446,7 +457,11 @@ public sealed class MainViewModel : Observable
             : $"Start {plan.Trip.Start.Label} [{plan.Trip.Start.System}], quantum drive {plan.Drive.Name}"
               + (plan.Trip.Unavailable.Count > 0 ? $"   ·   not sold anywhere: {string.Join(", ", plan.Trip.Unavailable)}" : string.Empty);
         SelectedRoute = RouteRows.FirstOrDefault();
+        RaisePlan();
+    }
 
+    private void RaisePlan()
+    {
         foreach (string prop in new[] { nameof(HasPlan), nameof(ShipTitle), nameof(GoalsText), nameof(DpsText), nameof(ShieldText),
                      nameof(MissileText), nameof(CostText), nameof(DistanceText),
                      nameof(PowerText), nameof(CoolingText), nameof(RouteNote) })

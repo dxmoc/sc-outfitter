@@ -154,8 +154,8 @@ public static class ErkulImporter
         foreach (Slot slot in ship.Slots)
         {
             List<ErkulOverride> mine = build.Overrides
-                .Where(o => o.PortPath.Equals(slot.Port, StringComparison.OrdinalIgnoreCase)
-                            || o.PortPath.StartsWith(slot.Port + "/", StringComparison.OrdinalIgnoreCase))
+                .Where(o => o.PortPath.Equals(slot.Path, StringComparison.OrdinalIgnoreCase)
+                            || o.PortPath.StartsWith(slot.Path + "/", StringComparison.OrdinalIgnoreCase))
                 .ToList();
             foreach (ErkulOverride o in mine)
             {

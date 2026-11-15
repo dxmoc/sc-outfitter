@@ -136,8 +136,9 @@ public static class Planner
 
     public static Plan FromErkul(DataStore data, ErkulBuild build, JsonNode vehicle, Location start)
     {
-        // gimbals stay as the player set them: overrides address the gun inside the mount
-        Ship ship = ShipLoader.FromJson(vehicle, fixedGuns: !build.GimbalLocked);
+        // gimbals stay as the player set them: overrides address the gun inside the mount;
+        // erkul builds cover turret guns too, so those ports have to be slots
+        Ship ship = ShipLoader.FromJson(vehicle, fixedGuns: !build.GimbalLocked, mannedTurrets: true);
         ErkulImporter.Result result = ErkulImporter.ToPicks(build, ship, data.Catalog);
         QuantumDrive drive = TripDrive(result.Picks, data.Catalog, ship, usePlanned: false);
         Trip trip = Router.Plan(result.Picks, data.Terminals, data.Starmap, start, drive);
@@ -159,8 +160,15 @@ public static class Planner
             ? qds.FirstOrDefault(c => c.Name == ship.DefaultQuantumDrive)
             : null;
         Component? comp = usePlanned && planned is not null ? planned : current ?? planned;
-        return comp is null
+        if (comp is not null)
+        {
+            return QuantumDrive.From(comp);
+        }
+
+        // snub fighters (Skylark, Merlin) have no drive port: they ride a carrier, so time the trip with a stand-in
+        Component? standIn = ship.SlotsOf(Kind.QuantumDrive).Any() ? null : qds?.OrderBy(c => c.Size).ThenBy(c => c.Stat("speed")).ThenBy(c => c.Name, StringComparer.Ordinal).FirstOrDefault();
+        return standIn is null
             ? throw new LookupException("No quantum drive data for this ship.")
-            : QuantumDrive.From(comp);
+            : QuantumDrive.From(standIn) with { Name = $"none (needs a carrier; times assume {standIn.Name})" };
     }
 }
